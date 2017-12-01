@@ -1,0 +1,4 @@
+{
+    "build-destination": "/srv/http/ewma",
+    "build-require-sudo": true
+}
