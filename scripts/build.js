@@ -6,6 +6,7 @@ const Event = require('events').EventEmitter;
 const babel = require('babel-core');
 const sass = require('node-sass');
 const microtime = require('microtime');
+const crypto = require('crypto');
 
 const start = microtime.now();
 
@@ -29,6 +30,12 @@ switch (process.argv[2]) {
         console.error(`invalid build type: ${process.argv[2]}`);
         process.exit(1);
         break;
+}
+
+let cacheHashes = {};
+
+function writeHash (path, contents) {
+    cacheHashes[path] = crypto.createHash('md5').update(contents).digest('hex').substr(-5)
 }
 
 let steps = [
@@ -133,15 +140,39 @@ let steps = [
         name: 'Migrating images',
         install: true,
         hook: (cb) => {
-            let cp = child_process.spawn('cp', ['-r', `${__dirname}/../static/images`, `${conf['build-destination']}/static/images`], {
-                stdio: 'inherit'
-            });
-
-            cp.on('exit', (code) => {
-                if (code === 0) {
-                    cb();
-                } else {
-                    cb(new Error(`Non-zero exit code: ${code}`));
+            fs.readdir(`${__dirname}/../static/images`, (err, dir) => {
+                if (err) {
+                    cb(err);
+                    return;
+                }
+                let transferCounter = 0;
+                let error = false;
+                for (let file of dir) {
+                    transferCounter++;
+                    fs.readFile(`${__dirname}/../static/images/${file}`, (err, result) => {
+                        if (!error) {
+                            if (err) {
+                                error = true;
+                                cb(err);
+                                return;
+                            }
+                            writeHash(`images/${file}`, result);
+                            fs.writeFile(`${conf['build-destination']}/static/images/${file}`, result, (err) => {
+                                if (!error) {
+                                    if (err) {
+                                        error = true;
+                                        cb(err);
+                                        return;
+                                    }
+                                    transferCounter--;
+                                    console.log(`    [${transferCounter} ongoing] Wrote images/${file}`);
+                                    if (transferCounter === 0) {
+                                        cb();
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
@@ -168,6 +199,7 @@ let steps = [
                                 cb(err);
                                 return;
                             }
+                            writeHash(`js/${file}`, result.code);
                             fs.writeFile(`${conf['build-destination']}/static/js/${file}`, result.code, (err) => {
                                 if (!error) {
                                     if (err) {
@@ -221,6 +253,8 @@ let steps = [
                                 file += '.css';
                             }
 
+                            writeHash(`css/${file}`, result.css);
+
                             fs.writeFile(`${conf['build-destination']}/static/css/${file}`, result.css, (err) => {
                                 if (!error) {
                                     if (err) {
@@ -238,6 +272,18 @@ let steps = [
                         }
                     });
                 }
+            });
+        }
+    },
+    {
+        name: 'Writing cache hashes',
+        install: true,
+        hook: (cb) => {
+            for (let hash in cacheHashes) {
+                console.log(`    ${cacheHashes[hash]}: ${hash}`);
+            }
+            fs.writeFile(`${conf['build-destination']}/cgi/hashes.json`, JSON.stringify(cacheHashes, null, 4), (err) => {
+                cb(err);
             });
         }
     },

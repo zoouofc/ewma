@@ -11,6 +11,8 @@ process.env.REQUEST_START = Date.now();
 global.__rootname = __dirname;
 
 const env = require(`${__rootname}/util/env.js`);
+const exitProcedures = require(`${__rootname}/exitProcedures.js`);
+const template = require(`${__rootname}/util/template.js`);
 
 let request = env.process();
 
@@ -18,22 +20,16 @@ request.headers['status'] = '200 OK';
 request.headers['content-type'] = 'text/html';
 
 // pathing and handling of request.body
-request.body = `<!DOCTYPE html>
-<html>
-    <head>
-        <title>ENGG Week Movie Archive</title>
-        <link rel="icon" type="image/png" href="/static/images/favicon.png" />
-        <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
-    </head>
-    <body>
-        <img src="/static/images/ewma.svg" />
-    </body>
-</html>`
+template.get('index.ejs', function (err, contents) {
+    if (err) {
+        throw err;
+    }
+    // output here
+    for (header in request.headers) {
+        process.stdout.write(`${header}: ${request.headers[header]}\n`);
+    }
+    process.stdout.write('\n');
 
-// output here
-for (header in request.headers) {
-    process.stdout.write(`${header}: ${request.headers[header]}\n`);
-}
-process.stdout.write('\n');
-
-process.stdout.write(request.body);
+    process.stdout.write(contents);
+    exitProcedures.shutdown(0);
+});
