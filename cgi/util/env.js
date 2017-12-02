@@ -18,6 +18,7 @@ module.exports.process = function () {
         process.env.QUERY_STRING = "debug=true";
     }
 
+    console.error(JSON.stringify(process.env, null,4));
     let request = {
         id: uuid(),
         href: path.resolve(process.env.REQUEST_URI),

@@ -137,6 +137,22 @@ let steps = [
         }
     },
     {
+        name: `Creating static structure: ${conf["build-destination"]}/static/images`,
+        hook: (cb) => {
+            let mk = child_process.spawn('mkdir', ['-p', `${conf['build-destination']}/static/images`], {
+                stdio: 'inherit'
+            });
+
+            mk.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
+                }
+            });
+        }
+    },
+    {
         name: 'Migrating images',
         install: true,
         hook: (cb) => {

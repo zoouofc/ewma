@@ -13,11 +13,16 @@ global.__rootname = __dirname;
 const env = require(`${__rootname}/util/env.js`);
 const exitProcedures = require(`${__rootname}/exitProcedures.js`);
 const template = require(`${__rootname}/util/template.js`);
+const cookie = require('cookie');
 
 let request = env.process();
 
 request.headers['status'] = '200 OK';
 request.headers['content-type'] = 'text/html';
+request.headers['set-cookie'] = cookie.serialize('session', '1231231231', {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24
+});
 
 // pathing and handling of request.body
 template.get('index.ejs', function (err, contents) {
