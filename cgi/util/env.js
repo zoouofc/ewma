@@ -8,6 +8,7 @@
 const path = require("path");
 const uuid = require("uuid/v1");
 const query2json = require(`${__rootname}/util/q2j.js`);
+const cke = require(`${__rootname}/util/cookie.js`);
 
 module.exports.process = function () {
     if (!process.env.hasOwnProperty('SERVER_SOFTWARE')) {
@@ -18,7 +19,6 @@ module.exports.process = function () {
         process.env.QUERY_STRING = "debug=true";
     }
 
-    console.error(JSON.stringify(process.env, null,4));
     let request = {
         id: uuid(),
         href: path.resolve(process.env.REQUEST_URI),
@@ -26,6 +26,7 @@ module.exports.process = function () {
         method: process.env.REQUEST_METHOD,
         query: query2json.q2j(process.env.QUERY_STRING),
         startTime: process.env.REQUEST_START,
+        cookie: cke.parse(process.env.HTTP_COOKIE || ''),
         headers: {}
     };
     process.env.REQUEST_ID = request.id;
