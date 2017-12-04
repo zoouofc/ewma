@@ -1,5 +1,6 @@
 $zooblue: #00B1FC
 $grey: #5D5D5D
+$font: monospace
 
 body
     background-color: #ebebeb
@@ -19,26 +20,22 @@ body
     position: relative
     .logo
         width: 330px
-    input
-        margin: 10px auto
-        padding: 6px
-        border-radius: 2px
-        border-color: $grey
-    input::-webkit-input-placeholder
-        text-align: center
-    input:-moz-placeholder
-        text-align: center
-    input::-moz-placeholder
-        text-align: center
-    input:-ms-input-placeholder
-        text-align: center
-    input:focus
-        outline: none
+        margin: auto
+
+#summary
+    font-family: monospace
+    td:nth-child(1)
+        text-align: right
+        font-weight: bold
 
 .absc
     position: absolute
     left: 50%
     top: 50%
     transform: translate(-50%, -50%)
+
 .db
     display: block
+
+.tac
+    text-align: center

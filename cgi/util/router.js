@@ -8,6 +8,7 @@
 const fs = require("fs");
 const pathLib = require("path");
 const template = require(`${__rootname}/util/template`);
+const code = require(`${__rootname}/util/code`);
 
 let registeredEndpoints = {};
 
@@ -39,7 +40,8 @@ module.exports.init = function () {
 
 module.exports.handoff = function (request, clbk) {
     if (!(request.method in registeredEndpoints)) {
-        throw new Error('405');
+        code.errorPage(request, code.METHOD_NOT_ALLOWED, clbk);
+        return;
     }
     for (let epnt of registeredEndpoints[request.method]) {
         for (let path of epnt.matchPaths) {
@@ -69,5 +71,6 @@ module.exports.handoff = function (request, clbk) {
         }
     }
 
-    throw new Error('404 ' + request.pathname);
+    code.errorPage(request, code.NOT_FOUND, clbk);
+    return;
 };

@@ -330,10 +330,8 @@ prog.on('n', function(step) {
     }
 
     let skip = BUILD_TYPE === 2 && !steps[step].install;
-    let extra = skip ? ' (skipping)' : ''
-
-    console.log(`[${step + 1}/${steps.length}]\x1b[33m ${steps[step].name}\x1b[0m${extra}`);
     if (!skip) {
+        console.log(`[${step + 1}/${steps.length}]\x1b[33m ${steps[step].name}\x1b[0m`);
         steps[step].hook(function(err) {
             if (err) {
                 console.error(`\x1b[31m[${step + 1}/${steps.length}] (${steps[step].name}) Encountered an error:\x1b[0m`);

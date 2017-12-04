@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+    <%- include('head_shit.ejs', {title: 'EWMA | The ENGG Week Movie Archive'}); %>
+    <link rel="stylesheet" type="text/css" href="<%= cacheBuster('css/tos.css'); %>" />
+</head>
+<body>
+    <div id="site">
+        <div class="absc db">
+            <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
+            <br /><br />
+            <div id="tos">
+                This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement:
+                <br />
+                <form action="/tosagree" method="POST">
+                    <input type="hidden" name="dest" value="<%= dest %>" />
+                    <input type="submit" value="I promise I won't be an Ass" />
+                </form>
+            </div>
+            <hr />
+            <div id="admin" class="tac">
+                <div>Admin Login</div>
+                <form action="/login" method="POST">
+                    <input type="text" id="username" placeholder="username" />
+                    <input type="password" id="password" placeholder="password" />
+                </post>
+            </div>
+        </div>
+    </div>
+</body>
