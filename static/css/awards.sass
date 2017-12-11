@@ -1,0 +1,77 @@
+$starcolor: #00B1FC
+$starbackground: #FFFFFF
+
+.awardTitle
+    display: inline-block
+    position: absolute
+    top: 50%
+    right: 50%
+    transform: translate(50%, -50%)
+    text-align: center
+
+.awardI
+    height: 80px
+    display: inline-block
+
+.awardIRight
+    margin-left: 53px
+
+.award
+    display: inline-block
+    position: relative
+    font-family: 'Playfair Display SC', serif
+    font-size: 13px
+    cursor: default
+    margin: 10px
+
+.tooltip .tooltiptext
+    visibility: hidden
+    width: 100%
+    top: 50%
+    transform: translateY(-50%)
+    background-color: rgba(0,0,0,0.6)
+    color: #fff
+    text-align: center
+    padding: 5px 0
+    border-radius: 6px
+    position: absolute
+    z-index: 1
+
+.tooltip:hover .tooltiptext
+    visibility: visible
+
+#movie_awards
+    display: inline-block
+    width: 287px
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+
+.stars
+    position: relative
+    vertical-align: middle
+    display: inline-block
+    color: $starbackground
+    overflow: hidden
+
+.full-stars
+    position: absolute
+    left: 0
+    top: 0
+    white-space: nowrap
+    overflow: hidden
+    color: $starcolor
+
+.empty-stars:before, .full-stars:before
+    content: "\2605\2605\2605\2605\2605"
+    font-size: 14pt
+
+.empty-stars:before
+    -webkit-text-stroke: 1px $starcolor
+
+.full-stars:before
+    -webkit-text-stroke: 1px $starcolor
+
+@-moz-document url-prefix()
+    .full-stars
+        color: $starcolor

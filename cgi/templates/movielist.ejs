@@ -5,36 +5,51 @@
 <body>
     <div id="site">
         <%- include('headers.ejs', {pageId: 'Movie List'}); %>
+        <script>
+            window.movies = <%- JSON.stringify(movies); %>
+        </script>
         <div id="content">
             <table id="movieTable">
                 <tbody>
                     <% let cls = true; %>
-                    <% for (let year in movies) { %>
+                    <% for (let movieYear of movies) { %>
                         <tr class="yearRow">
-                            <td><div><%= year %></div></td>
+                            <td><div><%= movieYear.year %></div></td>
                             <td>
                                 <table class="movieYear">
                                     <tbody>
-                                        <% for (let movie of movies[year]) { %>
+                                        <% for (let movie of movieYear.movies) { %>
                                             <tr class="movieRow <%= cls ? 'odd' : 'even' %>">
                                                 <% cls = !cls %>
                                                 <td class="tac movieTitle">
                                                     <%= movie.title %><br />
-                                                    <%= movie.rating %>
+                                                    <% if (movie.rating) { %>
+                                                        <div class="stars">
+                                                            <div class="empty-stars"></div>
+                                                            <div class="full-stars" style="width: <%= movie.rating || '0'; %>%;"></div>
+                                                        <div>
+                                                    <% } %>
                                                 </td>
                                                 <td class="tac movieDept"><%= movie.display %></td>
                                                 <td>
-                                                    <ul>
+                                                    <div class="tac">
                                                         <% if (movie.awards) { %>
                                                             <% for (let award of movie.awards) { %>
-                                                                <li><%= award.name %>
+                                                                <div class="award <%= award.note ? 'tooltip' : '' %>">
                                                                     <% if (award.note) { %>
-                                                                        (<%= award.note %>)
+                                                                        <span class="awardNote tooltiptext">
+                                                                            <%= award.note %>
+                                                                        </span>
                                                                     <% } %>
-                                                                </li>
+                                                                    <img class="awardILeft awardI" src="<%= cacheBuster('images/award_left.png'); %>" type="image/png" alt="award" />
+                                                                    <div class="awardTitle">
+                                                                        <%- award.name.replace(/ /gm, '<br />') %>
+                                                                    </div>
+                                                                    <img class="awardIRight awardI" src="<%= cacheBuster('images/award_right.png') %>" type="image/png" alt="award" />
+                                                                </div>
                                                             <% } %>
                                                         <% } %>
-                                                    </ul>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <% } %>

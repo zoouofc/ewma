@@ -1,4 +1,7 @@
 {
     "build-destination": "/srv/http/ewma",
-    "build-require-sudo": true
+    "build-require-sudo": true,
+    "database-user": "ewma",
+    "database-password": "XXXXXXXXXXXXXXXX",
+    "database-socket": "XXXXXXXXXXXXXXXXXX"
 }

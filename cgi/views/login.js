@@ -27,7 +27,8 @@ function loginPage (request, cb) {
 }
 
 function handleLoginAttempt(request, cb) {
-    request.errorMessage = 'Not Implemented';
+    request.errorMessage = "You'd like that, wouldn't you?";
+    request.headers['status'] = code.codeString(code.UNAUTHORIZED);
 
     loginPage(request, cb);
 }
