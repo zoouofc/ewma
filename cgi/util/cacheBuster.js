@@ -8,6 +8,10 @@
 const hashes = require(`${__rootname}/hashes.json`);
 
 function generateURL (path) {
+    if (/^js\/lib\//.test(path)) {
+        // we don't cachebust libraries
+        return `/static/${path}`;
+    }
     if (!(path in hashes)) {
         console.error(`Path hash never calculated for ${path}`);
         return `/static/_00000/${path}`;

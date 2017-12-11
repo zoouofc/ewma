@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <%- include('head_shit.ejs', {title: 'EWMA | Themes', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('headers.ejs', {pageId: 'Themes'}); %>
+        <div id="content">
+            <p>
+                The rules for ENGG Week themes vary from year to year and are ultimately up to the Judges. This being said,
+                <ul>
+                    <li>A theme may not be used for more than one department in a given year</li>
+                    <li>Once a theme is used in ENGG Week (Frosh Week does not count), it cannot be used again in the following 10 years.</li>
+                </ul>
+            </p>
+            <h3>Below are themes that have been used in the last 10 years, and should not be used in the <%= nowYear %> ENGG Week.</h3>
+            <table id="themes">
+                <thead>
+                    <tr><th>Theme</th><th>Year Used</th><th>Year of Availability</th><th>Department</th></tr>
+                </thead>
+                <tbody>
+                    <% for (let theme of themes) { %>
+                        <tr>
+                            <td><%= theme.theme %></td>
+                            <td><%= theme.year %></td>
+                            <td><%= theme.available %></td>
+                            <td><%= theme.dept %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <%- include('footers.ejs', {}); %>
+    </div>
+</body>

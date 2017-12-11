@@ -6,16 +6,16 @@
 <body>
     <div id="site">
         <div class="absc db">
-            <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
+            <a href="/">
+                <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
+            </a>
             <br /><br />
             <div>
                 <table id="summary">
                     <tbody>
-                        <tr><td>Code:</td><td><%= code %></td></tr>
-                        <tr><td>Message:</td><td><%= message %></td></tr>
-                        <tr><td>Method:</td><td><%= request.method %></td></tr>
-                        <tr><td>Request URI:</td><td><%= request.pathname %><td></tr>
-                        <tr><td>Request ID:</td><td><%= request.id %></td></tr>
+                        <% for (let prop in data) { %>
+                            <tr><td><%= prop %>:</td><td><%= data[prop] %></td></tr>
+                        <% } %>
                     </tbody>
                 </table>
             </div>

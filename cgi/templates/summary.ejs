@@ -1,0 +1,10 @@
+<% if (request) { %>
+    <!--
+        ENGG Week Movie Archive
+        Copyright (c) 2017 Mitchell Sawatzky, All Rights Reserved
+
+        Request length: <%= Date.now() - request.startTime %>ms
+        Request id: <%= request.id %>
+        <%= request.db.summary(request) %>
+    -->
+<% } %>

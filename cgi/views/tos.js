@@ -10,9 +10,13 @@ module.exports.name = 'tos';
 module.exports.type = 'GET';
 
 module.exports.handle = (request, cb) => {
+    if (/login/.test(request.pathname)) {
+        request.scripts.push('login');
+    }
     template.get('tos.ejs', {
         request: request,
-        dest: request._originalPathname || ''
+        dest: request._originalPathname || '',
+        login: /login/.test(request.pathname)
     }, (err, content) => {
         if (err) {
             throw err;

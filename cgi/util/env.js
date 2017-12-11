@@ -27,7 +27,16 @@ module.exports.process = function () {
         query: query2json.q2j(process.env.QUERY_STRING),
         startTime: process.env.REQUEST_START,
         cookie: cke.parse(process.env.HTTP_COOKIE || ''),
-        headers: {}
+
+        // permissions
+        admin: true,
+
+        // output
+        headers: {},
+        stylesheets: ['umbrella', 'headers', 'footers'],
+        scripts: ['lib/jquery.min'],
+        body: '',
+        headerLinks: []
     };
     process.env.REQUEST_ID = request.id;
 

@@ -25,8 +25,13 @@ function descend (path) {
                 descend(path + "/" + dir[i]);
             } else if (dir[i].substr(-3) === ".js") {
                 let enpt = require(pathLib.resolve(path + "/" + dir[i]));
-                registeredEndpoints[enpt.type] = registeredEndpoints[enpt.type] || [];
-                registeredEndpoints[enpt.type].push(enpt);
+                if (typeof enpt.type === 'string') {
+                    enpt.type = [enpt.type];
+                }
+                for (let type of enpt.type) {
+                    registeredEndpoints[type] = registeredEndpoints[type] || [];
+                    registeredEndpoints[type].push(enpt);
+                }
             } else {
                 console.error("Unexpected non-js file in endpoints: " + path + "/" + dir[i]);
             }
@@ -40,7 +45,7 @@ module.exports.init = function () {
 
 module.exports.handoff = function (request, clbk) {
     if (!(request.method in registeredEndpoints)) {
-        code.errorPage(request, code.METHOD_NOT_ALLOWED, clbk);
+        code.errorPage(request, code.NOT_FOUND, clbk);
         return;
     }
     for (let epnt of registeredEndpoints[request.method]) {

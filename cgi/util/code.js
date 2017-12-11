@@ -5,24 +5,35 @@
 
 const template = require(`${__rootname}/util/template`);
 
-function errorPage (request, errO, cb) {
+function errorPage (request, errO, cb, extras) {
     template.get('error.ejs', {
         request: request,
-        code: errO.code,
-        message: errO.message,
-        title: errO.message
+        title: errO.message,
+        data: Object.assign({
+            Code: errO.code,
+            Message: errO.message,
+            Method: request.method,
+            'Request URI': request.pathname,
+            'Request ID': request.id,
+            'DB Connection': request.db.index
+        }, extras || {})
     }, (err, content) => {
         if (err) {
             throw err;
         }
-        request.headers['status'] = `${errO.code} ${errO.message}`;
+        request.headers['status'] = codeString(errO);
         request.body = content;
         cb();
     });
 }
 
+function codeString (code) {
+    return `${code.code} ${code.message}`;
+}
+
 module.exports = {
     errorPage: errorPage,
+    codeString: codeString,
     CONTINUE: {code: 100, message: 'Continue'},
     SWITCHING_PROTOCOLS: {code: 101, message: 'Switching Protocols'},
     PROCESSING: {code: 102, message: 'Processing'},

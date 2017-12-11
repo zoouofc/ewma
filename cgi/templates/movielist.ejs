@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <%- include('head_shit.ejs', {title: 'EWMA | Movie List', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('headers.ejs', {pageId: 'Movie List'}); %>
+        <div id="content">
+            <table id="movieTable">
+                <tbody>
+                    <% let cls = true; %>
+                    <% for (let year in movies) { %>
+                        <tr class="yearRow">
+                            <td><div><%= year %></div></td>
+                            <td>
+                                <table class="movieYear">
+                                    <tbody>
+                                        <% for (let movie of movies[year]) { %>
+                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %>">
+                                                <% cls = !cls %>
+                                                <td class="tac movieTitle">
+                                                    <%= movie.title %><br />
+                                                    <%= movie.rating %>
+                                                </td>
+                                                <td class="tac movieDept"><%= movie.display %></td>
+                                                <td>
+                                                    <ul>
+                                                        <% if (movie.awards) { %>
+                                                            <% for (let award of movie.awards) { %>
+                                                                <li><%= award.name %>
+                                                                    <% if (award.note) { %>
+                                                                        (<%= award.note %>)
+                                                                    <% } %>
+                                                                </li>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <%- include('footers.ejs', {}); %>
+    </div>
+</body>

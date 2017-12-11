@@ -123,7 +123,7 @@ let steps = [
     {
         name: `Creating static structure: ${conf["build-destination"]}/static/js`,
         hook: (cb) => {
-            let mk = child_process.spawn('mkdir', ['-p', `${conf['build-destination']}/static/js`], {
+            let mk = child_process.spawn('mkdir', ['-p', `${conf['build-destination']}/static/js/lib`], {
                 stdio: 'inherit'
             });
 
@@ -205,33 +205,51 @@ let steps = [
                 let transpilationCounter = 0;
                 let error = false;
                 for (let file of dir) {
-                    transpilationCounter++;
-                    babel.transformFile(`${__dirname}/../static/js/${file}`, {
-                        presets: ['env']
-                    }, (err, result) => {
-                        if (!error) {
-                            if (err) {
-                                error = true;
-                                cb(err);
-                                return;
-                            }
-                            writeHash(`js/${file}`, result.code);
-                            fs.writeFile(`${conf['build-destination']}/static/js/${file}`, result.code, (err) => {
-                                if (!error) {
-                                    if (err) {
-                                        error = true;
-                                        cb(err);
-                                        return;
-                                    }
-                                    transpilationCounter--;
-                                    console.log(`    [${transpilationCounter} ongoing] Transpiled and wrote js/${file}`);
-                                    if (transpilationCounter === 0) {
-                                        cb();
-                                    }
+                    if (/\.js$/.test(file)) {
+                        transpilationCounter++;
+                        babel.transformFile(`${__dirname}/../static/js/${file}`, {
+                            presets: ['env']
+                        }, (err, result) => {
+                            if (!error) {
+                                if (err) {
+                                    error = true;
+                                    cb(err);
+                                    return;
                                 }
-                            });
-                        }
-                    });
+                                writeHash(`js/${file}`, result.code);
+                                fs.writeFile(`${conf['build-destination']}/static/js/${file}`, result.code, (err) => {
+                                    if (!error) {
+                                        if (err) {
+                                            error = true;
+                                            cb(err);
+                                            return;
+                                        }
+                                        transpilationCounter--;
+                                        console.log(`    [${transpilationCounter} ongoing] Transpiled and wrote js/${file}`);
+                                        if (transpilationCounter === 0) {
+                                            cb();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    },
+    {
+        name: 'Migrating JS Libraries',
+        hook: (cb) => {
+            let cp = child_process.spawn('cp', ['-r', 'static/js/lib', `${conf['build-destination']}/static/js/`], {
+                stdio: 'inherit'
+            });
+
+            cp.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
                 }
             });
         }
@@ -300,6 +318,23 @@ let steps = [
             }
             fs.writeFile(`${conf['build-destination']}/cgi/hashes.json`, JSON.stringify(cacheHashes, null, 4), (err) => {
                 cb(err);
+            });
+        }
+    },
+    {
+        name: 'Writing config',
+        install: true,
+        hook: (cb) => {
+            let cp = child_process.spawn('cp', ['conf.json', `${conf['build-destination']}/cgi/conf.json`], {
+                stdio: 'inherit'
+            });
+
+            cp.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
+                }
             });
         }
     },

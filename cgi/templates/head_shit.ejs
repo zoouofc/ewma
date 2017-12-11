@@ -4,16 +4,21 @@
 <meta name="copyright" content="2017 Mitchell Sawatzky" />
 <meta name="language" content="EN" />
 <meta name="robots" content="index, follow" />
+
 <link rel="icon" type="image/png" href="/static/images/favicon.png" />
+
+<% if (request && request.stylesheets) { %>
+    <% for (let sheet of request.stylesheets) { %>
+        <link rel="stylesheet" type="text/css" href="<%= cacheBuster(`css/${sheet}.css`); %>" />
+    <% } %>
+<% } %>
+
+<% if (request && request.scripts) { %>
+    <% for (let script of request.scripts) { %>
+        <script type="text/javascript" src="<%= cacheBuster(`js/${script}.js`); %>"></script>
+    <% } %>
+<% } %>
+
 <% if (title) { %>
     <title><%= title %></title>
-<% } %>
-<% if (request) { %>
-    <!--
-        ENGG Week Movie Archive
-        Copyright (c) 2017 Mitchell Sawatzky, All Rights Reserved
-
-        Request length: <%= Date.now() - request.startTime %>ms
-        Request id: <%= request.id %>
-    -->
 <% } %>
