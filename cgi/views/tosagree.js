@@ -3,22 +3,26 @@
  * @author Mitchell Sawatzky
  */
 
-const cke = require(`${__rootname}/util/cookie`);
 const redirection = require(`${__rootname}/util/redirection`);
+const auth = require(`${__rootname}/util/auth`);
 
 module.exports.matchPaths = ['/tosagree'];
 module.exports.name = 'tosagree';
 module.exports.type = 'POST';
 
 module.exports.handle = (request, cb) => {
-    request.headers['set-cookie'] = cke.tosCookie();
-    let url = '/';
-    if (request.postDataType === 'application/json' && 'dest' in request.post) {
-        url = request.post.dest.toString().replace(/\n/gm, '').trim();
-        if (url.length < 1) {
-            url = '/';
+    auth.grantSession(request, false, (err) => {
+        if (err) {
+            throw err;
         }
-    }
+        let url = '/';
+        if (request.postDataType === 'application/json' && 'dest' in request.post) {
+            url = request.post.dest.toString().replace(/\n/gm, '').trim();
+            if (url.length < 1) {
+                url = '/';
+            }
+        }
 
-    redirection.found(request, url, cb);
+        redirection.found(request, url, cb);
+    });
 };

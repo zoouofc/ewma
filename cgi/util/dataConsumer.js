@@ -16,7 +16,7 @@ module.exports.consume = function (cb) {
             process.stdout.write(`status: 413 Payload Too Large
 content-type: text/plain
 
-`);
+please stop`);
             process.exit(0);
         }
         data += chunk;

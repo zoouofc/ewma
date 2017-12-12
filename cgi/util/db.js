@@ -12,7 +12,8 @@ const config = require(`${__rootname}/conf.json`);
 
 let dbRegistry = [];
 
-module.exports.acquire = function (callback) {
+// if manual is true, you are responsible for closing the connection
+module.exports.acquire = function (callback, manual) {
     let id = dbRegistry.length;
 
     let connection = {
@@ -21,9 +22,12 @@ module.exports.acquire = function (callback) {
             user: config['database-user'],
             password: config['database-password'],
             database: "ewma"
-        }),
-        index: id
+        })
     };
+
+    if (!manual) {
+        connection.index = id;
+    }
 
     connection.kill = function (clbk) {
         if (connection._connection.state !== "disconnected") {
@@ -40,13 +44,19 @@ module.exports.acquire = function (callback) {
         }
     };
 
-    dbRegistry.push(connection);
+    if (!manual) {
+        dbRegistry.push(connection);
+    }
 
     // wrap methods here for flexibility later and statistical gathering
     connection.queries = [];
-    connection.do = function (query, cb) {
+    connection.do = function (query, esc, cb) {
         let start = Date.now();
-        connection._connection.query(query, (err, rows) => {
+        if (typeof esc === 'function') {
+            cb = esc;
+            esc = [];
+        }
+        connection._connection.query(query, esc, (err, rows) => {
             connection.queries.push({
                 query: query,
                 duration: Date.now() - start
@@ -67,7 +77,7 @@ module.exports.acquire = function (callback) {
             }
             time += query.duration;
         }
-        return `Database Queries: ${connection.queries.length}\n        Total Query Duration: ${time}ms\n        Longest Query: ${max.duration}ms` + (request.admin ? `\n        Longest Query: ${max.query}` : '');
+        return `Database Queries: ${connection.queries.length}\n        Total Query Duration: ${time}ms\n        Longest Query: ${max.duration}ms` + (request.admin ? `        ${max.query}` : '');
     }
 
     connection._connection.connect(function (err) {
@@ -79,8 +89,21 @@ module.exports.acquire = function (callback) {
             throw new Error(`Bad connection state: ${connection._connection.state}`);
         }
 
-        // try to close the connection on shutdown
-        exitProcedures.register(constants.priority.HIGH, connection.kill);
+        if (!manual) {
+            // try to close the connection on shutdown
+            exitProcedures.register(constants.priority.HIGH, connection.kill);
+        }
+
+        // we're going to run this on random connections even though that's pretty overkill
+        // I just don't want to deal with a cron job at this point
+        // It can process while the connection is handled
+        if (!manual && Date.now() % 100 === 0) {
+            connection.do('DELETE FROM session WHERE issued < ?', [Math.floor(Date.now() / 1000) - config['session-length']], (err) => {
+                if (err) {
+                    throw err;
+                }
+            });
+        }
 
         callback(connection);
         return;

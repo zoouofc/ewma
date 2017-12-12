@@ -29,7 +29,7 @@ module.exports.process = function () {
         cookie: cke.parse(process.env.HTTP_COOKIE || ''),
 
         // permissions
-        admin: true,
+        admin: false,
 
         // output
         headers: {},

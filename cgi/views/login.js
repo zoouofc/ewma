@@ -5,6 +5,9 @@
 
 const template = require(`${__rootname}/util/template`);
 const code = require(`${__rootname}/util/code`);
+const auth = require(`${__rootname}/util/auth`);
+const redirection = require(`${__rootname}/util/redirection`);
+const conf = require(`${__rootname}/conf.json`);
 
 module.exports.matchPaths = ['/login'];
 module.exports.name = 'login';
@@ -27,10 +30,24 @@ function loginPage (request, cb) {
 }
 
 function handleLoginAttempt(request, cb) {
-    request.errorMessage = "You'd like that, wouldn't you?";
-    request.headers['status'] = code.codeString(code.UNAUTHORIZED);
-
-    loginPage(request, cb);
+    auth.validateUser(request, request.post.username, request.post.password, (err, valid) => {
+        if (err) {
+            throw err;
+        }
+        if (valid) {
+            auth.grantSession(request, true, (err) => {
+                if (err) {
+                    throw err;
+                }
+                redirection.found(request, '/', cb);
+                return;
+            });
+        } else {
+            request.errorMessage = "You'd like that, wouldn't you?";
+            request.headers['status'] = code.codeString(code.UNAUTHORIZED);
+            loginPage(request, cb);
+        }
+    });
 }
 
 module.exports.handle = (request, cb) => {

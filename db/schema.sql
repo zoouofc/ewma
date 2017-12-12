@@ -26,3 +26,16 @@ CREATE TABLE IF NOT EXISTS `award` (
     CONSTRAINT `key_id_movie` UNIQUE(`id`, `movie_id`),
     FOREIGN KEY(`movie_id`) REFERENCES `movies`(`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `session` (
+    `token` CHAR(36) NOT NULL,
+    `issued` INT(11) NOT NULL,
+    `admin` BOOLEAN NOT NULL,
+    PRIMARY KEY(`token`)
+);
+
+CREATE TABLE IF NOT EXISTS `users` (
+    `username` VARCHAR(100) NOT NULL,
+    `password` CHAR(60) NOT NULL,
+    PRIMARY KEY(`username`)
+);

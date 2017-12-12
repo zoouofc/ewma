@@ -23,8 +23,8 @@
                 <div id="admin" class="tac">
                     <div>Admin Login</div>
                     <form id="login" action="/login" method="POST">
-                        <input type="text" id="username" placeholder="username" />
-                        <input type="password" id="password" placeholder="password" />
+                        <input type="text" name="username" id="username" placeholder="username" />
+                        <input type="password" name="password" id="password" placeholder="password" />
                     </form>
                     <div id="errorMessage">
                         <%= request.errorMessage %>
