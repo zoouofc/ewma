@@ -61,6 +61,7 @@ dbWrapper.acquire(function (db) {
                     request.postDataType = 'raw';
                 }
             }
+            console.error(request.post);
             router.handoff(request, () => {
                 // output here
                 for (header in request.headers) {
