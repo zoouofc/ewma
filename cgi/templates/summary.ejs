@@ -4,7 +4,8 @@
         Copyright (c) 2017 Mitchell Sawatzky, All Rights Reserved
 
         Request length: <%= Date.now() - request.startTime %>ms
-        Request id: <%= request.id %>
+        Request s/i: <%= `${request.cookie.session || ''}/${request.id}` %>
+        Admin: <%= request.admin %>
         <%= request.db.summary(request) %>
     -->
 <% } %>

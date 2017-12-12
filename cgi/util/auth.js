@@ -60,20 +60,34 @@ function checkSession (request, session, cb) {
 }
 
 function grantSession (request, admin, cb) {
-    let token = uuid();
-    request.db.do(`
-        INSERT INTO session (token, issued, admin)
+    function prog () {
+        let token = uuid();
+        request.db.do(`
+            INSERT INTO session (token, issued, admin)
             VALUES (?, ?, ?);`, [token, Math.floor(Date.now() / 1000), !!admin], (err) => {
-        if (err) {
-            cb(err);
-            return;
-        }
-        request.headers['set-cookie'] = cookie.serialize('session', token, {
-            httpOnly: true,
-            maxAge: 60 * 60 * 24
+            if (err) {
+                cb(err);
+                return;
+            }
+            request.headers['set-cookie'] = cookie.serialize('session', token, {
+                httpOnly: true,
+                maxAge: 60 * 60 * 24
+            });
+            cb(null);
         });
-        cb(null);
-    });
+    }
+
+    // if the request has a session already, remove it
+    if (request.cookie.session) {
+        request.db.do('DELETE FROM session WHERE token = ?', [request.cookie.session], (err) => {
+            if (err) {
+                throw err;
+            }
+            prog();
+        });
+    } else {
+        prog();
+    }
 }
 
 module.exports = {

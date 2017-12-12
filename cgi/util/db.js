@@ -94,17 +94,6 @@ module.exports.acquire = function (callback, manual) {
             exitProcedures.register(constants.priority.HIGH, connection.kill);
         }
 
-        // we're going to run this on random connections even though that's pretty overkill
-        // I just don't want to deal with a cron job at this point
-        // It can process while the connection is handled
-        if (!manual && Date.now() % 100 === 0) {
-            connection.do('DELETE FROM session WHERE issued < ?', [Math.floor(Date.now() / 1000) - config['session-length']], (err) => {
-                if (err) {
-                    throw err;
-                }
-            });
-        }
-
         callback(connection);
         return;
     });

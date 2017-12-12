@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+    <%- include('../head_shit.ejs', {title: 'EWMA | Admin', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('../headers.ejs', {pageId: 'Edit Movie'}); %>
+        <div id="content" class="tac">
+            <select name="movie" required="required">
+                <option label="Choose a Movie" value="-1" disabled="disabled" selected="selected">Choose a Movie</option>
+                <% for (movie of movies) { %>
+                    <option value="<%= movie.val %>" label="<%= movie.text %>"><%= movie.text %></option>
+                <% } %>
+            </select>
+            <input type="button" value="Edit Movie" disabled="disabled" />
+        </div>
+        <%- include('../footers.ejs', {}); %>
+    </div>
+</body>

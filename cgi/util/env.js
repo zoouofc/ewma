@@ -6,7 +6,7 @@
  */
 
 const path = require("path");
-const uuid = require("uuid/v1");
+const uuid = require("uuid/v4");
 const query2json = require(`${__rootname}/util/q2j.js`);
 const cke = require(`${__rootname}/util/cookie.js`);
 

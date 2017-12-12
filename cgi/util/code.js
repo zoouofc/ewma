@@ -15,7 +15,9 @@ function errorPage (request, errO, cb, extras) {
             Method: request.method,
             'Request URI': request.pathname,
             'Request ID': request.id,
-            'DB Connection': request.db.index
+            Session: request.cookie.session,
+            'DB Connection': request.db.index,
+            Admin: request.admin
         }, extras || {})
     }, (err, content) => {
         if (err) {

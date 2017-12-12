@@ -1,0 +1,9 @@
+{
+    "build-destination": "/srv/http/ewma",
+    "build-require-sudo": true,
+    "database-user": "ewma",
+    "database-password": "XXXXXXXXXX",
+    "database-socket": "/run/mysqld/mysqld.sock",
+    "session-length": 86400000,
+    "encryption-rounds": 10
+}

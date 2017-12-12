@@ -61,7 +61,7 @@ module.exports.handle = (request, cb) => {
             template.get('themes.ejs', {
                 request: request,
                 nowYear: yr,
-                themes, themes
+                themes: themes
             }, (err, content) => {
                 if (err) {
                     throw err;

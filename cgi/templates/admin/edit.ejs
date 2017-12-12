@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+    <%- include('../head_shit.ejs', {title: 'EWMA | Admin', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('../headers.ejs', {pageId: 'Edit Movie'}); %>
+        <div id="content" class="tac">
+            <h1 class="tal">Editing Movie: <%= movie.title  || '?' %></h1>
+            <hr />
+            <table class="formTable most">
+                <tbody>
+                    <tr>
+                        <td>Title:</td><td><input name="title" type="text" value="<%= movie.title %>" size="50" /></td>
+                        <td>Rating:</td><td><input name="rating" type="number" step="1" value="<%= movie.rating %>" pattern="\d+" /></td>
+                    </tr>
+                    <tr>
+                        <td>Year:</td><td><input name="year" type="number" step="1" maxlength="4" size="4" value="<%= movie.year %>" /></td>
+                        <td>Department:</td>
+                        <td>
+                            <select name="dept">
+                                <% for (let dept of depts) { %>
+                                    <% if (dept.abbr === movie.dept) { %>
+                                        <option value="<%= dept.abbr %>" label="<%= dept.display %>" selected="selected"><%= dept.display %></option>
+                                    <% } else { %>
+                                        <option value="<%= dept.abbr %>" label="<%= dept.display %>"><%= dept.display %></option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Source File:</td><td><input type="text" name="src" value="<%= movie.src %>" size="50" /></td>
+                        <td>Source MIME:</td>
+                        <td>
+                            <select name="mime">
+                                <% for (let mime of mimes) { %>
+                                    <% if (mime.name === movie.mime) { %>
+                                        <option value="<%= mime.name %>" label="<%= mime.display %>" selected="selected"><%= mime.display %></option>
+                                    <% } else { %>
+                                        <option value="<%= mime.name %>" label="<%= mime.display %>"><%= mime.display %></option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr><td colspan=4 class="tabledivider"><hr /></td></tr>
+                    <tr>
+                        <td>Theme:</td>
+                        <td>
+                            <select name="themeExisting">
+                                <% for (let theme of themes) { %>
+                                    <% if (theme.name === movie.theme) { %>
+                                        <option value="<%= theme.name %>" label="<%= theme.display %>" selected="selected"><%= theme.display %></option>
+                                    <% } else { %>
+                                        <option value="<%= theme.name %>" label="<%= theme.display %>"><%= theme.display %></option>
+                                    <% } %>
+                                <% } %>
+                                <option value="-1" label="Other">Other</option>
+                            </select>
+                        </td>
+                        <td class="themespecify hdn">Please Specify:</td>
+                        <td class="themespecify hdn"><input name="themeNew" type="text" size="50" /></td>
+                    </tr>
+                    <tr><td colspan=4 class="tabledivider"><hr /></td></tr>
+                    <tr><td colspan=4 style="text-align: center"><input type="button" value="New Award" id="newAwardButton" /></td></tr>
+                    <% for (let award of awards) { %>
+                        <tr>
+                            <td>
+                                <input type="button" class="deleteAward" award="<%= award.id %>" value="X" />
+                                Award Name:
+                            </td>
+                            <td>
+                                <input type="text" name="<%= `awardName_${award.id}` %>" value="<%= award.name %>" size="50" />
+                            </td>
+                            <td>Award Note (On Hover)</td>
+                            <td>
+                                <input type="text" name="<%= `awardNote_${award.id}` %>" value="<%= award.note %>" size="50" />
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <hr />
+            <input type="button" id="submit" value="Submit" />
+        </div>
+        <script>
+            window.data = <%- JSON.stringify({movie: movie, awards: awards, depts: depts, themes: themes}) %>;
+        </script>
+        <%- include('../footers.ejs', {}); %>
+    </div>
+</body>

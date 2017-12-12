@@ -1,3 +1,5 @@
+const code = require(`${__rootname}/util/code`);
+
 function populateHeaders (request, cb) {
     request.headerLinks = request.headerLinks || [];
 
@@ -32,8 +34,11 @@ function populateHeaders (request, cb) {
 
         if (request.admin) {
             request.headerLinks.push({
-                text: 'Admin',
-                link: '/admin'
+                text: 'Edit Movie',
+                link: '/admin/edit'
+            }, {
+                text: 'Logout',
+                link: '/logout'
             });
         } else {
             request.headerLinks.push({
@@ -46,6 +51,17 @@ function populateHeaders (request, cb) {
     });
 }
 
+function requireAdmin(proceed) {
+    return (request, exit) => {
+        if (request.admin) {
+            proceed(request, exit);
+            return;
+        }
+        code.errorPage(request, code.FORBIDDEN, exit);
+    }
+};
+
 module.exports = {
-    populateHeaders: populateHeaders
+    populateHeaders: populateHeaders,
+    requireAdmin: requireAdmin
 };
