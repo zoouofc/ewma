@@ -21,6 +21,13 @@
                                         <% for (let movie of movieYear.movies) { %>
                                             <tr class="movieRow <%= cls ? 'odd' : 'even' %>">
                                                 <% cls = !cls %>
+                                                <% if (request.admin) {%>
+                                                    <td class="editColumn">
+                                                        <a href="/admin/edit/<%= movie.id %>">
+                                                            <img class="editIcon" alt="edit" src="<%= cacheBuster('images/edit.svg'); %>" />
+                                                        </a>
+                                                    </td>
+                                                <% } %>
                                                 <td class="tac movieTitle">
                                                     <%= movie.title %><br />
                                                     <% if (movie.rating) { %>
