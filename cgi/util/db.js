@@ -64,6 +64,7 @@ module.exports.acquire = function (callback, manual) {
             cb(err, rows);
         });
     }
+    connection.format = mysql.format;
 
     connection.summary = function (request) {
         let max = {

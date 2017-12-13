@@ -1,6 +1,28 @@
 $(document).ready(function () {
     let deletedAwards = [];
 
+    function packPayload (payload) {
+        for (let prop in payload) {
+            if (typeof payload[prop][0] === "object") { // array
+                for (let e of payload[prop]) {
+                    for (let i = 0; i < e.length; i++) {
+                        if (typeof e[i] === 'string') {
+                            e[i] = encodeURIComponent(e[i]);
+                        }
+                    }
+                }
+            } else {
+                for (let i = 0; i < payload[prop].length; i++) {
+                    if (typeof payload[prop][i] === 'string') {
+                        payload[prop][i] = encodeURIComponent(payload[prop][i]);
+                    }
+                }
+            }
+        }
+
+        return JSON.stringify(payload);
+    }
+
     $('select[name="themeExisting"]').change((e) => {
         $('[name="themeNew"]').val('');
         if ($(e.target).val() === '-1') {
@@ -96,7 +118,7 @@ $(document).ready(function () {
         $('.awardName_new').each(function(i, e) {
             let awardname = $(e).val().trim();
             if (!awardname.length) {
-                alert('Alert names cannot be empty');
+                alert('Award names cannot be empty');
                 valid = false;
             }
 
@@ -104,6 +126,7 @@ $(document).ready(function () {
             if (!awardnote.length) {
                 awardnote = null;
             }
+
             actions._.push([CREATE, 'award', awardname, awardnote]);
         });
 
@@ -111,26 +134,51 @@ $(document).ready(function () {
             actions._.push([DELETE, 'award', award]);
         }
 
-        if (valid) {
-            // for (let action of actions._) {
-            //     if (action[0] === DELETE) {
-            //         console.log(`Delete ${action[1]}: ${action[2]}`);
-            //     }
-            //     if (action[0] === CREATE) {
-            //         console.log(`Create ${action[1]}: (${action[2]}) (${action[3]})`);
-            //     }
-            // }
-            // for (let key in actions) {
-            //     if (key !== '_' && actions[key][0] === UPDATE) {
-            //         console.log(`Update ${key}: (${data.movie[key]}) => (${actions[key][1]})`);
-            //     }
-            // }
+        $('.awardExist input[type="text"].awardName').each(function(i, e) {
+            let awardname = $(e).val().trim();
+            let awardnote = $(e).parent().parent().find('.awardNote').val().trim();
+            let award = parseInt($(e).attr('award'), 10);
+
+            if (!awardname.length) {
+                alert('Award names cannot be empty');
+                valid = false;
+            };
+
+            if (!awardnote.length) {
+                awardnote = null;
+            };
+
+            let originalAward = null;
+            for (let a of data.awards) {
+                if (a.id === award) {
+                    originalAward = a;
+                    break;
+                }
+            }
+            if (!originalAward) {
+                throw new Error('cannot find award');
+            }
+
+            if (awardname !== originalAward.name) {
+                actions.award = actions.award || [];
+                actions.award.push([UPDATE, award, 'name', awardname]);
+            }
+
+            if (awardnote !== originalAward.note) {
+                actions.award = actions.award || [];
+                actions.award.push([UPDATE, award, 'note', awardnote]);
+            }
+        });
+
+        actions = packPayload(actions);
+        if (valid && actions.length && actions !== '{"_":[]}' && actions !== '{}') {
             $('body').append(
-                $(`<form id="_form" method="POST" action="${location.pathname.replace(/\/$/, '')}/commit">
+                $(`<form id="_form" method="GET" action="${location.pathname.replace(/\/$/, '')}/commit">
                     <input type="hidden" name="payload" />
                 </input></form>`)
             );
-            $('#_form [name="payload"]').val(JSON.stringify(actions));
+
+            $('#_form [name="payload"]').val(actions);
             $('#_form').submit();
         }
     });

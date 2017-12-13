@@ -65,17 +65,17 @@
                     <tr><td colspan=4 class="tabledivider"><hr /></td></tr>
                     <tr><td colspan=4 style="text-align: center"><input type="button" value="New Award" id="newAwardButton" /></td></tr>
                     <% for (let award of awards) { %>
-                        <tr>
+                        <tr class="awardExist">
                             <td>
                                 <input type="button" class="deleteAward" award="<%= award.id %>" value="X" />
                                 Award Name:
                             </td>
                             <td>
-                                <input type="text" name="<%= `awardName_${award.id}` %>" value="<%= award.name %>" size="50" />
+                                <input type="text" class="awardName" award="<%= award.id %>" value="<%= award.name %>" size="50" />
                             </td>
                             <td>Award Note (On Hover)</td>
                             <td>
-                                <input type="text" name="<%= `awardNote_${award.id}` %>" value="<%= award.note %>" size="50" />
+                                <input type="text" class="awardNote" award="<%= award.id %>" value="<%= award.note %>" size="50" />
                             </td>
                         </tr>
                     <% } %>
