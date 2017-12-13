@@ -30,6 +30,9 @@
                                                 <% } %>
                                                 <td class="tac movieTitle">
                                                     <%= movie.title %><br />
+                                                    <% if (movie.theme) { %>
+                                                        <span class="smolits">(<%= movie.theme %>)</span><br />
+                                                    <% } %>
                                                     <% if (movie.rating) { %>
                                                         <div class="stars">
                                                             <div class="empty-stars"></div>
@@ -48,11 +51,11 @@
                                                                             <%= award.note %>
                                                                         </span>
                                                                     <% } %>
-                                                                    <img class="awardILeft awardI" src="<%= cacheBuster('images/award_left.png'); %>" type="image/png" alt="award" />
+                                                                    <img class="awardILeft awardI" src="<%= cacheBuster(`images/award_left${award.gold ? '_gold' : ''}.png`); %>" type="image/png" alt="award" />
                                                                     <div class="awardTitle">
                                                                         <%- award.name.replace(/ /gm, '<br />') %>
                                                                     </div>
-                                                                    <img class="awardIRight awardI" src="<%= cacheBuster('images/award_right.png') %>" type="image/png" alt="award" />
+                                                                    <img class="awardIRight awardI" src="<%= cacheBuster(`images/award_right${award.gold ? '_gold' : ''}.png`) %>" type="image/png" alt="award" />
                                                                 </div>
                                                             <% } %>
                                                         <% } %>

@@ -11,6 +11,13 @@ module.exports.matchPaths = ['/movies/list'];
 module.exports.name = 'movielist';
 module.exports.type = 'GET';
 
+const GOLDIES = [
+    "Viewer's Choice",
+    "Best Actor",
+    "Best Actress",
+    "Best Picture"
+];
+
 module.exports.handle = (request, cb) => {
     request.stylesheets.push('movielist', 'awards');
 
@@ -24,7 +31,8 @@ module.exports.handle = (request, cb) => {
                 m.dept,
                 d.display,
                 m.src,
-                m.mime
+                m.mime,
+                m.theme
             FROM movies m
                 LEFT JOIN department d
                     ON m.dept = d.abbr;`, (err, rows) => {
@@ -48,6 +56,13 @@ module.exports.handle = (request, cb) => {
                             throw err;
                         }
                         rows[i].awards = awards;
+
+                        for (let award of rows[i].awards) {
+                            if (GOLDIES.indexOf(award.name) !== -1) {
+                                award.gold = true;
+                            }
+                        }
+
                         iterator++;
                         if (iterator === rows.length - 1) {
                             // we're done
