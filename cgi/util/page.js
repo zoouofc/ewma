@@ -13,10 +13,10 @@ function populateHeaders (request, cb) {
         link: '/themes'
     });
 
-    request.headerLinks.push({
-        text: 'Submit Movie',
-        link: '/contact'
-    });
+    // request.headerLinks.push({
+    //     text: 'Submit Movie',
+    //     link: '/contact'
+    // });
 
     request.db.do(`
         SELECT id

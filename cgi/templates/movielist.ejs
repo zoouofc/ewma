@@ -19,7 +19,7 @@
                                 <table class="movieYear">
                                     <tbody>
                                         <% for (let movie of movieYear.movies) { %>
-                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %>">
+                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %>" onclick="javascript:location.href='/movies/<%= movie.id %>'">
                                                 <% cls = !cls %>
                                                 <% if (request.admin) {%>
                                                     <td class="editColumn">

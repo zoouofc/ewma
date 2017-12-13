@@ -1,3 +1,6 @@
+$oddrow: white
+$hoverrow: #C3C3C3
+
 #movieTable,
 .movieYear
     width: 100%
@@ -15,12 +18,16 @@
         transform: rotate(-90deg)
         padding: 14px 0
 .odd
-    background: white
+    background: $oddrow
 .movieTitle
     width: 180px
 .movieDept
     width: 300px
 .movieRow
     height: 100px
+.movieRow:hover
+    cursor: pointer !important
+    background-color: $hoverrow
 .editColumn
     width: 26px
+    z-index: 100
