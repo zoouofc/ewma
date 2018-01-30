@@ -32,6 +32,15 @@ $(document).ready(function () {
         }
     });
 
+    $('input[name="trailer"]').change(() => {
+        $('select[name="trailerParent"]').val(-1);
+        if ($('input[name="trailer"]:checked').length) {
+            $('.trailerspecify').removeClass('hdn');
+        } else {
+            $('.trailerspecify').addClass('hdn');
+        }
+    });
+
     $(document).on('click', '.deleteAward', function (e) {
         let award = parseInt($(e.target).attr('award'), 10);
         if (!isNaN(award)) {
@@ -112,6 +121,24 @@ $(document).ready(function () {
             }
             if (theme !== data.movie.theme) {
                 actions.theme = [UPDATE, theme];
+            }
+        }
+
+        if ($('[name="trailer"]:checked').length) {
+            let parent = parseInt($('[name="trailerParent"]').val(), 10);
+            if (parent === -1 || !parent) {
+                alert('You must specify a trailer parent');
+                return;
+            }
+            if (!data.movie.trailer) {
+                actions._.push([CREATE, 'trailer', parent]);
+            } else if (data.movie.trailer !== parent) {
+                actions._.push([DELETE, 'trailer']);
+                actions._.push([CREATE, 'trailer', parent]);
+            }
+        } else {
+            if (data.movie.trailer) {
+                actions._.push([DELETE, 'trailer']);
             }
         }
 

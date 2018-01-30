@@ -44,11 +44,35 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Trailer: </td>
+                        <td>
+                            <% if (movie.trailer) { %>
+                                <input type="checkbox" name="trailer" checked="checked" />
+                            <% } else { %>
+                                <input type="checkbox" name="trailer" />
+                            <% } %>
+                        </td>
+                        <td class="trailerspecify <%= movie.trailer? '' : 'hdn' %>">Movie Parent:</td>
+                        <td class="trailerspecify <%= movie.trailer? '' : 'hdn' %>">
+                            <select name="trailerParent">
+                                <option value="-1" label="Please select a parent" disabled="disabled">Please select a parent</option>
+                                <% for (let parent of allMovies) { %>
+                                    <% if (parent.val === movie.trailer) { %>
+                                        <option value="<%= parent.val %>" label="<%= parent.text %>" selected="selected"><%= parent.text %></option>
+                                    <% } else { %>
+                                        <option value="<%= parent.val %>" label="<%= parent.text %>"><%= parent.text %></option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </td>
+                    </tr>
                     <tr><td colspan=4 class="tabledivider"><hr /></td></tr>
                     <tr>
                         <td>Theme:</td>
                         <td>
                             <select name="themeExisting">
+                                <option value="-1" label="Other">Other</option>
                                 <% for (let theme of themes) { %>
                                     <% if (theme.name === movie.theme) { %>
                                         <option value="<%= theme.name %>" label="<%= theme.display %>" selected="selected"><%= theme.display %></option>
@@ -56,7 +80,6 @@
                                         <option value="<%= theme.name %>" label="<%= theme.display %>"><%= theme.display %></option>
                                     <% } %>
                                 <% } %>
-                                <option value="-1" label="Other">Other</option>
                             </select>
                         </td>
                         <td class="themespecify hdn">Please Specify:</td>

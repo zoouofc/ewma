@@ -39,3 +39,11 @@ CREATE TABLE IF NOT EXISTS `users` (
     `password` CHAR(60) NOT NULL,
     PRIMARY KEY(`username`)
 );
+
+CREATE TABLE IF NOT EXISTS `trailer` (
+    `trailer` INT(11) NOT NULL,
+    `parent` INT(11) NOT NULL,
+    CONSTRAINT `key_trailer_parent` UNIQUE(`trailer`, `parent`),
+    FOREIGN KEY(`trailer`) REFERENCES `movies`(`id`),
+    FOREIGN KEY(`parent`) REFERENCES `movies`(`id`)
+);

@@ -1,4 +1,7 @@
 $oddrow: white
+$evenrow: #E1E1E1
+$oddnosource: #FFDBDB
+$evennosource: #CC9898
 $hoverrow: #C3C3C3
 
 #movieTable,
@@ -17,17 +20,39 @@ $hoverrow: #C3C3C3
     div
         transform: rotate(-90deg)
         padding: 14px 0
+
 .odd
     background: $oddrow
+
+.odd:not(.clickable)
+    background: $oddnosource
+
+.even:not(.clickable)
+    background: $evennosource
+
 .movieTitle
     width: 180px
+    position: relative
+
+.trailerIcon
+    width: 15px
+    position: absolute
+    left: 5px
+    bottom: 5px
+
 .movieDept
     width: 300px
+
 .movieRow
     height: 100px
+
 .movieRow.clickable:hover
     cursor: pointer !important
     background-color: $hoverrow
+
+.movieRow:not(.clickable)
+    cursor: not-allowed
+
 .editColumn
     width: 26px
     z-index: 100

@@ -11,6 +11,7 @@ module.exports.name = 'index';
 module.exports.type = 'GET';
 
 module.exports.handle = (request, cb) => {
+    request.stylesheets.push("index");
     page.populateHeaders(request, () => {
         template.get('index.ejs', {
             request: request

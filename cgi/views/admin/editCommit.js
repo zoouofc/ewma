@@ -38,14 +38,28 @@ function generateActionsFromPayload (movie, payload) {
     for (let entry of payload._) {
         switch (actionMap[entry[0]]) {
             case 'DELETE':
-                // this only happens with awards
-                actions.push({
-                    hr: `Delete ${entry[1]} no ${entry[2]} (${getVal(movie, 'award', entry[2]).name})`,
-                    db: {
-                        q: `DELETE FROM award WHERE id = ?`,
-                        r: [entry[2]]
-                    }
-                });
+                switch(entry[1]) {
+                    case 'award':
+                        actions.push({
+                            hr: `Delete ${entry[1]} no ${entry[2]} (${getVal(movie, 'award', entry[2]).name})`,
+                            db: {
+                                q: `DELETE FROM award WHERE id = ?`,
+                                r: [entry[2]]
+                            }
+                        });
+                        break;
+                    case 'trailer':
+                        actions.push({
+                            hr: `Delete trailer mapping from ${movie.id}`,
+                            db: {
+                                q: `DELETE FROM trailer WHERE trailer = ?`,
+                                r: [movie.id]
+                            }
+                        });
+                        break;
+                    default:
+                        throw new Error('cannot delete unknown type');
+                }
                 break;
             case 'CREATE':
                 switch (entry[1]) {
@@ -55,6 +69,15 @@ function generateActionsFromPayload (movie, payload) {
                             db: {
                                 q: `INSERT INTO award (movie_id, name, note) VALUES (?, ?, ?)`,
                                 r: [movie.id, entry[2], entry[3]]
+                            }
+                        });
+                        break;
+                    case 'trailer':
+                        actions.push({
+                            hr: `Create new trailer mapping from ${movie.id} => ${entry[2]}`,
+                            db: {
+                                q: `INSERT INTO trailer (trailer, parent) VALUES (?, ?)`,
+                                r: [movie.id, entry[2]]
                             }
                         });
                         break;
@@ -104,7 +127,7 @@ function generateActionsFromPayload (movie, payload) {
                     });
                     break;
                 default:
-                    throw new Error('unknown action');
+                    throw new Error(`unknown action: ${entry[0]} (${actionMap[entry[0]]})`);
             }
         }
     }
@@ -235,7 +258,7 @@ function commit (request, cb) {
                             if (err) {
                                 throw err;
                             }
-                            redirection.found(request, '/', cb);
+                            redirection.found(request, '/movies/list', cb);
                         });
                     }
                 }

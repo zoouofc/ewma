@@ -32,10 +32,13 @@ module.exports.handle = (request, cb) => {
                 d.display,
                 m.src,
                 m.mime,
-                m.theme
+                m.theme,
+                (SELECT s.trailer FROM trailer s WHERE s.parent = m.id) as trailer
             FROM movies m
                 LEFT JOIN department d
-                    ON m.dept = d.abbr;`, (err, rows) => {
+                    ON m.dept = d.abbr
+            WHERE m.id NOT IN
+                (SELECT t.trailer FROM trailer t)`, (err, rows) => {
             if (err) {
                 throw err
             }

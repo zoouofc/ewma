@@ -16,7 +16,17 @@ module.exports.handle = page.requireAdmin((request, cb) => {
     request.stylesheets.push('edit');
     page.populateHeaders(request, () => {
         let id = request.pathname.split('/')[3];
-        request.db.do('SELECT title, rating, year, dept, src, mime, theme FROM movies where id = ?', [id], (err, movie) => {
+        request.db.do(`
+            SELECT
+                title,
+                rating,
+                year,
+                dept,
+                src,
+                mime,
+                theme,
+                (SELECT t.parent FROM trailer t WHERE m.id = t.trailer) AS trailer
+            FROM movies m where id = ?`, [id], (err, movie) => {
             if (err) {
                 throw err;
             }
@@ -30,8 +40,9 @@ module.exports.handle = page.requireAdmin((request, cb) => {
             let depts = null;
             let awards = null;
             let themes = null;
+            let allMovies = [];
             let ok = 0;
-            let needed = 2;
+            let needed = 3;
 
             function proc () {
                 template.get('admin/edit.ejs', {
@@ -40,6 +51,7 @@ module.exports.handle = page.requireAdmin((request, cb) => {
                     depts: depts,
                     awards: awards,
                     themes: themes,
+                    allMovies: allMovies,
                     mimes: [
                         {
                             name: null,
@@ -80,6 +92,24 @@ module.exports.handle = page.requireAdmin((request, cb) => {
                     throw err;
                 }
                 awards = rows;
+                if (ok == needed) {
+                    proc();
+                } else {
+                    ok++;
+                }
+            });
+
+            request.db.do('SELECT id, year, dept, title FROM movies WHERE id != ? ORDER BY year DESC, title ASC;', [id], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+
+                for (let row of rows) {
+                    if (!row.year) row.year = '?';
+                    if (!row.dept) row.dept = '?';
+                    if (!row.title) row.title = '?';
+                    allMovies.push({val: row.id, text: `${row.year}//${row.dept.toUpperCase()} - ${row.title}`});
+                }
                 if (ok == needed) {
                     proc();
                 } else {

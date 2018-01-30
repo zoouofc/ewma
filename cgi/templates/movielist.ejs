@@ -37,7 +37,12 @@
                                                         <div class="stars">
                                                             <div class="empty-stars"></div>
                                                             <div class="full-stars" style="width: <%= movie.rating || '0'; %>%;"></div>
-                                                        <div>
+                                                        </div>
+                                                    <% } %>
+                                                    <% if (movie.trailer) { %>
+                                                        <div class="trailerBadge" title="This movie has a Trailer">
+                                                            <img class="trailerIcon" alt="trailer" src="<%= cacheBuster('images/clacker.svg'); %>" />
+                                                        </div>
                                                     <% } %>
                                                 </td>
                                                 <td class="tac movieDept"><%= movie.display %></td>
