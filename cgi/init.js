@@ -68,16 +68,21 @@ dbWrapper.acquire(function (db) {
                     process.stdout.write(`${header}: ${request.headers[header]}\n`);
                 }
                 process.stdout.write('\n');
-                template.get('summary.ejs', {
-                    request: request
-                }, (err, content) => {
-                    if (err) {
-                        throw err;
-                    }
-                    process.stdout.write(content);
+                if (request.headers['content-type'] === 'text/html') {
+                    template.get('summary.ejs', {
+                        request: request
+                    }, (err, content) => {
+                        if (err) {
+                            throw err;
+                        }
+                        process.stdout.write(content);
+                        process.stdout.write(request.body);
+                        exitProcedures.shutdown(0);
+                    });
+                } else {
                     process.stdout.write(request.body);
                     exitProcedures.shutdown(0);
-                });
+                }
             });
         });
     });

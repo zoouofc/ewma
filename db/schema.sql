@@ -47,3 +47,10 @@ CREATE TABLE IF NOT EXISTS `trailer` (
     FOREIGN KEY(`trailer`) REFERENCES `movies`(`id`),
     FOREIGN KEY(`parent`) REFERENCES `movies`(`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `viewcount` (
+    `movie_id` INT(11) NOT NULL,
+    `session`  CHAR(36) NOT NULL,
+    CONSTRAINT `key_movie_sesion` UNIQUE(`movie_id`, `session`),
+    FOREIGN KEY(`movie_id`) REFERENCES `movies`(`id`)
+);

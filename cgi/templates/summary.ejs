@@ -1,7 +1,7 @@
 <% if (request) { %>
     <!--
         ENGG Week Movie Archive
-        Copyright (c) 2017 Mitchell Sawatzky, All Rights Reserved
+        Copyright (c) 2016 - <%= (new Date()).getFullYear() %> Mitchell Sawatzky, All Rights Reserved
 
         Request length: <%= Date.now() - request.startTime %>ms
         Request s/i: <%= `${request.cookie.session || ''}/${request.id}` %>

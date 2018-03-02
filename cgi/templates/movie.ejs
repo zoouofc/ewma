@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<head>
+    <%- include('head_shit.ejs', {title: `EWMA | Watch ${primary.title}`, request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('headers.ejs', {pageId: 'movies'}); %>
+        <div id="content">
+            <% if (trailer) { %>
+                <%- include('_source.ejs', {movie: trailer}); %>
+                <hr />
+            <% } %>
+            <%- include('_source.ejs', {movie: primary}); %>
+        </div>
+        <%- include('footers.ejs', {}); %>
+    </div>
+</body>
