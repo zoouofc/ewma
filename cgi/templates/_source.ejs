@@ -10,6 +10,11 @@
             <div><%= movie.viewcount || 0 %> View<%= movie.viewcount === 1 ? '' : 's' %></div>
         </div>
         <h3>
+            <% if (request.admin) {%>
+                <a href="/admin/edit/<%= movie.id %>" title="Edit Movie">
+                    <img class="editIcon" alt="edit" src="<%= cacheBuster('images/edit.svg'); %>" />
+                </a>
+            <% } %>
             <%= movie.title || "?" %>
             <% if (movie.rating) { %>
                 <div class="stars">
