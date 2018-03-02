@@ -24,7 +24,7 @@ module.exports.handle = (request, cb) => {
                 LEFT JOIN (
                     SELECT v.movie_id, COUNT(*) as viewcount
                     FROM viewcount v
-                    WHERE v.movie_id = ?
+                    GROUP BY v.movie_id
                 ) vc ON vc.movie_id = m.id
             WHERE m.id = ?
                 OR m.id = (
