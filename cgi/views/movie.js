@@ -20,7 +20,7 @@ module.exports.handle = (request, cb) => {
         request.db.do(`
             SELECT *
             FROM movies m
-                INNER JOIN department d ON m.dept = d.abbr
+                LEFT JOIN department d ON m.dept = d.abbr
                 LEFT JOIN (
                     SELECT v.movie_id, COUNT(*) as viewcount
                     FROM viewcount v

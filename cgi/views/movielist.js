@@ -58,9 +58,9 @@ module.exports.handle = (request, cb) => {
                         rows[i].duration = time.secondsToStamp(rows[i].duration);
                     }
                     request.db.do(`
-                        SELECT name, note
+                        SELECT name, note, movie_id
                         FROM award
-                        WHERE movie_id = ${rows[i].id}`, (err, awards) => {
+                        WHERE movie_id = ?`, [rows[i].id], (err, awards) => {
                         if (err) {
                             throw err;
                         }
@@ -73,7 +73,7 @@ module.exports.handle = (request, cb) => {
                         }
 
                         iterator++;
-                        if (iterator === rows.length - 1) {
+                        if (iterator === rows.length) {
                             // we're done
                             // sort on year, dept desc, title
                             rows.sort((a, b) => {
