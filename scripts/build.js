@@ -12,10 +12,10 @@ const start = microtime.now();
 
 if (conf['build-require-sudo'] && process.getuid() !== 0) {
     console.error('Build has been configured to require root.');
-    process.exit(1);
+    process.exit(0);
 } else if (!conf['build-require-sudo'] && process.getuid() === 0) {
     console.error('Refusing to run as root');
-    process.exit(1);
+    process.exit(0);
 }
 
 let BUILD_TYPE;

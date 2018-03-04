@@ -6,6 +6,7 @@
 const template = require(`${__rootname}/util/template`);
 const code = require(`${__rootname}/util/code`);
 const page = require(`${__rootname}/util/page`);
+const time = require(`${__rootname}/util/time`);
 
 module.exports.matchPaths = ['/movies/list'];
 module.exports.name = 'movielist';
@@ -33,6 +34,7 @@ module.exports.handle = (request, cb) => {
                 m.src,
                 m.mime,
                 m.theme,
+                m.duration,
                 (SELECT s.trailer FROM trailer s WHERE s.parent = m.id) as trailer
             FROM movies m
                 LEFT JOIN department d
@@ -46,11 +48,15 @@ module.exports.handle = (request, cb) => {
                 if (err) {
                     throw err;
                 }
-                max = max[0].rating;
+                max = max[0].rating < 100 ? 100 : max[0].rating;
+
                 let iterator = 0;
                 let movies = [];
                 for (let i = 0; i < rows.length; i++) {
                     rows[i].rating = rows[i].rating / max * 100;
+                    if (rows[i].duration) {
+                        rows[i].duration = time.secondsToStamp(rows[i].duration);
+                    }
                     request.db.do(`
                         SELECT name, note
                         FROM award
