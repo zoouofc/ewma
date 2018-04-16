@@ -268,7 +268,7 @@ function commit (request, cb) {
     });
 }
 
-module.exports.handle = page.requireAdmin((request, cb) => {
+module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
     switch (request.method) {
         case 'GET':
             viewCommit(request, cb);

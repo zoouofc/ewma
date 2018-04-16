@@ -10,27 +10,23 @@
                 <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
             </a>
             <br /><br />
-            <% if (!login) { %>
                 <div id="tos">
                     This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement. Also, we use cookies.
                     <br />
-                    <form action="/tosagree" method="POST">
-                        <input type="hidden" name="dest" value="<%= dest %>" />
-                        <input type="submit" value="I promise I won't be an Ass" />
-                    </form>
                 </div>
-            <% } else { %>
-                <div id="admin" class="tac">
-                    <div>Admin Login</div>
+                <br/>
+                <div id="errorMessage">
+                    <%= request.errorMessage %>
+                </div>
+                <div id="login" class="tac">
                     <form id="login" action="/login" method="POST">
                         <input type="text" name="username" id="username" placeholder="username" />
                         <input type="password" name="password" id="password" placeholder="password" />
+                        <input type="hidden" name="dest" value="<%= dest %>" />
+                        <input type="submit" value="I promise I won't be an Ass" />
                     </form>
-                    <div id="errorMessage">
-                        <%= request.errorMessage %>
-                    </div>
+                    <a href="/newaccount">Create an Account</a>
                 </div>
-            <% } %>
         </div>
     </div>
 </body>

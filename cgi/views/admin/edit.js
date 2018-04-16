@@ -11,7 +11,7 @@ module.exports.matchPaths = [/^\/admin\/edit\/[0-9]+\/?$/];
 module.exports.name = 'edit';
 module.exports.type = 'GET';
 
-module.exports.handle = page.requireAdmin((request, cb) => {
+module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
     request.scripts.push('edit');
     request.stylesheets.push('edit');
     page.populateHeaders(request, () => {

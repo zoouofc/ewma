@@ -21,7 +21,7 @@
                                         <% for (let movie of movieYear.movies) { %>
                                             <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.src ? 'clickable' : '' %>" onclick="javascript:<%=  movie.src ? `location.href='/movies/${movie.id}';` : 'void()' %>">
                                                 <% cls = !cls %>
-                                                <% if (request.admin) {%>
+                                                <% if (request.permissions.movie_edit) {%>
                                                     <td class="editColumn">
                                                         <a href="/admin/edit/<%= movie.id %>">
                                                             <img class="editIcon" alt="edit" src="<%= cacheBuster('images/edit.svg'); %>" />

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <%- include('head_shit.ejs', {title: 'EWMA | Create Account', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <div id="content">
+            <div class="absc db">
+                <a href="/">
+                    <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
+                </a>
+                <br />
+                <div class="errText">
+                    <% if (errText) { %>
+                        <%= errText %>
+                    <% } else { %> &nbsp; <% } %>
+                </div>
+                <form method="POST" action="/newaccount" id="createForm">
+                    <div class="formPart">
+                        <input type="text" name="username" id="username" placeholder="username" autocomplete="off" required="required" maxlength="100">
+                    </div>
+
+                    <div class="formPart">
+                        <input type="password" name="password" id="password" placeholder="password" autocomplete="off" required="required" pattern=".{8,}" title="Must be at least 8 chars">
+                    </div class="formPart">
+
+                    <div class="formPart">
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="repeat password" autocomplete="off" required="required" pattern=".{8,}" title="Must be at least 8 chars">
+                    </div class="formPart">
+
+                    <div class="formPart">
+                        <input type="email" name="email" id="email" placeholder="email" autocomplate="off" required="required" maxlength="100">
+                    </div>
+
+                    <div class="formPart">
+                        <label for="hdyhau">How did you hear about this?</label>
+                        <textarea name="hdyhau" id="hdyhau" required="required"></textarea>
+                    <br />
+                    <div class="formPart">
+                        This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement. Also, we use cookies.<br/>
+                        <strong>By creating an account, you agree to these terms.</strong>
+                    </div>
+
+                    <input type="submit" value="Create Account">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

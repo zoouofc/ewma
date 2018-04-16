@@ -17,7 +17,7 @@ function errorPage (request, errO, cb, extras) {
             'Request ID': request.id,
             Session: request.cookie.session,
             'DB Connection': `${request.db.index}:${request.db._connection.threadId}`,
-            Admin: request.admin
+            Permissions: request.permissions ? Object.keys(request.permissions).sort().join(', ') : ''
         }, extras || {})
     }, (err, content) => {
         if (err) {

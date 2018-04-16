@@ -27,9 +27,7 @@ module.exports.process = function () {
         query: query2json.q2j(process.env.QUERY_STRING),
         startTime: process.env.REQUEST_START,
         cookie: cke.parse(process.env.HTTP_COOKIE || ''),
-
-        // permissions
-        admin: false,
+        postDataType: process.env.CONTENT_TYPE,
 
         // output
         headers: {},

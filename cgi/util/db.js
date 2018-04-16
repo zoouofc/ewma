@@ -66,7 +66,7 @@ module.exports.acquire = function (callback, manual) {
     }
     connection.format = mysql.format;
 
-    connection.summary = function (request) {
+    connection.summary = function (request, full) {
         let max = {
             query: ';',
             duration: 0
@@ -78,7 +78,7 @@ module.exports.acquire = function (callback, manual) {
             }
             time += query.duration;
         }
-        return `Database Queries: ${connection.queries.length}\n        Total Query Duration: ${time}ms\n        Longest Query: ${max.duration}ms` + (request.admin ? `        ${max.query}` : '');
+        return `Database Queries: ${connection.queries.length}\n        Total Query Duration: ${time}ms\n        Longest Query: ${max.duration}ms` + (full ? `        ${max.query}` : '');
     }
 
     connection._connection.connect(function (err) {

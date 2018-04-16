@@ -2,6 +2,7 @@ const code = require(`${__rootname}/util/code`);
 
 function populateHeaders (request, cb) {
     request.headerLinks = request.headerLinks || [];
+    request.headerLinksAdmin = request.headerLinksAdmin || [];
 
     request.headerLinks.push({
         text: 'Movie List',
@@ -32,36 +33,53 @@ function populateHeaders (request, cb) {
             link: '/movies/' + rows[0].id
         });
 
-        if (request.admin) {
-            request.headerLinks.push({
+        if (request.permissions.movie_edit) {
+            request.headerLinksAdmin.push({
                 text: 'Edit Movie',
                 link: '/admin/edit'
-            }, {
-                text: 'Logout',
-                link: '/logout'
-            });
-        } else {
-            request.headerLinks.push({
-                text: 'Admin Login',
-                link: '/login'
             });
         }
+
+        // if (request.permissions.manage_permissions) {
+        //     request.headerLinksAdmin.push({
+        //         text: 'Manage Permissions',
+        //         link: '/admin/permissions'
+        //     });
+        // }
+
+        if (request.permissions.manage_users) {
+            request.headerLinksAdmin.push({
+                text: 'Manage Users',
+                link: '/admin/users'
+            });
+        }
+
+        request.headerLinks.push({
+            text: 'Logout',
+            link: '/logout'
+        });
 
         cb();
     });
 }
 
-function requireAdmin(proceed) {
+function requirePermission(permission, proceed) {
     return (request, exit) => {
-        if (request.admin) {
-            proceed(request, exit);
-            return;
-        }
-        code.errorPage(request, code.FORBIDDEN, exit);
+        request.user.checkPerm(permission, (err, ok) => {
+            if (err) {
+                throw err;
+            }
+            if (ok) {
+                proceed(request, exit);
+                return;
+            } else {
+                code.errorPage(request, code.FORBIDDEN, exit);
+            }
+        });
     }
 };
 
 module.exports = {
     populateHeaders: populateHeaders,
-    requireAdmin: requireAdmin
+    requirePermission: requirePermission
 };

@@ -30,18 +30,24 @@ function loginPage (request, cb) {
 }
 
 function handleLoginAttempt(request, cb) {
-    auth.validateUser(request, request.post.username, request.post.password, (err, valid) => {
+    auth.validateUser(request, request.post.username, request.post.password, (err, id, approved) => {
         if (err) {
             throw err;
         }
-        if (valid) {
-            auth.grantSession(request, true, (err) => {
-                if (err) {
-                    throw err;
-                }
-                redirection.found(request, '/', cb);
-                return;
-            });
+        if (id) {
+            if (approved) {
+                auth.grantSession(request, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    redirection.found(request, request.post.dest || '/', cb);
+                    return;
+                }, id);
+            } else {
+                request.errorMessage = "This account must be approved before it can be used.";
+                request.headers['status'] = code.codeString(code.UNAUTHORIZED);
+                loginPage(request, cb);
+            }
         } else {
             request.errorMessage = "You'd like that, wouldn't you?";
             request.headers['status'] = code.codeString(code.UNAUTHORIZED);

@@ -7,6 +7,7 @@
 
 module.exports.q2j = function (querystring) {
     let json = {};
+    querystring = querystring.replace(/\+/gm, ' ');
     let components = querystring.split("&");
     for (let component of components) {
         let comp = component.split("=");

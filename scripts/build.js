@@ -72,6 +72,38 @@ let steps = [
         }
     },
     {
+        name: `Copying msmtp configuration from ${conf["msmtp-conf"]}`,
+        hook: (cb) => {
+            let cp = child_process.spawn('cp', [`${conf["msmtp-conf"]}`, `${conf['build-destination']}/cgi/msmtprc`], {
+                stdio: 'inherit'
+            });
+
+            cp.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
+                }
+            });
+        }
+    },
+    {
+        name: `Creating msmtp log: ${conf['build-destination']}/${conf["msmtp-log"]}`,
+        hook: (cb) => {
+            let cp = child_process.spawn('touch', [`${conf['build-destination']}/${conf["msmtp-log"]}`], {
+                stdio: 'inherit'
+            });
+
+            cp.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
+                }
+            });
+        }
+    },
+    {
         name: 'Migrating CGI paths',
         install: true,
         hook: (cb) => {
@@ -362,6 +394,23 @@ let steps = [
             });
 
             npm.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
+                }
+            });
+        }
+    },
+    {
+        name: `Setting ownership on ${conf['build-destination']}`,
+        install: true,
+        hook: (cb) => {
+            let chown = child_process.spawn('chown', ['-R', `${conf['http_user']}:${conf['http_user']}`, `${conf['build-destination']}`], {
+                stdio: 'inherit'
+            });
+
+            chown.on('exit', (code) => {
                 if (code === 0) {
                     cb();
                 } else {

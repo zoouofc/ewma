@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "scripts/build.js all",
     "inst": "scripts/build.js install",
-    "genadmin": "scripts/genadmin.js",
+    "genuser": "scripts/genuser.js",
     "compute-source-length": "scripts/compute-source-length.js",
     "db-update": "scripts/db-update.sh",
     "postdb-update": "scripts/cleanshell.sh",

@@ -11,12 +11,12 @@ module.exports.matchPaths = ['/logout'];
 module.exports.name = 'logout';
 module.exports.type = 'GET';
 
-module.exports.handle = page.requireAdmin((request, cb) => {
-    auth.grantSession(request, false, (err) => {
+module.exports.handle = (request, cb) => {
+    auth.removeSession(request, (err) => {
         if (err) {
             throw err;
         }
         redirection.found(request, '/', cb);
         return;
     });
-});
+};

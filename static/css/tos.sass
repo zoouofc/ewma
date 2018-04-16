@@ -1,5 +1,6 @@
 $zooblue: #00B1FC
 $grey: #5D5D5D
+$red: #D94D4D
 $font: monospace
 
 body
@@ -39,13 +40,16 @@ body
         outline: none
     input[type="submit"]
         cursor: pointer
+    #errorMessage,
     #tos
-        width: 300px
+        width: 400px
         text-align: center
         margin: auto
         font-size: 12px
         font-family: $font
-    #admin
+    #errorMessage
+        color: $red
+    #login
         margin: auto
         font-family: $font
 

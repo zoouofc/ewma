@@ -5,7 +5,12 @@
 
         Request length: <%= Date.now() - request.startTime %>ms
         Request s/i: <%= `${request.cookie.session || ''}/${request.id}` %>
-        Admin: <%= request.admin %>
-        <%= request.db.summary(request) %>
+        Username: <%= request.user.attributes.username %>
+        <% if (fullSummary) { %>
+        Permissions:
+            <% for (let perm of [...request.user.permissions].sort() || []) { %>
+                <%= perm %><% } %>
+        <% } %>
+        <%= request.db.summary(request, fullSummary) %>
     -->
 <% } %>

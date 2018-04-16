@@ -13,11 +13,33 @@
     table-layout: fixed
     padding-left: 180px
     text-align: center
-    a
+    a, ul
         text-decoration: none
         font-variant: small-caps
         font-weight: bolder
         font-size: 20px
         color: black
+        cursor: pointer
+    ul
+        list-style-type: none
+        padding-left: 0
+        transition: 0.2s
+        li
+            position: relative
+        ul
+            position: absolute
+            top: 1em
+            left: 0
+            display: none
+    ul > li:hover ul
+        padding-top: 0.2em
+        display: block
+        background: #E1E1E1
+        width: 100%
+        li
+            width: 100%
+            border: 1px solid black
+        li:hover
+            background: white
     .currentpage
         border-bottom: 1px solid black

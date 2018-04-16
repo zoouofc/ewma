@@ -7,6 +7,7 @@ const cookie = require(`${__rootname}/util/cookie`);
 const uuid = require('uuid/v4');
 const conf = require(`${__rootname}/conf.json`);
 const bcrypt = require('bcrypt');
+const user = require(`${__rootname}/models/user`);
 
 function validateUser (request, username, password, cb) {
     if (!username || !password) {
@@ -14,7 +15,7 @@ function validateUser (request, username, password, cb) {
         return;
     }
 
-    request.db.do('SELECT password FROM users WHERE username = ?;', [username], (err, row) => {
+    request.db.do('SELECT password, id, approved FROM users WHERE username = ?;', [username], (err, row) => {
         if (err) {
             cb(err);
             return;
@@ -27,24 +28,24 @@ function validateUser (request, username, password, cb) {
                     return;
                 }
                 if (res) {
-                    cb(null, true);
+                    cb(null, row[0].id, row[0].approved);
                 } else {
                     // password's wrong
-                    cb(null, false);
+                    cb(null, false, 0);
                 }
             });
         } else {
-            cb(null, false);
+            cb(null, false, 0);
         }
     });
 }
 
 function checkSession (request, session, cb) {
     request.db.do(`
-        SELECT admin
-        FROM session
-        WHERE token = ?
-            AND issued > ?
+        SELECT users.id AS id
+        FROM session INNER JOIN users ON session.user = users.id
+        WHERE session.token = ?
+            AND session.issued > ?
         LIMIT 1`, [session, Math.floor(Date.now() / 1000) - conf['session-length']], (err, rows) => {
         if (err) {
             console.error(err);
@@ -52,19 +53,33 @@ function checkSession (request, session, cb) {
             return;
         }
         if (rows.length) {
-            cb(null, true, !!rows[0].admin);
+            let u = new user.User(request.db);
+            u.initFromId(rows[0].id, (err) => {
+                if (err) {
+                    cb(err);
+                    return;
+                }
+
+                if (u.valid) {
+                    // this authenticates the user
+                    u.authenticated = true;
+                    cb(null, u);
+                } else {
+                    cb(null, null);
+                }
+            });
         } else {
-            cb(null, false, false);
+            cb(null, null);
         }
     });
 }
 
-function grantSession (request, admin, cb) {
+function grantSession (request, cb, id) {
     function prog () {
         let token = uuid();
         request.db.do(`
-            INSERT INTO session (token, issued, admin)
-            VALUES (?, ?, ?);`, [token, Math.floor(Date.now() / 1000), !!admin], (err) => {
+            INSERT INTO session (token, issued, user)
+            VALUES (?, ?, ?);`, [token, Math.floor(Date.now() / 1000), id || request.user.attributes.id], (err) => {
             if (err) {
                 cb(err);
                 return;
@@ -90,8 +105,13 @@ function grantSession (request, admin, cb) {
     }
 }
 
+function removeSession (request, cb, id) {
+    request.db.do('DELETE FROM session WHERE token = ?', [id || request.cookie.session], cb);
+}
+
 module.exports = {
     checkSession: checkSession,
     grantSession: grantSession,
+    removeSession: removeSession,
     validateUser: validateUser
 };

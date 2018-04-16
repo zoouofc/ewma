@@ -5,7 +5,7 @@
 
 function _runUpdate() {
     echo
-    echo "Running $1"
+    echo "Running $1 as MYSQL user root"
     echo
     mysql --verbose -u root -p -D ewma < $1
     if [ $? -ne 0 ]; then

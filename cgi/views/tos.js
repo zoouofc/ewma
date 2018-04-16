@@ -15,8 +15,7 @@ module.exports.handle = (request, cb) => {
     }
     template.get('tos.ejs', {
         request: request,
-        dest: request._originalPathname || '',
-        login: /login/.test(request.pathname)
+        dest: request._originalPathname || ''
     }, (err, content) => {
         if (err) {
             throw err;
