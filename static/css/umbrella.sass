@@ -1,6 +1,7 @@
 $background: #E1E1E1
 $primaryFont: "Encode Sans Semi Condensed", sans-serif
-
+$green: #1F8A0E
+$red: #8A330E
 html
     box-sizing: border-box
     height: 100%
@@ -21,6 +22,18 @@ body
 #content
     padding: 0 10px
 
+.styled-table
+    border: 1px solid black
+    border-radius: 10px
+    td:not(:last-child), th:not(:last-child)
+        border-right: 1px solid black
+    th
+        border-bottom: 1px solid black
+    thead tr
+        background: white
+    tr:nth-child(2n)
+        background: white
+
 .absCY
     position: absolute
     transform: translateY(-50%)
@@ -39,7 +52,8 @@ body
     margin: auto
 .hdn
     display: none
-
+.monospace
+    font-family: monospace
 .editIcon
     width: 22px
     padding: 2px
@@ -47,3 +61,11 @@ body
 .smolits
     font-size: 10px
     font-style: italic
+.green
+    color: $green
+.red
+    color: $red
+.width100
+    width: 100%
+.width50
+    width: 50%

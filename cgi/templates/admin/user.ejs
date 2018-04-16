@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('../headers.ejs', {pageId: 'Manage User'}); %>
+        <div id="content">
+            <h3>
+                User: <%= user.attributes.username %>
+                <div class="smolits fr">
+                    ID: <%= user.attributes.id %>
+                </div>
+            </h3>
+            <hr>
+            <div class="tac width100">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="username">Username</label>
+                            </td>
+                            <td><input type="text" name="username" disabled="disabled" value="<%= user.attributes.username %>"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="approved">Approved</label>
+                            </td>
+                            <td>
+                                <% if (user.attributes.approved) { %>
+                                    <span class="green">Yes &#x2714;</span>
+                                <% } else { %>
+                                    <form method="POST" action="/admin/user/<%= user.attributes.id %>/activate">
+                                        <input type="hidden" name="user" value="<%= user.attributes.id %>">
+                                        <span class="red">No ✖</span>
+                                        <input type="submit" value="Activate User">
+                                    </form>
+                                <% } %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="email">Email</label>
+                            </td>
+                            <td><input type="email" name="email" disabled="disabled" value="<%= user.attributes.email %>"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="permissions">Permissions</label></td>
+                            <td class="monospace">
+                                <% for (let permission of [...user.permissions].sort()) { %>
+                                    <%= permission %>
+                                    <br />
+                                <% } %>
+                            </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <%- include('../footers.ejs', {}); %>
+    </div>
+</body>

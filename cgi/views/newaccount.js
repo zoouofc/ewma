@@ -59,8 +59,6 @@ function handleCreateAttempt (request, cb) {
         return;
     }
 
-    throw new Error('no')
-
     request.db.do('SELECT id FROM users WHERE LOWER(username) = LOWER(?) OR LOWER(email) = LOWER(?)', [
         request.post.username,
         request.post.email
@@ -127,7 +125,7 @@ Email: <a href="mailto:${request.post.email}">${request.post.email}</a>
 How did you hear about us?
 ${request.post.hdyhau}
 </pre>
-<a href="https://ewma.zooengg.ca/admin/user/activate/${uID}">Activate this user</a>
+<a href="https://ewma.zooengg.ca/admin/user/${uID}">Activate this user</a>
                         </body></html>`, (err) => {
                             if (err) {
                                 throw err;

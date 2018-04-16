@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('../headers.ejs', {pageId: 'Manage Users'}); %>
+        <div id="content" class="tac">
+            <table class="width100 styled-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Approved</th>
+                        <th>Permissions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let user of users) { %>
+                        <tr>
+                            <td><a href="/admin/user/<%= user.attributes.id %>"><%= user.attributes.username %></a></td>
+                            <td><a href="mailto:<%= user.attributes.email %>"><%= user.attributes.email %></a></td>
+                            <td class="monospace"><%= user.attributes.approved ? 'true' : 'false' %></td>
+                            <td class="monospace">
+                                <% for (let perm of [...user.permissions].sort()) { %>
+                                    <%= perm %>
+                                    <br />
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <%- include('../footers.ejs', {}); %>
+    </div>
+</body>

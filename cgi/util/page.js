@@ -40,12 +40,12 @@ function populateHeaders (request, cb) {
             });
         }
 
-        // if (request.permissions.manage_permissions) {
-        //     request.headerLinksAdmin.push({
-        //         text: 'Manage Permissions',
-        //         link: '/admin/permissions'
-        //     });
-        // }
+        if (request.permissions.manage_permissions) {
+            request.headerLinksAdmin.push({
+                text: 'Manage Permissions',
+                link: '/admin/permissions'
+            });
+        }
 
         if (request.permissions.manage_users) {
             request.headerLinksAdmin.push({

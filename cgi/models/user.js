@@ -14,8 +14,8 @@ class User {
         this.attributes = {};
     }
 
-    initFromUsername (username, clbk) {
-        this.db.do('SELECT * FROM users WHERE username = ?;', [username], (err, rows) => {
+    initFromId (id, clbk) {
+        this.db.do('SELECT * FROM users WHERE id = ?;', [id], (err, rows) => {
             if (err) {
                 clbk(err);
                 return;
@@ -32,20 +32,16 @@ class User {
         });
     }
 
-    get [Symbol.toStringTag] () {
-        return `models.user.User(${this.attributes.username})`;
-    }
-
-    initFromId (id, clbk) {
-        this.db.do('SELECT username FROM users WHERE id = ?', [id], (err, rows) => {
+    initFromUsername (username, clbk) {
+        this.db.do('SELECT id FROM users WHERE username = ?;', [username], (err, rows) => {
             if (err) {
                 clbk(err);
                 return;
             }
 
             if (rows.length) {
-                // user exists.
-                this.initFromUsername(rows[0].username, (err) => {
+                // user exists
+                this.initFromId(rows[0].id, (err) => {
                     if (err) {
                         clbk(err);
                         return;
@@ -57,6 +53,10 @@ class User {
                 clbk(null);
             }
         });
+    }
+
+    get [Symbol.toStringTag] () {
+        return `models.user.User(${this.attributes.username})`;
     }
 
     authenticate (password, clbk) {
