@@ -11,5 +11,11 @@
     "msmtp-from": "ewma@zooengg.ca",
     "msmtp-conf": "/home/ewma/.msmtprc",
     "msmtp-log": "msmtp.log",
-    "http_user": "http"
+    "http_user": "http",
+    "golden_awards": [
+        "Viewer's Choice",
+        "Best Actor",
+        "Best Actress",
+        "Best Picture"
+    ]
 }
