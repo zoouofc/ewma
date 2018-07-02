@@ -7,20 +7,169 @@ const template = require(`${__rootname}/util/template`);
 const code = require(`${__rootname}/util/code`);
 const page = require(`${__rootname}/util/page`);
 const time = require(`${__rootname}/util/time`);
+const conf = require(`${__rootname}/conf.json`);
 
 module.exports.matchPaths = ['/movies/list'];
 module.exports.name = 'movielist';
 module.exports.type = 'GET';
 
-const GOLDIES = [
-    "Viewer's Choice",
-    "Best Actor",
-    "Best Actress",
-    "Best Picture"
-];
+const GOLDIES = conf.golden_awards;
 
 module.exports.handle = (request, cb) => {
     request.stylesheets.push('movielist', 'awards');
+
+    let sortDirection = -1; // desc
+    if (request.query.hasOwnProperty('d') && request.query.d === '1') {
+        sortDirection = 1;
+    }
+
+    let sorter;
+    let sortType;
+    switch (request.query.s) {
+        case 't':
+            sortType = 't';
+            sorter = (a, b) => {
+                // sort on title, year desc, dept
+                if (a.title > b.title) {
+                    return sortDirection;
+                } else if (a.title < b.title) {
+                    return -sortDirection;
+                } else {
+                    if (a.year > b.year) {
+                        return -sortDirection;
+                    } else if (a.year < b.year) {
+                        return sortDirection;
+                    } else {
+                        return a.dept < b.dept ? -sortDirection : sortDirection;
+                    }
+                }
+            };
+            break;
+        case 'i':
+            sortType = 'i';
+            sorter = (a, b) => {
+                // sort on theme, year desc, dept
+                if (a.theme === null || b.theme === null) {
+                    if (a.theme !== null) {
+                        return sortDirection;
+                    }
+                    if (b.theme !== null) {
+                        return -sortDirection;
+                    }
+                }
+
+                if (a.theme > b.theme) {
+                    return sortDirection;
+                } else if (a.theme < b.theme) {
+                    return -sortDirection;
+                } else {
+                    if (a.year > b.year) {
+                        return -sortDirection;
+                    } else if (a.year < b.year) {
+                        return sortDirection;
+                    } else {
+                        return a.dept < b.dept ? -sortDirection : sortDirection;
+                    }
+                }
+            };
+            break;
+        case 'r':
+            sortType = 'r';
+            sorter = (a, b) => {
+                // sort on rating, year desc, dept
+                if (a.rating > b.rating) {
+                    return sortDirection;
+                } else if (a.rating < b.rating) {
+                    return -sortDirection;
+                } else {
+                    if (a.year > b.year) {
+                        return -sortDirection;
+                    } else if (a.year < b.year) {
+                        return sortDirection;
+                    } else {
+                        return a.dept < b.dept ? -sortDirection : sortDirection;
+                    }
+                }
+            };
+            break;
+        case 'l':
+            sortType = 'l';
+            sorter = (a, b) => {
+                // sort on duration, dept desc, dept
+                if (a.duration > b.duration) {
+                    return sortDirection;
+                } else if (a.duration < b.duration) {
+                    return -sortDirection;
+                } else {
+                    if (a.year > b.year) {
+                        return -sortDirection;
+                    } else if (a.year < b.year) {
+                        return sortDirection;
+                    } else {
+                        return a.dept > b.dept ? -sortDirection : sortDirection;
+                    }
+                }
+            };
+            break;
+        case 'd':
+            sortType = 'd';
+            sorter = (a, b) => {
+                // sort on dept desc, year desc, title
+                if (a.dept < b.dept) {
+                    return sortDirection;
+                } else if (a.dept > b.dept) {
+                    return -sortDirection;
+                } else {
+                    if (a.year > b.year) {
+                        return -sortDirection;
+                    } else if (a.year < b.year) {
+                        return sortDirection;
+                    } else {
+                        return a.title < b.title ? -sortDirection : sortDirection;
+                    }
+                }
+            };
+            break;
+        case 'a':
+            sortType = 'a';
+            sorter = (a, b) => {
+                // sort on number of awards, year desc, dept desc
+                if (a.awards.length > b.awards.length) {
+                    return sortDirection;
+                } else if (a.awards.length < b.awards.length) {
+                    return -sortDirection;
+                } else {
+                    if (a.year > b.year) {
+                        return sortDirection;
+                    } else if (a.year < b.year) {
+                        return -sortDirection;
+                    } else {
+                        return a.dept > b.dept ? -sortDirection : sortDirection;
+                    }
+                }
+            };
+            break;
+        case 'y':
+        default:
+            sortType = 'y';
+            sorter = (a, b) => {
+                // sort on year desc, dept desc, title
+                if (a.year < b.year) {
+                    return -sortDirection;
+                } else if (a.year > b.year) {
+                    return sortDirection;
+                } else {
+                    if (a.dept > b.dept) {
+                        return sortDirection;
+                    } else if (a.dept < b.dept) {
+                        return -sortDirection;
+                    } else {
+                        return a.title < b.title ? sortDirection : -sortDirection;
+                    }
+                }
+            };
+            break;
+    }
 
     page.populateHeaders(request, () => {
         request.db.do(`
@@ -55,7 +204,7 @@ module.exports.handle = (request, cb) => {
                 for (let i = 0; i < rows.length; i++) {
                     rows[i].rating = rows[i].rating / max * 100;
                     if (rows[i].duration) {
-                        rows[i].duration = time.secondsToStamp(rows[i].duration);
+                        rows[i].durationDisplay = time.secondsToStamp(rows[i].duration);
                     }
                     request.db.do(`
                         SELECT name, note, movie_id
@@ -75,22 +224,7 @@ module.exports.handle = (request, cb) => {
                         iterator++;
                         if (iterator === rows.length) {
                             // we're done
-                            // sort on year, dept desc, title
-                            rows.sort((a, b) => {
-                                if (a.year < b.year) {
-                                    return 1;
-                                } else if (a.year > b.year) {
-                                    return -1;
-                                } else {
-                                    if (a.dept > b.dept) {
-                                        return -1;
-                                    } else if (a.dept < b.dept) {
-                                        return 1
-                                    } else {
-                                        return a.title < b.title ? -1 : 1;
-                                    }
-                                }
-                            });
+                            rows.sort(sorter);
                             // group on year
                             for (let row of rows) {
                                 if (!movies.length) {
@@ -111,7 +245,8 @@ module.exports.handle = (request, cb) => {
                             }
                             template.get('movielist.ejs', {
                                 request: request,
-                                movies: movies
+                                movies: movies,
+                                sortType: sortType
                             }, (err, content) => {
                                 if (err) {
                                     throw err;

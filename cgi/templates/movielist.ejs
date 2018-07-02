@@ -10,6 +10,64 @@
         </script>
         <div id="content">
             <table id="movieTable">
+                <thead>
+                    <tr class="yearRow">
+                        <th onclick="javascript:window.location.search = 's=y&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                            Year
+                            <% if (sortType === 'y') { %>
+                                <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                            <% } %>
+                        </th>
+                        <th>
+                            <table class="movieYear">
+                                <tbody>
+                                    <tr class="moviesHeaders">
+                                        <td class="tac movieTitle">
+                                            <div onclick="javascript:window.location.search = 's=t&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                                Title
+                                                <% if (sortType === 't') { %>
+                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <% } %>
+                                            </div>
+                                            <div class="smolits" onclick="javascript:window.location.search = 's=i&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                                (Theme)
+                                                <% if (sortType === 'i') { %>
+                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <% } %>
+                                            </div>
+                                            <div class="smolits" onclick="javascript:window.location.search = 's=r&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                                Rating
+                                                <% if (sortType === 'r') { %>
+                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <% } %>
+                                            </div>
+                                        </td>
+                                        <td class="tac movieLength" onclick="javascript:window.location.search = 's=l&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                            Duration
+                                            <% if (sortType === 'l') { %>
+                                                <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                            <% } %>
+                                        </td>
+                                        <td class="tac movieDept" onclick="javascript:window.location.search = 's=d&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                            Department
+                                            <% if (sortType === 'd') { %>
+                                                <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                            <% } %>
+                                        </td>
+                                        <td onclick="javascript:window.location.search = 's=a&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                            <div class="tac">
+                                                Awards
+                                                <% if (sortType === 'a') { %>
+                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <% } %>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     <% let cls = true; %>
                     <% for (let movieYear of movies) { %>
@@ -21,7 +79,7 @@
                                         <% for (let movie of movieYear.movies) { %>
                                             <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.src ? 'clickable' : '' %>" onclick="javascript:<%=  movie.src ? `location.href='/movies/${movie.id}';` : 'void()' %>">
                                                 <% cls = !cls %>
-                                                <% if (request.permissions.movie_edit) {%>
+                                                <% if (request.permissions.movie_edit) { %>
                                                     <td class="editColumn">
                                                         <a href="/admin/edit/<%= movie.id %>">
                                                             <img class="editIcon" alt="edit" src="<%= cacheBuster('images/edit.svg'); %>" />
@@ -46,7 +104,7 @@
                                                     <% } %>
                                                 </td>
                                                 <td class="tac movieLength">
-                                                    <%= movie.duration %>
+                                                    <%= movie.durationDisplay %>
                                                 </td>
                                                 <td class="tac movieDept"><%= movie.display %></td>
                                                 <td>

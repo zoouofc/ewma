@@ -7,12 +7,19 @@ $hoverrow: #C3C3C3
 #movieTable,
 .movieYear
     width: 100%
+    border-collapse: collapse
 
-.yearRow > td
+#movieTable
+    border-left: 1px solid black
+    border-right: 1px solid black
+
+.yearRow > td,
+.yearRow > th
     border-bottom: 1px solid black
     border-top: 1px solid black
 
-.yearRow > td:first-child
+.yearRow > td:first-child,
+.yearRow > th:first-child
     width: 10px
     text-align: center
     border-right: 1px solid black
@@ -61,3 +68,20 @@ $hoverrow: #C3C3C3
     font-family: monospace
     font-size: 13px
     width: 65px
+
+.moviesHeaders,
+thead > .yearRow
+    height: 60px
+    background: $evenrow
+
+.moviesHeaders td:not(:first-child):hover,
+.moviesHeaders td:first-child div:hover,
+thead > .yearRow th:first-child:hover
+    background-color: $hoverrow
+    cursor: pointer !important
+
+.sort-desc::after
+    content: "▾"
+
+.sort-asc::after
+    content: "▴"
