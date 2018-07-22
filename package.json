@@ -29,18 +29,18 @@
   },
   "homepage": "https://github.com/zoouofc/ewma#readme",
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "bcrypt": "^1.0.3",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "bcrypt": "^3.0.0",
     "cookie": "^0.3.1",
-    "ejs": "^2.5.7",
-    "microtime": "^2.1.6",
-    "mysql": "^2.15.0",
+    "ejs": "^2.6.1",
+    "microtime": "^2.1.8",
+    "mysql": "^2.16.0",
     "node-ffprobe": "^1.2.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.2",
     "read": "^1.0.7",
-    "select-shell": "^1.0.0",
+    "select-shell": "^1.1.2",
     "strftime": "^0.10.0",
-    "uuid": "^3.1.0"
+    "uuid": "^3.3.2"
   }
 }

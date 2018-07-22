@@ -1,5 +1,3 @@
-#!/usr/bin/node
-
 /**
  * Entry point for all requests to the server
  * @file init.js

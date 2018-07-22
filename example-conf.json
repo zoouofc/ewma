@@ -2,6 +2,7 @@
     "build-destination": "/srv/http/ewma",
     "movie-sources": "/path/to/movies",
     "build-require-sudo": true,
+    "cgi-executable": "/usr/bin/node",
     "database-user": "ewma",
     "database-password": "XXXXXXXXXX",
     "database-socket": "/run/mysqld/mysqld.sock",

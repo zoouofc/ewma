@@ -121,6 +121,26 @@ let steps = [
         }
     },
     {
+        name: 'Populating shebangs',
+        install: true,
+        hook: (cb) => {
+            fs.readFile(`${conf['build-destination']}/cgi/init.js`, (err, result) => {
+                if (err) {
+                    cb(err);
+                    return;
+                }
+                fs.writeFile(`${conf['build-destination']}/cgi/init.js`, `#!${conf['cgi-executable']}\n${result}`, (err) => {
+                    if (err) {
+                        cb(err);
+                        return;
+                    }
+                    cb();
+                    return;
+                });
+            });
+        }
+    },
+    {
         name: `Creating static structure: ${conf["build-destination"]}/static`,
         hook: (cb) => {
             let mk = child_process.spawn('mkdir', ['-p', `${conf['build-destination']}/static`], {
