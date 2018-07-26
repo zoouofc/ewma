@@ -22,11 +22,9 @@ module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
                 rating,
                 year,
                 dept,
-                src,
-                mime,
-                theme,
-                (SELECT t.parent FROM trailer t WHERE m.id = t.trailer) AS trailer
-            FROM movies m where id = ?`, [id], (err, movie) => {
+                theme
+            FROM movies m where id = ?
+        `, [id], (err, movie) => {
             if (err) {
                 throw err;
             }
@@ -41,8 +39,9 @@ module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
             let awards = null;
             let themes = null;
             let allMovies = [];
+            let videosAndSources = null;
             let ok = 0;
-            let needed = 3;
+            let needed = 4;
 
             function proc () {
                 template.get('admin/edit.ejs', {
@@ -52,6 +51,7 @@ module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
                     awards: awards,
                     themes: themes,
                     allMovies: allMovies,
+                    videosAndSources: videosAndSources,
                     mimes: [
                         {
                             name: null,
@@ -65,6 +65,20 @@ module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
                             name: 'video/webm',
                             display: 'WEBM'
                         }
+                    ],
+                    resolutions: [
+                        'Select a Resolution',
+                        '240p',
+                        '360p',
+                        '480p',
+                        '720p',
+                        '1080p'
+                    ],
+                    videoTypes: [
+                        'primary',
+                        'trailer',
+                        'commentary',
+                        'other'
                     ]
                 }, (err, content) => {
                     if (err) {
@@ -134,6 +148,50 @@ module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
                     name: null,
                     display: 'Pick a Theme'
                 });
+                if (ok == needed) {
+                    proc();
+                } else {
+                    ok++;
+                }
+            });
+
+            request.db.do(`
+                SELECT
+                    sources.id as sourceID,
+                    sources.video_id,
+                    sources.file,
+                    sources.mime,
+                    sources.resolution,
+                    videos.id as videoID,
+                    videos.type,
+                    videos.title
+                FROM sources
+                    INNER JOIN videos ON sources.video_id = videos.id
+                WHERE videos.movie_id = ?
+                ORDER BY sources.id
+            `, [id], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                videosAndSources = {};
+
+                for (let row of rows) {
+                    if (!(row.videoID in videosAndSources)) {
+                        videosAndSources[row.videoID] = {
+                            id: row.videoID,
+                            type: row.type,
+                            title: row.title,
+                            sources: []
+                        };
+                    }
+                    videosAndSources[row.videoID].sources.push({
+                        id: row.sourceID,
+                        file: row.file,
+                        mime: row.mime,
+                        resolution: row.resolution
+                    });
+                }
+
                 if (ok == needed) {
                     proc();
                 } else {

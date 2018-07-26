@@ -20,9 +20,9 @@ function populateHeaders (request, cb) {
     // });
 
     request.db.do(`
-        SELECT id
+        SELECT movies.id
         FROM movies
-        WHERE src IS NOT NULL
+            INNER JOIN videos on videos.movie_id = movies.id
         ORDER BY RAND()
         LIMIT 0, 1;`, (err, rows) => {
         if (err) {

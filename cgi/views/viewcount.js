@@ -15,7 +15,7 @@ module.exports.handle = (request, cb) => {
     request.headers['content-type'] = 'application/json';
     let id = request.pathname.split('/')[2];
     request.db.do(`
-        INSERT INTO viewcount (movie_id, session)
+        INSERT INTO viewcount (video_id, session)
             VALUES (?, ?)
     `, [id, request.cookie.session], (err) => {
         request.body = JSON.stringify({

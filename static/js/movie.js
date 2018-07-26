@@ -10,34 +10,34 @@ Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
 
 $(document).ready(function() {
     setInterval(function() {
-        $(`video[data-movie-id]`).each(function (index, element) {
+        $(`video[data-video-id]`).each(function (index, element) {
             if (element.playing) {
-                let movie = $(element).attr('data-movie-id');
-                if (submittedMovies.indexOf(movie) === -1) {
-                    if (movie in playingMovies) {
-                        playingMovies[movie]++;
-                        console.log(`${movie} has been playing for ${playingMovies[movie] * 10}s`);
+                let video = $(element).attr('data-video-id');
+                if (submittedMovies.indexOf(video) === -1) {
+                    if (video in playingMovies) {
+                        playingMovies[video]++;
+                        console.log(`${video} has been playing for ${playingMovies[video] * 10}s`);
                     } else {
-                        console.log(`Started playing ${movie}`);
-                        playingMovies[movie] = 1;
+                        console.log(`Started playing ${video}`);
+                        playingMovies[video] = 1;
                     }
                 }
             }
         });
 
-        for (let movie in playingMovies) {
-            if (!document.querySelector(`video[data-movie-id="${movie}"]`).playing) {
+        for (let video in playingMovies) {
+            if (!document.querySelector(`video[data-video-id="${video}"]`).playing) {
                 // movie's not playing.
-                delete playingMovies[movie];
-                console.log(`${movie} stopped playing`);
-            } else if (submittedMovies.indexOf(movie) === -1 && playingMovies[movie] > 3) {
+                delete playingMovies[video];
+                console.log(`${video} stopped playing`);
+            } else if (submittedMovies.indexOf(video) === -1 && playingMovies[video] > 3) {
                 // we've been watching this movie for more than 30 seconds straight
                 // and haven't submitted it yet.
-                submittedMovies.push(movie);
-                delete playingMovies[movie];
+                submittedMovies.push(video);
+                delete playingMovies[video];
                 $.ajax({
                     method: 'POST',
-                    url: `/viewcount/${movie}`
+                    url: `/viewcount/${video}`
                 });
             }
         }

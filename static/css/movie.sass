@@ -25,3 +25,19 @@
 
         .movieAwards
             margin-right: 20px
+
+.videoBadge
+    border: 1px solid rgb(117, 117, 117)
+    border-radius: 7px
+    background: white
+    padding: 2px 5px
+    font-variant: small-caps
+
+.videoBadge-primary::after
+    content: 'feature presentation'
+.videoBadge-commentary::after
+    content: 'audio commentary'
+.videoBadge-trailer::after
+    content: 'official trailer'
+.videoBadge-other::after
+    content: 'extra video'

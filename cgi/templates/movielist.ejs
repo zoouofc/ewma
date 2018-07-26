@@ -77,7 +77,7 @@
                                 <table class="movieYear">
                                     <tbody>
                                         <% for (let movie of movieYear.movies) { %>
-                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.src ? 'clickable' : '' %>" onclick="javascript:<%=  movie.src ? `location.href='/movies/${movie.id}';` : 'void()' %>">
+                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.hasVideo ? 'clickable' : '' %>" onclick="javascript:location.href='/movies/<%= movie.id %>';">
                                                 <% cls = !cls %>
                                                 <% if (request.permissions.movie_edit) { %>
                                                     <td class="editColumn">
@@ -97,9 +97,14 @@
                                                             <div class="full-stars" style="width: <%= movie.rating || '0'; %>%;"></div>
                                                         </div>
                                                     <% } %>
-                                                    <% if (movie.trailer) { %>
+                                                    <% if (movie.hasTrailer) { %>
                                                         <div class="trailerBadge" title="This movie has a Trailer">
-                                                            <img class="trailerIcon" alt="trailer" src="<%= cacheBuster('images/clacker.svg'); %>" />
+                                                            <img class="icon trailerIcon" alt="trailer" src="<%= cacheBuster('images/clacker.svg'); %>" />
+                                                        </div>
+                                                    <% } %>
+                                                    <% if (movie.hasCommentary) { %>
+                                                        <div class="trailerBadge" title="This movie has a Commentated version">
+                                                            <img class="icon commentaryIcon" alt="commentary" src="<%= cacheBuster('images/commentary.svg'); %>" />
                                                         </div>
                                                     <% } %>
                                                 </td>

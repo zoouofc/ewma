@@ -8,6 +8,7 @@
 const fs = require('fs');
 const ejs = require('ejs');
 const cacheBuster = require(`${__rootname}/util/cacheBuster`);
+const conf = require(`${__rootname}/conf.json`);
 
 let cache = {};
 
@@ -39,6 +40,7 @@ function get (file, data, options, cb) {
 
     options.filename = `${__rootname}/templates/${file}`;
     data.cacheBuster = cacheBuster.generateURL;
+    data.templateOptions = conf.templateOptions;
 
     load(file, (err, file) => {
         if (err) {

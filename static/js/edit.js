@@ -1,5 +1,9 @@
 $(document).ready(function () {
     let deletedAwards = [];
+    let deletedSources = [];
+    let deletedVideos = [];
+    let newSourceID = 0;
+    let newVideoID = 0;
 
     function packPayload (payload) {
         for (let prop in payload) {
@@ -32,21 +36,111 @@ $(document).ready(function () {
         }
     });
 
-    $('input[name="trailer"]').change(() => {
-        $('select[name="trailerParent"]').val(-1);
-        if ($('input[name="trailer"]:checked').length) {
-            $('.trailerspecify').removeClass('hdn');
-        } else {
-            $('.trailerspecify').addClass('hdn');
-        }
-    });
-
     $(document).on('click', '.deleteAward', function (e) {
         let award = parseInt($(e.target).attr('award'), 10);
         if (!isNaN(award)) {
             deletedAwards.push(award);
         }
         $(e.target).closest('tr').remove();
+    });
+
+    $('#newVideoButton').click(function (e) {
+        newVideoID--;
+        $(e.target).closest('tr').after(
+            $(`<tr data-video-id="${newVideoID}"><td colspan="4" class="tabledivider"><hr /></td></tr>
+                <tr data-video-id="${newVideoID}">
+                    <td>Video:</td>
+                    <td>
+                        <input type="text" disabled="disabled" value="${newVideoID}">
+                        <input type="button" value="X" data-video-id="${newVideoID}" class="deleteVideo">
+                    </td>
+                    <td>Video Class:</td>
+                    <td>
+                        <select name="type" data-video-id="${newVideoID}">
+                            <option>primary</option>
+                            <option>trailer</option>
+                            <option>commentary</option>
+                            <option>other</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr data-video-id="${newVideoID}">
+                    <td>Title:</td>
+                    <td><input name="title" data-video-id="${newVideoID}"></td>
+                    <td></td>
+                    <td>
+                        <input type="button" value="Add Source" class="addSource" data-video-id="${newVideoID}" disabled="disabled" title="You need to commit this new video first">
+                    </td>
+                </tr>
+            `)
+        );
+    });
+
+    $(document).on('click', '.addSource', function(e) {
+        let videoID = $(e.target).attr('data-video-id');
+        newSourceID--;
+        $(e.target).closest('tr').after(
+            $(`<tr data-source-id="${newSourceID}" data-video-id="${videoID}">
+                    <td colspan="4" class="tabledivider"><hr style="width: 75%"/></td>
+                </tr>
+                <tr data-source-id="${newSourceID}" data-video-id="${videoID}">
+                    <td>Source:</td>
+                    <td>
+                        <input disabled="disabled" type="text" value="${newSourceID}">
+                        <input type="button" value="X" class="deleteSource" data-source-id="${newSourceID}" />
+                    </td>
+                    <td>Source MIME:</td>
+                    <td>
+                        <select name="mime" data-source-id="${newSourceID}">
+                            <option value="">Select a MIME</option>
+                            <option>video/mp4</option>
+                            <option>video/webm</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr data-source-id="${newSourceID}" data-video-id="${videoID}">
+                    <td>Source File:</td>
+                    <td>
+                        <input type="text" name="file" size="50" data-source-id="${newSourceID}" />
+                    </td>
+                    <td>Resolution:</td>
+                    <td>
+                        <select name="resolution" data-source-id="${newSourceID}">
+                            <option>Select a Resolution</option>
+                            <option>240p</option>
+                            <option>360p</option>
+                            <option>480p</option>
+                            <option>720p</option>
+                            <option>1080p</option>
+                        </select>
+                    </td>
+                </tr>
+            `)
+        );
+    });
+
+    $(document).on('click', '.deleteSource', function(e) {
+        let id = $(e.target).attr('data-source-id');
+        if (parseInt(id) >= 0) {
+            deletedSources.push(id);
+        }
+        $(`tr[data-source-id="${id}"]`).remove();
+    });
+
+    $(document).on('click', '.deleteVideo', function(e) {
+        let id = $(e.target).attr('data-video-id');
+        if (parseInt(id) >= 0) {
+            deletedVideos.push(id);
+        }
+        $(`tr[data-video-id="${id}"][data-source-id]`).each(function(i, e) {
+            let id = $(e).attr('data-source-id');
+            if (parseInt(id) >= 0) {
+                if (deletedSources.indexOf(id) === -1) {
+                    deletedSources.push(id);
+                }
+            }
+        });
+        $(`tr[data-video-id="${id}"]`).remove();
     });
 
     $('#newAwardButton').click(function (e) {
@@ -97,8 +191,6 @@ $(document).ready(function () {
 
         validateText('title');
         validateText('dept');
-        validateText('src');
-        validateText('mime');
         validateNum('rating');
         validateNum('year');
 
@@ -121,24 +213,6 @@ $(document).ready(function () {
             }
             if (theme !== data.movie.theme) {
                 actions.theme = [UPDATE, theme];
-            }
-        }
-
-        if ($('[name="trailer"]:checked').length) {
-            let parent = parseInt($('[name="trailerParent"]').val(), 10);
-            if (parent === -1 || !parent) {
-                alert('You must specify a trailer parent');
-                return;
-            }
-            if (!data.movie.trailer) {
-                actions._.push([CREATE, 'trailer', parent]);
-            } else if (data.movie.trailer !== parent) {
-                actions._.push([DELETE, 'trailer']);
-                actions._.push([CREATE, 'trailer', parent]);
-            }
-        } else {
-            if (data.movie.trailer) {
-                actions._.push([DELETE, 'trailer']);
             }
         }
 
@@ -196,6 +270,110 @@ $(document).ready(function () {
                 actions.award.push([UPDATE, award, 'note', awardnote]);
             }
         });
+
+        let videoIds = [];
+        $('[data-video-id]').each(function (i, e) {
+            let id = $(e).attr('data-video-id');
+            if (videoIds.indexOf(id) === -1) {
+                videoIds.push(id);
+            }
+        });
+
+        let videos = {};
+        for (let video of videoIds) {
+            videos[video] = {
+                id: parseInt(video),
+                type: $(`[name="type"][data-video-id="${video}"]`).val(),
+                title: $(`[name="title"][data-video-id="${video}"]`).val().trim(),
+                sources: []
+            };
+            if (!videos[video].title.length) {
+                videos[video].title = null;
+            }
+
+            let sourceIds = [];
+            $(`[data-video-id="${video}"][data-source-id]`).each(function (i, e) {
+                let id = $(e).attr('data-source-id');
+                if (sourceIds.indexOf(id) === -1) {
+                    sourceIds.push(id);
+                }
+            });
+
+            for (let source of sourceIds) {
+                let file = $(`[name="file"][data-source-id="${source}"]`).val().trim();
+                if (!file.length) {
+                    alert('Source file is required.');
+                    valid = false;
+                }
+
+                let mime = $(`[name="mime"][data-source-id="${source}"]`).val();
+                let resolution = $(`[name="resolution"][data-source-id="${source}"]`).val();
+
+                if (!mime.length || mime === 'Select a MIME') {
+                    mime = null;
+                }
+                if (!resolution.length || resolution === 'Select a Resolution') {
+                    resolution = null;
+                }
+                videos[video].sources.push({
+                    id: parseInt(source),
+                    file: file,
+                    mime: mime,
+                    resolution: resolution
+                });
+            }
+        }
+
+        for (let source of deletedSources) {
+            actions._.push([DELETE, 'source', parseInt(source)]);
+        }
+        for (let video of deletedVideos) {
+            actions._.push([DELETE, 'video', parseInt(video)]);
+        }
+
+        for (let id in videos) {
+            let video = videos[id]
+            if (id < 0) {
+                // new video
+                actions._.push([CREATE, 'video', video.type, video.title]);
+            } else {
+                if (video.type !== data.videosAndSources[id].type) {
+                    actions.video = actions.video || [];
+                    actions.video.push([UPDATE, id, 'type', video.type]);
+                }
+                if (video.title !== data.videosAndSources[id].title) {
+                    actions.video = actions.video || [];
+                    actions.video.push([UPDATE, id, 'title', video.title]);
+                }
+                for (let source of video.sources) {
+                    if (source.id < 0) {
+                        // new source
+                        actions._.push([CREATE, 'source', id, source.file, source.mime, source.resolution]);
+                    } else {
+                        let originalSource;
+                        for (let oSource of data.videosAndSources[id].sources) {
+                            if (oSource.id === source.id) {
+                                originalSource = oSource;
+                                break;
+                            }
+                        }
+
+                        if (source.file !== originalSource.file) {
+                            actions.source = actions.source || [];
+                            actions.source.push([UPDATE, source.id, 'file', source.file]);
+                        }
+                        if (source.mime !== originalSource.mime) {
+                            actions.source = actions.source || [];
+                            actions.source.push([UPDATE, source.id, 'mime', source.mime]);
+                        }
+                        if (source.resolution !== originalSource.resolution) {
+                            actions.source = actions.source || [];
+                            actions.source.push(([UPDATE, source.id, 'resolution', source.resolution]));
+                        }
+                    }
+                }
+            }
+        }
 
         actions = packPayload(actions);
         if (valid && actions.length && actions !== '{"_":[]}' && actions !== '{}') {

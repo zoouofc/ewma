@@ -89,7 +89,7 @@ dbWrapper.acquire(function (db) {
                     }
                     process.stdout.write('\n');
                     if (request.headers['content-type'] === 'text/html') {
-                        request.user.checkPerm('summary_view', (err, ok) => {
+                        request.user.checkPerm('view_summary', (err, ok) => {
                             if (err) {
                                 throw err;
                             }

@@ -9,6 +9,7 @@
     "inst": "scripts/build.js install",
     "genuser": "scripts/genuser.js",
     "compute-source-length": "scripts/compute-source-length.js",
+    "compute-resolution": "scripts/compute-resolution.js",
     "db-update": "scripts/db-update.sh",
     "postdb-update": "scripts/cleanshell.sh",
     "db-update-schema": "scripts/update-schema.sh"

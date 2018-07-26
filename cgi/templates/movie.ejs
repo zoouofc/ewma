@@ -1,16 +1,56 @@
 <!DOCTYPE html>
 <head>
-    <%- include('head_shit.ejs', {title: `EWMA | Watch ${primary.title}`, request: request, cacheBuster: cacheBuster}); %>
+    <%- include('head_shit.ejs', {title: `EWMA | Stream`, request: request, cacheBuster: cacheBuster}); %>
 </head>
 <body>
     <div id="site">
         <%- include('headers.ejs', {pageId: 'movies'}); %>
         <div id="content">
-            <% if (trailer) { %>
-                <%- include('_source.ejs', {movie: trailer}); %>
-                <hr />
+            <div class="movie">
+                <div class="movieTitleBlock">
+                    <div class="fr tar">
+                        <% if (oneVideo.deptDisplay) { %>
+                            <div><%= oneVideo.deptDisplay %></div>
+                        <% } %>
+                        <% if (oneVideo.movieYear) { %>
+                            <div><%= oneVideo.movieYear %></div>
+                        <% } %>
+
+                        <% if (oneVideo.movieTheme) { %>
+                            <div>Theme: <%= oneVideo.movieTheme %></div>
+                        <% } %>
+                        <div class="smolits">Movie <%= oneVideo.movieId %></div>
+                    </div>
+                    <h2>
+                        <%= oneVideo.movieTitle || "?" %>
+                        <% if (oneVideo.movieRating) { %>
+                            <div class="stars">
+                                <div class="empty-stars"></div>
+                                <div class="full-stars" style="width: <%= oneVideo.movieRating || '0'; %>%;"></div>
+                            </div>
+                        <% } %>
+                    </h2>
+                    <div class="movieAwards tac">
+                        <% for (let award of awards) { %>
+                            <%- include('award.ejs', {award: award}); %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <% for (let trailer of trailers) { %>
+                <%- include('_source.ejs', {video: trailer}); %>
             <% } %>
-            <%- include('_source.ejs', {movie: primary}); %>
+            <% for (let commentary of commentaries) { %>
+                <%- include('_source.ejs', {video: commentary}); %>
+            <% } %>
+            <% for (let other of others) { %>
+                <%- include('_source.ejs', {video: other}); %>
+            <% } %>
+            <% for (let prim of primary) { %>
+                <%- include('_source.ejs', {video: prim}); %>
+            <% } %>
         </div>
         <%- include('footers.ejs', {}); %>
     </div>

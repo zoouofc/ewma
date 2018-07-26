@@ -30,7 +30,12 @@ fs.readdir(conf['movie-sources'], (err, dir) => {
                     return;
                 }
 
-                db.do(`UPDATE movies SET duration = ? WHERE src = ?`, [Math.floor(probe.format.duration), file], (err) => {
+                db.do(`UPDATE movies
+                        INNER JOIN videos ON videos.movie_id = movies.id
+                        INNER JOIN sources ON video.id = sources.videos.id
+                        SET movies.duration = ?
+                        WHERE sources.file = ?`,
+                    [Math.floor(probe.format.duration), file], (err) => {
                     if (err) {
                         throw err;
                     }

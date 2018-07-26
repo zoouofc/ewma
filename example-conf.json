@@ -2,6 +2,7 @@
     "build-destination": "/srv/http/ewma",
     "movie-sources": "/path/to/movies",
     "build-require-sudo": true,
+    "create-sourceMaps": false,
     "cgi-executable": "/usr/bin/node",
     "database-user": "ewma",
     "database-password": "XXXXXXXXXX",
@@ -18,5 +19,8 @@
         "Best Actor",
         "Best Actress",
         "Best Picture"
-    ]
+    ],
+    "templateOptions": {
+        "remoteMovies": null
+    }
 }

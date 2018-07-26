@@ -276,7 +276,8 @@ let steps = [
                     if (/\.js$/.test(file)) {
                         transpilationCounter++;
                         babel.transformFile(`${__dirname}/../static/js/${file}`, {
-                            presets: ['env']
+                            presets: ['env'],
+                            sourceMaps: conf['create-sourceMaps']
                         }, (err, result) => {
                             if (!error) {
                                 if (err) {

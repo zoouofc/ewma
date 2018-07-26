@@ -30,45 +30,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Source File:</td><td><input type="text" name="src" value="<%= movie.src %>" size="50" /></td>
-                        <td>Source MIME:</td>
-                        <td>
-                            <select name="mime">
-                                <% for (let mime of mimes) { %>
-                                    <% if (mime.name === movie.mime) { %>
-                                        <option value="<%= mime.name %>" label="<%= mime.display %>" selected="selected"><%= mime.display %></option>
-                                    <% } else { %>
-                                        <option value="<%= mime.name %>" label="<%= mime.display %>"><%= mime.display %></option>
-                                    <% } %>
-                                <% } %>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Trailer: </td>
-                        <td>
-                            <% if (movie.trailer) { %>
-                                <input type="checkbox" name="trailer" checked="checked" />
-                            <% } else { %>
-                                <input type="checkbox" name="trailer" />
-                            <% } %>
-                        </td>
-                        <td class="trailerspecify <%= movie.trailer? '' : 'hdn' %>">Movie Parent:</td>
-                        <td class="trailerspecify <%= movie.trailer? '' : 'hdn' %>">
-                            <select name="trailerParent">
-                                <option value="-1" label="Please select a parent" disabled="disabled">Please select a parent</option>
-                                <% for (let parent of allMovies) { %>
-                                    <% if (parent.val === movie.trailer) { %>
-                                        <option value="<%= parent.val %>" label="<%= parent.text %>" selected="selected"><%= parent.text %></option>
-                                    <% } else { %>
-                                        <option value="<%= parent.val %>" label="<%= parent.text %>"><%= parent.text %></option>
-                                    <% } %>
-                                <% } %>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr><td colspan=4 class="tabledivider"><hr /></td></tr>
-                    <tr>
                         <td>Theme:</td>
                         <td>
                             <select name="themeExisting">
@@ -85,7 +46,84 @@
                         <td class="themespecify hdn">Please Specify:</td>
                         <td class="themespecify hdn"><input name="themeNew" type="text" size="50" /></td>
                     </tr>
-                    <tr><td colspan=4 class="tabledivider"><hr /></td></tr>
+                    <tr>
+                        <td colspan="4" style="text-align: center">
+                            <input type="button" value="Add Video" id="newVideoButton" />
+                        </td>
+                    </tr>
+                    <tr><td colspan="4" class="tabledivider"><hr /></td></tr>
+                    <% for (let video in videosAndSources) { %>
+                        <tr data-video-id="<%= video %>">
+                            <td>Video:</td>
+                            <td>
+                                <input type="text" disabled="disabled" value="<%= video %>">
+                                <input type="button" value="X" data-video-id="<%= video %>" class="deleteVideo">
+                            </td>
+                            <td>Video Class:</td>
+                            <td>
+                                <select name="type" data-video-id="<%= video %>">
+                                    <% for (let type of videoTypes) { %>
+                                        <% if (videosAndSources[video].type === type) { %>
+                                            <option value="<%= type %>" label="<%= type %>" selected="selected"><%= type %></option>
+                                        <% } else { %>
+                                            <option value="<%= type %>" label="<%= type %>"><%= type %></option>
+                                        <% } %>
+                                    <% } %>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr data-video-id="<%= video %>">
+                            <td>Title:</td>
+                            <td><input name="title" data-video-id="<%= video %>" value="<%= videosAndSources[video].title %>" size="50"></td>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Add Source" class="addSource" data-video-id="<%= video %>">
+                            </td>
+                        </tr>
+                        <% for (let source of videosAndSources[video].sources) { %>
+                            <tr data-source-id="<%= source.id %>" data-video-id="<%= video %>">
+                                <td colspan="4" class="tabledivider"><hr style="width: 75%"/></td>
+                            </tr>
+                            <tr data-source-id="<%= source.id %>" data-video-id="<%= video %>">
+                                <td>Source:</td>
+                                <td>
+                                    <input disabled="disabled" type="text" value="<%= source.id %>">
+                                    <input type="button" value="X" class="deleteSource" data-source-id="<%= source.id %>" />
+                                </td>
+                                <td>Source MIME:</td>
+                                <td>
+                                    <select name="mime" data-source-id="<%= source.id %>">
+                                        <% for (let mime of mimes) { %>
+                                            <% if (mime.name === source.mime) { %>
+                                                <option value="<%= mime.name %>" label="<%= mime.display %>" selected="selected"><%= mime.display %></option>
+                                            <% } else { %>
+                                                <option value="<%= mime.name %>" label="<%= mime.display %>"><%= mime.display %></option>
+                                            <% } %>
+                                        <% } %>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr data-source-id="<%= source.id %>" data-video-id="<%= video %>">
+                                <td>Source File:</td>
+                                <td>
+                                    <input type="text" name="file" value="<%= source.file %>" size="50" data-source-id="<%= source.id %>" />
+                                </td>
+                                <td>Resolution:</td>
+                                <td>
+                                    <select name="resolution" data-source-id="<%= source.id %>">
+                                        <% for (let resolution of resolutions) { %>
+                                            <% if (resolution === source.resolution) { %>
+                                                <option value="<%= resolution %>" label="<%= resolution %>" selected="selected"><%= resolution %></option>
+                                            <% } else { %>
+                                                <option value="<%= resolution %>" label="<%= resolution %>"><%= resolution %></option>
+                                            <% } %>
+                                        <% } %>
+                                    </select>
+                                </td>
+                            </tr>
+                        <% } %>
+                        <tr data-video-id="<%= video %>"><td colspan="4" class="tabledivider"><hr /></td></tr>
+                    <% } %>
                     <tr><td colspan=4 style="text-align: center"><input type="button" value="New Award" id="newAwardButton" /></td></tr>
                     <% for (let award of awards) { %>
                         <tr class="awardExist">
@@ -108,7 +146,13 @@
             <input type="button" id="submit" value="Submit" />
         </div>
         <script>
-            window.data = <%- JSON.stringify({movie: movie, awards: awards, depts: depts, themes: themes}) %>;
+            window.data = <%- JSON.stringify({
+                movie: movie,
+                awards: awards,
+                depts: depts,
+                themes: themes,
+                videosAndSources: videosAndSources
+            }) %>;
         </script>
         <%- include('../footers.ejs', {}); %>
     </div>

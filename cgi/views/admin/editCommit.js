@@ -57,6 +57,24 @@ function generateActionsFromPayload (movie, payload) {
                             }
                         });
                         break;
+                    case 'source':
+                        actions.push({
+                            hr: `Delete source ${entry[2]}`,
+                            db: {
+                                q: `DELETE FROM sources WHERE id = ?`,
+                                r: [entry[2]]
+                            }
+                        });
+                        break;
+                    case 'video':
+                        actions.push({
+                            hr: `Delete video ${entry[2]}`,
+                            db: {
+                                q: `DELETE FROM videos WHERE id = ?`,
+                                r: [entry[2]]
+                            }
+                        });
+                        break;
                     default:
                         throw new Error('cannot delete unknown type');
                 }
@@ -78,6 +96,24 @@ function generateActionsFromPayload (movie, payload) {
                             db: {
                                 q: `INSERT INTO trailer (trailer, parent) VALUES (?, ?)`,
                                 r: [movie.id, entry[2]]
+                            }
+                        });
+                        break;
+                    case 'source':
+                        actions.push({
+                            hr: `Create new source on video ${entry[2]}`,
+                            db: {
+                                q: `INSERT INTO sources (video_id, file, mime, resolution) VALUES (?, ?, ?, ?)`,
+                                r: [entry[2], entry[3], entry[4], entry[5]]
+                            }
+                        });
+                        break;
+                    case 'video':
+                        actions.push({
+                            hr: `Create new video on movie ${movie.id}`,
+                            db: {
+                                q: `INSERT INTO videos (movie_id, type, title) VALUES (?, ?, ?)`,
+                                r: [movie.id, entry[2], entry[3]]
                             }
                         });
                         break;
@@ -111,8 +147,46 @@ function generateActionsFromPayload (movie, payload) {
         }
     }
 
+    payload.video = payload.video || [];
+    for (let entry of payload.video) {
+        switch (actionMap[entry[0]]) {
+            case 'UPDATE':
+                let post = {};
+                post[entry[2]] = entry[3];
+                actions.push({
+                    hr: `Update video no ${entry[1]} ${entry[2]} => ${entry[3]}`,
+                    db: {
+                        q: `UPDATE videos SET ? WHERE id = ?`,
+                        r: [post, entry[1]]
+                    }
+                });
+                break;
+            default:
+                throw new Error('unknown action');
+        }
+    }
+
+    payload.source = payload.source || [];
+    for (let entry of payload.source) {
+        switch (actionMap[entry[0]]) {
+            case 'UPDATE':
+                let post = {};
+                post[entry[2]] = entry[3];
+                actions.push({
+                    hr: `Update source no ${entry[1]} ${entry[2]} => ${entry[3]}`,
+                    db: {
+                        q: `UPDATE sources SET ? WHERE id = ?`,
+                        r: [post, entry[1]]
+                    }
+                });
+                break;
+            default:
+                throw new Error('unknown action');
+        }
+    }
+
     for (let prop in payload) {
-        if (prop !== '_' && prop !== 'award') {
+        if (prop !== '_' && prop !== 'award' && prop !== 'video' && prop !== 'source') {
             let entry = payload[prop];
             switch (actionMap[entry[0]]) {
                 case 'UPDATE':
@@ -168,7 +242,7 @@ function viewCommit (request, cb) {
         request.stylesheets.push('edit');
         let id = parseInt(request.pathname.split('/')[3], 10);
 
-        request.db.do('SELECT title, rating, year, dept, src, mime, theme FROM movies where id = ?', [id], (err, movie) => {
+        request.db.do('SELECT title, rating, year, dept, theme FROM movies where id = ?', [id], (err, movie) => {
             if (err) {
                 throw err;
             }
@@ -214,7 +288,7 @@ function viewCommit (request, cb) {
 function commit (request, cb) {
     let id = parseInt(request.pathname.split('/')[3], 10);
 
-    request.db.do('SELECT title, rating, year, dept, src, mime, theme FROM movies where id = ?', [id], (err, movie) => {
+    request.db.do('SELECT title, rating, year, dept, theme FROM movies where id = ?', [id], (err, movie) => {
         if (err) {
             throw err;
         }

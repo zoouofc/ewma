@@ -1,31 +1,18 @@
 <div class="movie">
     <div class="movieTitleBlock">
         <div class="fr tar">
-            <% if (movie.display) { %>
-                <div><%= movie.display %></div>
-            <% } %>
-            <% if (movie.year) { %>
-                <div><%= movie.year %></div>
-            <% } %>
-            <div><%= movie.viewcount || 0 %> View<%= movie.viewcount === 1 ? '' : 's' %></div>
+            <div class="videoBadge videoBadge-<%= video.type %>"></div>
+            <div><%= video.viewcount || 0 %> View<%= video.viewcount === 1 ? '' : 's' %></div>
+            <div class="smolits">Video <%= video.id %></div>
         </div>
         <h3>
             <% if (request.permissions.movie_edit) {%>
-                <a href="/admin/edit/<%= movie.id %>" title="Edit Movie">
+                <a href="/admin/edit/<%= video.movieId %>" title="Edit Movie">
                     <img class="editIcon" alt="edit" src="<%= cacheBuster('images/edit.svg'); %>" />
                 </a>
             <% } %>
-            <%= movie.title || "?" %>
-            <% if (movie.rating) { %>
-                <div class="stars">
-                    <div class="empty-stars"></div>
-                    <div class="full-stars" style="width: <%= movie.rating || '0'; %>%;"></div>
-                </div>
-            <% } %>
+            <%= video.videoTitle || "?" %>
         </h3>
-        <% if (movie.theme) { %>
-            <span class="smolits">Theme: <%= movie.theme %></span>
-        <% } %>
     </div>
     <br>
     <div class="movieSourceBlock">
@@ -33,22 +20,21 @@
             <tbody>
                 <tr>
                     <td>
-                        <video src="/static/movie_sources/<%= movie.src %>"
-                            type="<%= movie.mime %>"
+                        <video
                             controls
                             poster="<%= cacheBuster(`images/ewma_poster.svg`); %>"
-                            data-movie-id="<%= movie.id %>"
-                        ></video>
+                            data-movie-id="<%= video.movieId %>"
+                            data-video-id="<%= video.id %>"
+                        >
+                            <% for (let source of video.sources) { %>
+                                <source type="<%= source.mime %>"
+                                    src="<%= templateOptions.remoteMovies %>/static/movie_sources/<%= source.file %>"
+                                    data-source-id="<%= source.id %>"
+                                    data-source-resolution="<%= source.resolution %>">
+                            <% } %>
+                            Go get a browser that was made in the last 5 years.
+                        </video>
                     </td>
-                    <% if (movie.awards && movie.awards.length) { %>
-                        <td>
-                            <div class="movieAwards tac">
-                                <% for (let award of movie.awards) { %>
-                                    <%- include('award.ejs', {award: award}); %>
-                                <% } %>
-                            </div>
-                        </td>
-                    <% } %>
                 </tr>
             </tbody>
         </table>

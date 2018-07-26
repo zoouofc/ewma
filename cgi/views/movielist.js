@@ -172,6 +172,79 @@ module.exports.handle = (request, cb) => {
     }
 
     page.populateHeaders(request, () => {
+        let movies;
+        let awards;
+        let maxRating;
+        let videoTypes = {
+            commentary: [],
+            primary: [],
+            trailer: [],
+            other: []
+        };
+        let queries = 4;
+
+        function done() {
+            if (--queries === 0) {
+                // everything is ready
+                for (let movie of movies) {
+                    movie.rating = movie.rating / maxRating * 100;
+
+                    if (movie.duration) {
+                        movie.durationDisplay = time.secondsToStamp(movie.duration);
+                    }
+
+                    movie.awards = [];
+                    for (let award of awards) {
+                        if (award.movie_id === movie.id) {
+                            movie.awards.push(award);
+                        }
+                    }
+
+                    movie.hasCommentary = videoTypes.commentary.indexOf(movie.id) !== -1;
+                    movie.hasPrimary = videoTypes.primary.indexOf(movie.id) !== -1;
+                    movie.hasTrailer = videoTypes.trailer.indexOf(movie.id) !== -1;
+                    movie.hasOther = videoTypes.other.indexOf(movie.id) !== -1;
+
+                    movie.hasVideo = movie.hasCommentary || movie.hasPrimary || movie.hasTrailer || movie.hasOther;
+                }
+
+                movies.sort(sorter);
+
+                // group on year
+                let sortedMovies = [];
+                for (let movie of movies) {
+                    if (!sortedMovies.length) {
+                        sortedMovies.push({
+                            year: movie.year,
+                            movies: []
+                        });
+                    }
+
+                    if (sortedMovies[sortedMovies.length - 1].year === movie.year) {
+                        sortedMovies[sortedMovies.length - 1].movies.push(movie);
+                    } else {
+                        sortedMovies.push({
+                            year: movie.year,
+                            movies: [movie]
+                        });
+                    }
+                }
+
+                template.get('movielist.ejs', {
+                    request: request,
+                    movies: sortedMovies,
+                    sortType: sortType
+                }, (err, content) => {
+                    if (err) {
+                        throw err;
+                    }
+                    request.body = content;
+                    cb();
+                });
+            }
+        }
+
+
         request.db.do(`
             SELECT
                 m.title,
@@ -180,84 +253,55 @@ module.exports.handle = (request, cb) => {
                 m.id,
                 m.dept,
                 d.display,
-                m.src,
-                m.mime,
                 m.theme,
                 m.duration,
-                (SELECT s.trailer FROM trailer s WHERE s.parent = m.id) as trailer
+                (SELECT v.id FROM videos v WHERE v.movie_id = m.id LIMIT 1) as clickable
             FROM movies m
                 LEFT JOIN department d
-                    ON m.dept = d.abbr
-            WHERE m.id NOT IN
-                (SELECT t.trailer FROM trailer t)`, (err, rows) => {
+                    ON m.dept = d.abbr`, (err, rows) => {
             if (err) {
                 throw err
             }
-            request.db.do('SELECT max(rating) as rating from movies;', (err, max) => {
-                if (err) {
-                    throw err;
+            movies = rows;
+            done();
+        });
+
+
+        request.db.do('SELECT max(rating) as rating from movies;', (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            maxRating = rows[0].rating < 100 ? 100 : rows[0].rating;
+            done();
+        });
+
+        request.db.do('SELECT name, note, movie_id FROM award', (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            for (let row of rows) {
+                if (GOLDIES.indexOf(row.name) !== -1) {
+                    row.gold = true;
                 }
-                max = max[0].rating < 100 ? 100 : max[0].rating;
+            }
+            awards = rows;
+            done();
+        });
 
-                let iterator = 0;
-                let movies = [];
-                for (let i = 0; i < rows.length; i++) {
-                    rows[i].rating = rows[i].rating / max * 100;
-                    if (rows[i].duration) {
-                        rows[i].durationDisplay = time.secondsToStamp(rows[i].duration);
-                    }
-                    request.db.do(`
-                        SELECT name, note, movie_id
-                        FROM award
-                        WHERE movie_id = ?`, [rows[i].id], (err, awards) => {
-                        if (err) {
-                            throw err;
-                        }
-                        rows[i].awards = awards;
-
-                        for (let award of rows[i].awards) {
-                            if (GOLDIES.indexOf(award.name) !== -1) {
-                                award.gold = true;
-                            }
-                        }
-
-                        iterator++;
-                        if (iterator === rows.length) {
-                            // we're done
-                            rows.sort(sorter);
-                            // group on year
-                            for (let row of rows) {
-                                if (!movies.length) {
-                                    movies.push({
-                                        year: row.year,
-                                        movies: []
-                                    });
-                                }
-
-                                if (movies[movies.length - 1].year === row.year) {
-                                    movies[movies.length - 1].movies.push(row);
-                                } else {
-                                    movies.push({
-                                        year: row.year,
-                                        movies: [row]
-                                    });
-                                }
-                            }
-                            template.get('movielist.ejs', {
-                                request: request,
-                                movies: movies,
-                                sortType: sortType
-                            }, (err, content) => {
-                                if (err) {
-                                    throw err;
-                                }
-                                request.body = content;
-                                cb();
-                            });
-                        }
-                    });
+        // Join on sources here because we don't care about video entries that don't have any sources
+        request.db.do('SELECT videos.type, videos.movie_id FROM videos INNER JOIN sources on sources.video_id = videos.id', (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            for (let row of rows) {
+                if (!(row.type in videoTypes)) {
+                    throw new Error(`Unknown videoType: ${row.type}`);
                 }
-            });
+                if (videoTypes[row.type].indexOf(row.movie_id) === -1) {
+                    videoTypes[row.type].push(row.movie_id);
+                }
+            }
+            done();
         });
     });
 };
