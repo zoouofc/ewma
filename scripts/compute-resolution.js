@@ -28,46 +28,59 @@ fs.readdir(conf['movie-sources'], (err, dir) => {
     dbW.acquire(function (db) {
         let ongoing = 0;
 
-        for (let file of dir) {
-            ongoing++;
+        db.do('SELECT file FROM sources WHERE resolution IS NULL', (err, rows) => {
+            if (err) {
+                throw err;
+            }
 
-            ffprobe(`${conf['movie-sources']}/${file}`, (err, probe) => {
-                if (err) {
-                    console.error(`\x1b[31mcould not probe source: ${file}: ${err}\x1b[0m`);
-                    cont(db, --ongoing);
-                    return;
-                }
 
-                let resolution;
-                for (let stream of probe.streams) {
-                    if (stream.codec_type === 'video') {
-                        if (resolution) {
-                            console.error(`\x1b[31mcould not probe source: ${file}: more than one video stream\x1b[0m`);
+            for (let row of rows) {
+                let file = row.file;
+
+                if (file in dir) {
+                    ongoing++;
+
+                    ffprobe(`${conf['movie-sources']}/${file}`, (err, probe) => {
+                        if (err) {
+                            console.error(`\x1b[31mcould not probe source: ${file}: ${err}\x1b[0m`);
                             cont(db, --ongoing);
                             return;
                         }
-                        resolution = resolutionMap[`${stream.width}x${stream.height}`];
-                        if (!resolution) {
-                            console.error(`\x1b[31mcould not probe source: ${file}: unsupported resolution ${stream.width}x${stream.height}\x1b[0m`);
-                            cont(db, --ongoing);
-                            return;
+
+                        let resolution;
+                        for (let stream of probe.streams) {
+                            if (stream.codec_type === 'video') {
+                                if (resolution) {
+                                    console.error(`\x1b[31mcould not probe source: ${file}: more than one video stream\x1b[0m`);
+                                    cont(db, --ongoing);
+                                    return;
+                                }
+                                resolution = resolutionMap[`${stream.width}x${stream.height}`];
+                                if (!resolution) {
+                                    console.error(`\x1b[31mcould not probe source: ${file}: unsupported resolution ${stream.width}x${stream.height}\x1b[0m`);
+                                    cont(db, --ongoing);
+                                    return;
+                                }
+                            }
                         }
-                    }
+
+                        db.do(`UPDATE sources
+                                SET sources.resolution = ?
+                                WHERE sources.file = ?`,
+                            [resolution, file], (err) => {
+                            if (err) {
+                                throw err;
+                            }
+
+                            console.log(`${file}: ${resolution}`);
+                            cont(db, --ongoing);
+                        });
+                    });
+                } else {
+                    console.error(`\x1b[31mcould not probe source: ${file}: not in movie_sources\x1b[0m`);
                 }
-
-                db.do(`UPDATE sources
-                        SET sources.resolution = ?
-                        WHERE sources.file = ?`,
-                    [resolution, file], (err) => {
-                    if (err) {
-                        throw err;
-                    }
-
-                    console.log(`${file}: ${resolution}`);
-                    cont(db, --ongoing);
-                });
-            });
-        }
+            }
+        });
     });
 });
 
