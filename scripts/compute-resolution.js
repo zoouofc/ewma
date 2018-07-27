@@ -9,11 +9,27 @@ const fs = require('fs');
 const conf = require('../conf.json');
 
 const resolutionMap = {
-    '352x240': '240p',
-    '480x360': '360p',
-    '858x480': '480p',
-    '1280x720': '720p',
-    '1920x1080': '1080p'
+    '322x214': '240p',
+    '352x240': '240p', //actual
+    '320x240': '240p',
+    '360x240': '240p',
+
+    '480x360': '360p', //actual
+    '540x360': '360p',
+    '638x360': '360p',
+    '640x328': '360p',
+    '640x352': '360p',
+    '640x354': '360p',
+    '640x356': '360p',
+    '640x358': '360p',
+    '640x360': '360p',
+
+    '858x480': '480p', //actual
+
+    '1280x720': '720p', //actual
+    '960x720': '720p',
+
+    '1920x1080': '1080p' //actual
 };
 
 require('./_path_configuration.js')();
@@ -33,11 +49,10 @@ fs.readdir(conf['movie-sources'], (err, dir) => {
                 throw err;
             }
 
-
             for (let row of rows) {
                 let file = row.file;
 
-                if (file in dir) {
+                if (dir.indexOf(file) !== -1) {
                     ongoing++;
 
                     ffprobe(`${conf['movie-sources']}/${file}`, (err, probe) => {
