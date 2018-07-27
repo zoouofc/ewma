@@ -335,45 +335,63 @@ let steps = [
                 let transpilationCounter = 0;
                 let error = false;
                 for (let file of dir) {
-                    transpilationCounter++;
-                    sass.render({
-                        file: `${__dirname}/../static/css/${file}`,
-                        includePaths: [`${__dirname}/../static/css`],
-                        indentWidth: 4,
-                        outputStyle: 'expanded'
-                    }, (err, result) => {
-                        if (!error) {
-                            if (err) {
-                                error = true;
-                                cb(err);
-                                return;
-                            }
-
-                            let reg = /^(.*)\..*?/.exec(file);
-                            if (reg) {
-                                file = `${reg[1]}.css`;
-                            } else {
-                                file += '.css';
-                            }
-
-                            writeHash(`css/${file}`, result.css);
-
-                            fs.writeFile(`${conf['build-destination']}/static/css/${file}`, result.css, (err) => {
-                                if (!error) {
-                                    if (err) {
-                                        error = true;
-                                        cb(err);
-                                        return;
-                                    }
-                                    transpilationCounter--;
-                                    console.log(`    [${transpilationCounter} ongoing] Transpiled and wrote css/${file}`);
-                                    if (transpilationCounter === 0) {
-                                        cb();
-                                    }
+                    if (/\.sass$/.test(file)) {
+                        transpilationCounter++;
+                        sass.render({
+                            file: `${__dirname}/../static/css/${file}`,
+                            includePaths: [`${__dirname}/../static/css`],
+                            indentWidth: 4,
+                            outputStyle: 'expanded'
+                        }, (err, result) => {
+                            if (!error) {
+                                if (err) {
+                                    error = true;
+                                    cb(err);
+                                    return;
                                 }
-                            });
-                        }
-                    });
+
+                                let reg = /^(.*)\..*?/.exec(file);
+                                if (reg) {
+                                    file = `${reg[1]}.css`;
+                                } else {
+                                    file += '.css';
+                                }
+
+                                writeHash(`css/${file}`, result.css);
+
+                                fs.writeFile(`${conf['build-destination']}/static/css/${file}`, result.css, (err) => {
+                                    if (!error) {
+                                        if (err) {
+                                            error = true;
+                                            cb(err);
+                                            return;
+                                        }
+                                        transpilationCounter--;
+                                        console.log(`    [${transpilationCounter} ongoing] Transpiled and wrote css/${file}`);
+                                        if (transpilationCounter === 0) {
+                                            cb();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    },
+    {
+        name: 'Migrating CSS Libraries',
+        hook: (cb) => {
+            let cp = child_process.spawn('cp', ['-r', 'static/css/lib', `${conf['build-destination']}/static/css/`], {
+                stdio: 'inherit'
+            });
+
+            cp.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
                 }
             });
         }

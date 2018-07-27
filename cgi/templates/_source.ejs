@@ -20,20 +20,27 @@
             <tbody>
                 <tr>
                     <td>
-                        <video
-                            controls
-                            poster="<%= cacheBuster(`images/ewma_poster.svg`); %>"
-                            data-movie-id="<%= video.movieId %>"
-                            data-video-id="<%= video.id %>"
-                        >
-                            <% for (let source of video.sources) { %>
-                                <source type="<%= source.mime %>"
-                                    src="<%= templateOptions.remoteMovies %>/static/movie_sources/<%= source.file %>"
-                                    data-source-id="<%= source.id %>"
-                                    data-source-resolution="<%= source.resolution %>">
-                            <% } %>
-                            Go get a browser that was made in the last 5 years.
-                        </video>
+                        <div class="videoContainer">
+                            <video
+                                poster="<%= cacheBuster(`images/ewma_poster.svg`); %>"
+                                data-movie-id="<%= video.movieId %>"
+                                data-video-id="<%= video.id %>"
+                                controls
+                                id="video-<%= video.id %>"
+                                data-plyr-config="{}"
+                            >
+                                <% for (let source of video.sources) { %>
+                                    <source type="<%= source.mime %>"
+                                        src="<%= templateOptions.remoteMovies %>/static/movie_sources/<%= source.file %>"
+                                        data-source-id="<%= source.id %>"
+                                        <% if (source.resolution) { %>
+                                            size="<%= source.resolution.replace(/[^0-9]/g, '') %>"
+                                        <% } %>
+                                    >
+                                <% } %>
+                                Go get a browser that was made in the last 5 years.
+                            </video>
+                        </div>
                     </td>
                 </tr>
             </tbody>

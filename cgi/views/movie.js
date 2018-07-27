@@ -13,8 +13,8 @@ module.exports.name = 'movie';
 module.exports.type = 'GET';
 
 module.exports.handle = (request, cb) => {
-    request.stylesheets.push('movie', 'awards');
-    request.scripts.push('movie');
+    request.stylesheets.push('movie', 'awards', 'player', 'lib/plyr.min');
+    request.scripts.push('movie', 'lib/plyr.min');
     page.populateHeaders(request, () => {
         let id = request.pathname.split('/')[2];
         request.db.do(`

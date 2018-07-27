@@ -8,7 +8,7 @@
 const hashes = require(`${__rootname}/hashes.json`);
 
 function generateURL (path) {
-    if (/^js\/lib\//.test(path)) {
+    if (/^js\/lib\//.test(path) || /^css\/lib\//.test(path)) {
         // we don't cachebust libraries
         return `/static/${path}`;
     }

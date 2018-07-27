@@ -1,5 +1,6 @@
 let playingMovies = {},
-    submittedMovies = [];
+    submittedMovies = [],
+    players;
 
 Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
     get: function(){
@@ -9,6 +10,12 @@ Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
 
 
 $(document).ready(function() {
+    players = Plyr.setup('.videoContainer video', {
+        settings: ['quality', 'speed', 'loop'],
+        disableContextMenu: false
+    });
+
+
     setInterval(function() {
         $(`video[data-video-id]`).each(function (index, element) {
             if (element.playing) {
