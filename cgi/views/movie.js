@@ -94,7 +94,7 @@ module.exports.handle = (request, cb) => {
                             case 'commentary':
                                 commentaries.push(video);
                                 break;
-                            case 'others':
+                            case 'other':
                                 others.push(video);
                                 break;
                             case 'primary':
