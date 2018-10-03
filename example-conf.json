@@ -22,5 +22,6 @@
     ],
     "templateOptions": {
         "remoteMovies": null
-    }
+    },
+    "password-reset-window": 600000
 }

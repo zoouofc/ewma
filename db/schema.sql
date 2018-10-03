@@ -52,6 +52,20 @@ CREATE TABLE `movies` (
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4;
 
 --
+-- Table structure for table `passwordtoken`
+--
+
+DROP TABLE IF EXISTS `passwordtoken`;
+CREATE TABLE `passwordtoken` (
+  `user` char(36) CHARACTER SET latin1 NOT NULL,
+  `token` char(29) CHARACTER SET latin1 NOT NULL,
+  `created` int(11) NOT NULL,
+  PRIMARY KEY (`token`),
+  KEY `passwordtoken_user_fk1` (`user`),
+  CONSTRAINT `passwordtoken_user_fk1` FOREIGN KEY (`user`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
 -- Table structure for table `permission_schema`
 --
 
@@ -107,7 +121,7 @@ CREATE TABLE `sources` (
   UNIQUE KEY `file` (`file`),
   KEY `video_id` (`video_id`),
   CONSTRAINT `sources_ibfk_1` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Table structure for table `users`
@@ -138,7 +152,7 @@ CREATE TABLE `videos` (
   PRIMARY KEY (`id`),
   KEY `movie_id` (`movie_id`),
   CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Table structure for table `viewcount`
@@ -153,4 +167,4 @@ CREATE TABLE `viewcount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- Dump completed on 2018-07-25 23:51:58
+-- Dump completed on 2018-10-02 12:43:46

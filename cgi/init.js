@@ -47,7 +47,11 @@ dbWrapper.acquire(function (db) {
 
             // expired session or first time
             if ((!request.cookie.session || !user)
-                && (request.pathname !== '/tosagree' && request.pathname !== '/newaccount')
+                && (
+                    request.pathname !== '/tosagree'
+                    && request.pathname !== '/newaccount'
+                    && request.pathname !== '/useapasswordmanager'
+                )
                 && request.method === 'GET'
             ) {
                 // tsk tsk. Better make sure they're not an ass first
