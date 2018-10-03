@@ -142,23 +142,23 @@ function handleResetAttempt (request, cb) {
                 ], (err) => {
                     if (err) {
                         throw err;
-
-                        template.get('password_reset_email.ejs', {
-                            token: encodeURIComponent(salt),
-                            user: encodeURIComponent(rows[0].id)
-                        }, (err, body) => {
-                            mail.sendMail({
-                                To: request.post.email,
-                                Subject: 'Password Reset Request',
-                            }, body, (err) => {
-                                if (err) {
-                                    throw err;
-                                }
-
-                                redirection.found(request, '/', cb);
-                            });
-                        });
                     }
+
+                    template.get('password_reset_email.ejs', {
+                        token: encodeURIComponent(salt),
+                        user: encodeURIComponent(rows[0].id)
+                    }, (err, body) => {
+                        mail.sendMail({
+                            To: request.post.email,
+                            Subject: 'Password Reset Request',
+                        }, body, (err) => {
+                            if (err) {
+                                throw err;
+                            }
+
+                            redirection.found(request, '/', cb);
+                        });
+                    });
                 });
             });
         } else {
