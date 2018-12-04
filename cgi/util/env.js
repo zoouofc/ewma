@@ -32,7 +32,7 @@ module.exports.process = function () {
         // output
         headers: {},
         stylesheets: ['umbrella', 'headers', 'footers'],
-        scripts: ['lib/jquery.min'],
+        scripts: ['edgeCases', 'lib/jquery.min'],
         body: '',
         headerLinks: []
     };
