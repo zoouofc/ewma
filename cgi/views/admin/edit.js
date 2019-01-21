@@ -165,8 +165,8 @@ module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
                     videos.id as videoID,
                     videos.type,
                     videos.title
-                FROM sources
-                    INNER JOIN videos ON sources.video_id = videos.id
+                FROM videos
+                    LEFT JOIN sources ON sources.video_id = videos.id
                 WHERE videos.movie_id = ?
                 ORDER BY sources.id
             `, [id], (err, rows) => {
