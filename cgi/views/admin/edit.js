@@ -184,12 +184,14 @@ module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
                             sources: []
                         };
                     }
-                    videosAndSources[row.videoID].sources.push({
-                        id: row.sourceID,
-                        file: row.file,
-                        mime: row.mime,
-                        resolution: row.resolution
-                    });
+                    if (row.sourceID) {
+                        videosAndSources[row.videoID].sources.push({
+                            id: row.sourceID,
+                            file: row.file,
+                            mime: row.mime,
+                            resolution: row.resolution
+                        });
+                    }
                 }
 
                 if (ok == needed) {
