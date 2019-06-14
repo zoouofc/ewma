@@ -17,7 +17,16 @@
                 <tbody>
                     <% for (let perm of permissions) { %>
                         <tr>
-                            <td class="monospace"><%= perm.permission %></td>
+                            <td class="monospace">
+                                <%= perm.permission %>
+                                <% if (perm.permission !== 'manage_permissions') { %>
+                                    <img src="<%= cacheBuster('images/delete-button.svg') %>"
+                                        class="delete-button"
+                                        data-permission="<%= perm.permission %>"
+                                        width="16"
+                                        height="16">
+                                <% } %>
+                            </td>
                             <td><%= perm.description %></td>
                             <td>
                                 <% for (let user of perm.users) { %>
@@ -29,6 +38,14 @@
                     <% } %>
                 </tbody>
             </table>
+
+            <form action="/admin/permissions/new" method="post">
+                <label for="name">Permission Name</label>
+                <input type="text" maxlength="20" required="required" name="name" pattern="^[a-zA-Z_]*$"/>
+                <label for="description">Permission Description</label>
+                <textarea required="required" maxlength="255" name="description"></textarea>
+                <input type="submit"/>
+            </form>
         </div>
         <%- include('../footers.ejs', {}); %>
     </div>

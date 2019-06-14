@@ -13,6 +13,8 @@ module.exports.type = 'GET';
 
 
 module.exports.handle = page.requirePermission('manage_permissions', (request, cb) => {
+    request.stylesheets.push('permissions');
+    request.scripts.push('permissions');
     page.populateHeaders(request, (err) => {
         if (err) {
             throw err;
