@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
+  <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
+
+<style>
+  body {font-family: 'Didact Gothic';font-size: 16px;}
+</style>
+
 <body>
     <div id="site">
         <%- include('../headers.ejs', {pageId: 'Manage Users'}); %>
         <div id="content" class="tac">
-            <table class="width100 styled-table">
+            <table class="perm-table width100 styled-table">
                 <thead>
                     <tr>
                         <th>Permission</th>
-                        <th>Description</th>
-                        <th>Users With Permission</th>
+                        <th class="perm-description">Description</th>
+                        <th class="perm-users">Users with Permission</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,7 +27,7 @@
                                 <%= perm.permission %>
                                 <% if (perm.permission !== 'manage_permissions') { %>
                                     <img src="<%= cacheBuster('images/delete-button.svg') %>"
-                                        class="delete-button"
+                                        class="delete-button dumb-push"
                                         data-permission="<%= perm.permission %>"
                                         width="16"
                                         height="16">
@@ -39,13 +45,19 @@
                 </tbody>
             </table>
 
-            <form action="/admin/permissions/new" method="post">
-                <label for="name">Permission Name</label>
-                <input type="text" maxlength="20" required="required" name="name" pattern="^[a-zA-Z_]*$"/>
-                <label for="description">Permission Description</label>
-                <textarea required="required" maxlength="255" name="description"></textarea>
-                <input type="submit"/>
-            </form>
+          <div class="page-wrap">
+              <h3>Create Permission</h3>
+              <form action="/admin/permissions/new" method="post">
+                  <label for="name">Permission Name</label><br>
+                  <input class="perm-name-input" type="text" maxlength="20" required="required" name="name" pattern="^[a-zA-Z_]*$"/>
+                  <div class="perm-description">
+                      <label for="description">Permission Description</label>
+                      <textarea class="fixed-textbox" required="required" maxlength="255" name="description"></textarea>
+                  </div>
+                  <input class="button" type="submit"/>
+              </form>
+        </div>
+
         </div>
         <%- include('../footers.ejs', {}); %>
     </div>
