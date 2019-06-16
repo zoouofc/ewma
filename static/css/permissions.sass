@@ -1,6 +1,153 @@
-.delete-button
-    transform: translateY(5px)
+body
+    background-color: #23272A
 
-.delete-button:hover
-    cursor: pointer
+#content
+    padding: 25px 50px 0px 50px
+
+#footer #footerContent
+    color: #00b1fc
+
+.delete-button
     filter: invert(50%)
+    .dumb-push
+        transform: translateY(5px)
+
+    &:hover
+        cursor: pointer
+
+.button
+    padding: 10px 20px 11px
+    font-weight: bold
+    border-radius: 100px
+    color: #23272A
+    background-color: #73d5ff
+    border: 0.5px solid #23272A
+    box-shadow: 0px 0px 0px 1px #73d5ff
+    cursor: pointer
+    outline: none
+
+
+    &:hover
+        color: #93c8df
+        background-color: #2c3037
+        box-shadow: 0px 0px 0px 1px #93c8df
+
+
+.perm-table
+    border: 1px solid #99AAB5
+    border-radius: 10px
+    color: #FFF
+    max-width: 100%
+
+    th
+        letter-spacing: 2px
+        border-bottom: 1px solid #99AAB5
+        border-radius: 10px
+        font-size: 18px
+        color: #008dc9
+        padding-top: 15px
+        padding-bottom: 10px
+        padding-right: 15px
+        padding-left: 10px
+
+    td:not(:last-child), th:not(:last-child)
+        border-right: none
+        border-radius: 10px
+        padding-block-start: 15px
+        padding-block-end: 15px
+        padding-right: 10px
+        padding-left: 10px
+
+    td:nth-cell(2)
+        max-width: 100%
+        word-break: break-all
+
+    td:last-child
+        border-right: none
+        padding-block-start: 15px
+        padding-block-end: 15px
+        border-radius: 10px
+
+    thead tr
+        background: #2c3037
+
+    th.perm-users
+        max-width: 150px
+
+    tr:nth-child(2n)
+        background: #2c3037
+
+    a:-webkit-any-link
+        color: #00b1fc
+        cursor: pointer
+        text-decoration: none
+        &:visited
+           color: #00c9a1
+
+.page-wrap
+    color: #73d5ff
+    width: 400px
+    margin: 50px auto
+    padding: 20px
+    border-radius: 20px
+    background: #2c3037
+    background-size: auto
+    background-origin: padding-box
+    background-clip: border-box
+    box-shadow: #434444
+    border: 2px groove #99AAB5
+    overflow-y: auto
+
+    h3
+        color: #008dc9
+        margin: 0px
+        padding-bottom: 20px
+        letter-spacing: 2px
+
+    .perm-name-input
+        margin-block-start: 6px
+        width: 200px
+        border-radius: 7px
+        border: 1px inset #00000047
+        background-color: #52555c
+        color: #FFF
+        padding-inline-start: 10px
+        outline: none
+
+    .perm-description
+        padding-top: 20px
+        padding-bottom: 15px
+
+        .fixed-textbox
+            outline: none
+            background-color: #52555c
+            margin-block-start: 6px
+            width: 360px
+            height: 120px
+            resize: none
+            border-radius: 10px
+            border: 1px inset #00000047
+            color: #FFF
+            padding-inline-start: 10px
+            padding-inline-end: 10px
+
+        ::-webkit-scrollbar
+            width: 10px
+            height: 10px
+
+        ::-webkit-scrollbar-button:start:decrement,
+        ::-webkit-scrollbar-button:end:increment
+            height: 10px
+            background-color: transparent
+
+        ::-webkit-scrollbar-track-piece
+            visibility: hidden
+
+        ::-webkit-scrollbar-thumb:vertical
+            position: absolute
+            right: 50px
+            padding-right: 5px
+            height: 10px
+            background-color: #73d5ff
+            border: 1px solid #73d5ff
+            -webkit-border-radius: 16px

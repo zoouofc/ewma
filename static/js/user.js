@@ -1,11 +1,12 @@
 $(document).ready(function() {
     $('.delete-button').click(function() {
-        if (confirm('are you sure you wanna delete that, son?')) {
+        if (confirm('are you sure you wanna remove that, son?')) {
             $.ajax({
                 url: '/admin/permissions/delete',
                 method: 'POST',
                 data: JSON.stringify({
-                    permission: $(this).attr('data-permission')
+                    permission: $(this).attr('data-permission'),
+                    user: $(this).attr('data-user')
                 }),
                 contentType: 'application/json',
                 error: function() {
@@ -17,10 +18,4 @@ $(document).ready(function() {
             });
         }
     });
-
-    $('[name="name"]').keypress(function(e) {
-        if (/^[^a-zA-Z_]$/.test(e.originalEvent.key)) {
-            return false;
-        }
-    })
 });

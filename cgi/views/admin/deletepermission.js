@@ -17,16 +17,35 @@ module.exports.handle = page.requirePermission('manage_permissions', (request, c
         return;
     }
 
-    request.db.do('DELETE FROM permissions WHERE perm = ?', [
-        request.post.permission
-    ], (err) => {
-        if (err) {
-            throw err;
-        }
-
-        request.db.do('DELETE FROM permission_schema WHERE perm = ?', [
+    if (!request.post.user) {
+        request.db.do('DELETE FROM permissions WHERE perm = ?', [
             request.post.permission
         ], (err) => {
+            if (err) {
+                throw err;
+            }
+
+            request.db.do('DELETE FROM permission_schema WHERE perm = ?', [
+                request.post.permission
+            ], (err) => {
+                if (err) {
+                    throw err;
+                }
+
+                request.headers['content-type'] = 'application/json';
+                request.body = JSON.stringify({
+                    status: 200,
+                    message: 'success'
+                });
+                cb();
+            });
+        });
+    } else {
+        request.db.do('DELETE FROM permissions WHERE perm = ? AND user = ?', [
+            request.post.permission,
+            request.post.user
+        ], (err) => {
+
             if (err) {
                 throw err;
             }
@@ -38,5 +57,5 @@ module.exports.handle = page.requirePermission('manage_permissions', (request, c
             });
             cb();
         });
-    });
+    }
 });
