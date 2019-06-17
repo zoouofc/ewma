@@ -169,6 +169,7 @@ function handleResetAttempt (request, cb) {
 }
 
 module.exports.handle = (request, cb) => {
+    request.stylesheets.push('newaccount', 'tos');
     switch (request.method) {
         case 'GET':
             resetPage(request, null, cb);

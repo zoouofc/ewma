@@ -25,9 +25,10 @@
                         <tr>
                             <td class="monospace">
                                 <%= perm.permission %>
+                                <br>
                                 <% if (perm.permission !== 'manage_permissions') { %>
-                                    <img src="<%= cacheBuster('images/delete-button.svg') %>"
-                                        class="delete-button dumb-push"
+                                    <img src="<%= cacheBuster('images/delete-colored.svg') %>"
+                                        class="delete-button"
                                         data-permission="<%= perm.permission %>"
                                         width="16"
                                         height="16">

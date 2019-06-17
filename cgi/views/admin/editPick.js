@@ -11,6 +11,7 @@ module.exports.name = 'editPick';
 module.exports.type = 'GET';
 
 module.exports.handle = page.requirePermission('movie_edit', (request, cb) => {
+    request.stylesheets.push('edit');
     request.scripts.push('adminPick');
     page.populateHeaders(request, () => {
         request.db.do('SELECT id, year, dept, title FROM movies ORDER BY year DESC, title ASC;', (err, rows) => {

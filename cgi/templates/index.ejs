@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | Home', request: request, cacheBuster: cacheBuster}); %>
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
+
+<style>
+  body {font-family: 'Didact Gothic';font-size: 16px;}
+</style>
 <body>
     <div id="site">
         <%- include('headers.ejs', {pageId: 'Home'}); %>
