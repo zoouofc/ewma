@@ -2,7 +2,12 @@
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | The ENGG Week Movie Archive'}); %>
     <link rel="stylesheet" type="text/css" href="<%= cacheBuster('css/tos.css'); %>" />
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
+
+<style>
+  body {font-family: 'Didact Gothic';font-size: 16px;}
+</style>
 <body>
     <div id="site">
         <div class="absc db">
@@ -10,23 +15,27 @@
                 <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
             </a>
             <br /><br />
-                <div id="tos">
-                    This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement. Also, we use cookies.
-                    <br />
-                </div>
-                <br/>
-                <div id="errorMessage">
-                    <%= request.errorMessage %>
-                </div>
-                <div id="login" class="tac">
-                    <form id="login" action="/login" method="POST">
-                        <input type="text" name="username" id="username" placeholder="username" />
-                        <input type="password" name="password" id="password" placeholder="password" />
-                        <input type="hidden" name="dest" value="<%= dest %>" />
-                        <input type="submit" value="I promise I won't be an Ass" />
-                    </form>
-                    <a href="/newaccount">Create an Account</a>
-                    <a href="/useapasswordmanager">Forgot Password?</a>
+                <div class="content">
+                    <div id="tos">
+                        This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement. Oh, and we use cookies.
+                        <br />
+                    </div>
+                    <br/>
+                    <div id="errorMessage">
+                        <%= request.errorMessage %>
+                    </div>
+                    <div id="login" class="tac">
+                        <form id="login" action="/login" method="POST">
+                            <input type="text" name="username" id="username" placeholder="username" autocomplete="off" />
+                            <input type="password" name="password" id="password" placeholder="password" />
+                            <input type="hidden" name="dest" value="<%= dest %>" />
+                            <br><br>
+                            <input class="submit" type="submit" value="I promise I won't be an Ass" />
+                        </form>
+                        <br>
+                        <a href="/newaccount">Create an Account</a>
+                        <a href="/useapasswordmanager">Forgot Password?</a>
+                    </div>
                 </div>
         </div>
     </div>

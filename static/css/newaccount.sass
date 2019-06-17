@@ -1,11 +1,75 @@
 form
     text-align: center
-    width: 500px
+    width: 75%
+
     .formPart
         width: 100%
         position: relative
+
+
         input, textarea
             width: 100%
+        .denied
+            color: #73d5ff
+
+        .fixed-textbox
+            outline: none
+            background-color: #52555c
+            margin-block-start: 6px
+            width: 360px
+            height: 120px
+            resize: none
+            border-radius: 10px
+            border: 1px inset #00000047
+            color: #FFF
+            padding-inline-start: 10px
+            padding-inline-end: 10px
+
+        ::-webkit-scrollbar
+            width: 10px
+            height: 10px
+
+        ::-webkit-scrollbar-button:start:decrement,
+        ::-webkit-scrollbar-button:end:increment
+            height: 10px
+            background-color: transparent
+
+        ::-webkit-scrollbar-track-piece
+            visibility: hidden
+
+        ::-webkit-scrollbar-thumb:vertical
+            position: absolute
+            right: 50px
+            padding-right: 5px
+            height: 10px
+            background-color: #73d5ff
+            border: 1px solid #73d5ff
+            -webkit-border-radius: 16px
+
+
 .errText
     text-align: center
     color: #D94D4D
+
+#site
+    #content
+        input[type="submit"]
+            width: 130px
+        .formPart.user-name
+            margin-block-end: 10px
+            width: 75%
+        .formPart.email
+            margin-block-end: 10px
+            width: 75%
+        .user-password
+            margin-block-end: 10px
+            .formPart.initial-pwd,
+            .formPart.retype-pwd,
+                width: 75%
+
+
+
+
+
+
+
