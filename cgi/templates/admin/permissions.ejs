@@ -32,10 +32,10 @@
                             <%= perm.permission %>
                             <br>
                             <% if (perm.permission !== 'manage_permissions') { %>
-                                <img src="<%= cacheBuster('images/delete-colored.svg') %>" 
+                                <img src="<%= cacheBuster('images/delete-colored.svg') %>"
                                     class="delete-button"
-                                    data-permission="<%= perm.permission %>" 
-                                    width="16" 
+                                    data-permission="<%= perm.permission %>"
+                                    width="16"
                                     height="16">
                             <% } %>
                         </td>
@@ -55,11 +55,17 @@
                 <h3>Create Permission</h3>
                 <form action="/admin/permissions/new" method="post">
                     <label for="name">Permission Name</label><br>
-                    <input class="perm-name-input" type="text" maxlength="20" required="required" name="name"
+                    <input class="perm-name-input"
+                        type="text"
+                        maxlength="20"
+                        required="required"
+                        name="name"
                         pattern="^[a-zA-Z_]*$" />
                     <div class="perm-description">
                         <label for="description">Permission Description</label>
-                        <textarea class="fixed-textbox" required="required" maxlength="255"
+                        <textarea class="fixed-textbox"
+                            required="required"
+                            maxlength="255"
                             name="description"></textarea>
                     </div>
                     <input class="button" type="submit" />

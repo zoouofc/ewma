@@ -30,14 +30,20 @@
                     <label for="username">
                         <h3>Username</h3>
                     </label>
-                    <input type="text" name="username" disabled="disabled" value="<%= user.attributes.username %>">
+                    <input type="text"
+                        name="username"
+                            disabled="disabled"
+                            value="<%= user.attributes.username %>">
                 </div>
 
                 <div class="user-email">
                     <label for="email">
                         <h3>Email</h3>
                     </label>
-                    <input type="email" name="email" disabled="disabled" value="<%= user.attributes.email %>">
+                    <input type="email"
+                        name="email"
+                        disabled="disabled"
+                        value="<%= user.attributes.email %>">
                 </div>
             </div>
             <div class="right-panel">
@@ -69,11 +75,11 @@
                                 <tr>
                                     <td>
                                         <% if (has_permission && permission !== 'manage_permissions') { %>
-                                            <img src="<%= cacheBuster('images/delete-colored.svg') %>" 
+                                            <img src="<%= cacheBuster('images/delete-colored.svg') %>"
                                                 class="delete-button"
-                                                data-user="<%= user.attributes.id %>" 
+                                                data-user="<%= user.attributes.id %>"
                                                 data-permission="<%= permission %>"
-                                                width="15" 
+                                                width="15"
                                                 height="15">
                                         <% } %>
                                         <%= permission %><% } %></td>
