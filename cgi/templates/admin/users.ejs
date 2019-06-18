@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
-  <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
 
 <style>
-  body {font-family: 'Didact Gothic';font-size: 16px;}
+    body {
+        font-family: 'Didact Gothic';
+        font-size: 16px;
+    }
+
 </style>
 
 <body>
@@ -23,25 +28,24 @@
                 </thead>
                 <tbody>
                     <% for (let user of users) { %>
-                        <tr>
-                            <td><a href="/admin/user/<%= user.attributes.id %>"><%= user.attributes.username %></a></td>
-                            <td><a class="user-email" href="mailto:<%= user.attributes.email %>"><%= user.attributes.email %></a></td>
-                            <td class="monospace" data-approved="<%= user.attributes.approved %>"><%= user.attributes.approved ? 'true' : 'false' %></td>
-                            <td class="monospace">
-                                <% for (let perm of [...user.permissions].sort()) { %>
-                                    <%= perm %>
-                                    <br />
-                                <% } %>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td><a href="/admin/user/<%= user.attributes.id %>"><%= user.attributes.username %></a></td>
+                        <td><a class="user-email"
+                                href="mailto:<%= user.attributes.email %>"><%= user.attributes.email %></a></td>
+                        <td class="monospace" data-approved="<%= user.attributes.approved %>">
+                            <%= user.attributes.approved ? 'true' : 'false' %></td>
+                        <td class="monospace">
+                            <% for (let perm of [...user.permissions].sort()) { %>
+                            <%= perm %>
+                            <br />
+                            <% } %>
+                        </td>
+                    </tr>
                     <% } %>
                 </tbody>
             </table>
         </div>
         <%- include('../footers.ejs', {}); %>
-        <img src="<%= cacheBuster('images/GoodWork.png') %>"
-            style="float: right"
-            width="50"
-            height="50">
+        <img src="<%= cacheBuster('images/GoodWork.png') %>" style="float: right" width="50" height="50">
     </div>
 </body>

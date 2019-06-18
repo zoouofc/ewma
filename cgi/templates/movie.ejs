@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('head_shit.ejs', {title: `EWMA | Stream`, request: request, cacheBuster: cacheBuster}); %>
 </head>
+
 <body>
     <div id="site">
         <%- include('headers.ejs', {pageId: 'movies'}); %>
@@ -17,17 +19,17 @@
                         <% } %>
 
                         <% if (oneVideo.movieTheme) { %>
-                            <div>Theme: <%= oneVideo.movieTheme %></div>
+                        <div>Theme: <%= oneVideo.movieTheme %></div>
                         <% } %>
                         <div class="smolits">Movie <%= oneVideo.movieId %></div>
                     </div>
                     <h2>
                         <%= oneVideo.movieTitle || "?" %>
                         <% if (oneVideo.movieRating) { %>
-                            <div class="stars">
-                                <div class="empty-stars"></div>
-                                <div class="full-stars" style="width: <%= oneVideo.movieRating || '0'; %>%;"></div>
-                            </div>
+                        <div class="stars">
+                            <div class="empty-stars"></div>
+                            <div class="full-stars" style="width: <%= oneVideo.movieRating || '0'; %>%;"></div>
+                        </div>
                         <% } %>
                     </h2>
                     <div class="movieAwards tac">

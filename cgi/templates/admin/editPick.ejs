@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin', request: request, cacheBuster: cacheBuster}); %>
     <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
 
 <style>
-  body {font-family: 'Didact Gothic';font-size: 16px;}
+    body {
+        font-family: 'Didact Gothic';
+        font-size: 16px;
+    }
+
 </style>
 
 <body>
@@ -13,7 +18,8 @@
         <%- include('../headers.ejs', {pageId: 'Edit Movie'}); %>
         <div id="content" class="tac">
             <select class="movie-select" name="movie" required="required">
-                <option label="Choose a Movie" value="-1" disabled="disabled" selected="selected">Choose a Movie</option>
+                <option label="Choose a Movie" value="-1" disabled="disabled" selected="selected">Choose a Movie
+                </option>
                 <% for (movie of movies) { %>
                     <option value="<%= movie.val %>" label="<%= movie.text %>"><%= movie.text %></option>
                 <% } %>

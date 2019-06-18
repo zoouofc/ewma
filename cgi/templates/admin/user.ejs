@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
-  <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
 
 <style>
-  body {font-family: 'Didact Gothic';font-size: 16px;}
+    body {
+        font-family: 'Didact Gothic';
+        font-size: 16px;
+    }
+
 </style>
 
 <body>
@@ -22,18 +27,24 @@
             <hr>
             <div class="user-info">
                 <div class="user-name">
-                    <label for="username"><h3>Username</h3></label>
-                        <input type="text" name="username" disabled="disabled" value="<%= user.attributes.username %>">
+                    <label for="username">
+                        <h3>Username</h3>
+                    </label>
+                    <input type="text" name="username" disabled="disabled" value="<%= user.attributes.username %>">
                 </div>
 
                 <div class="user-email">
-                    <label for="email"><h3>Email</h3></label>
-                        <input type="email" name="email" disabled="disabled" value="<%= user.attributes.email %>">
+                    <label for="email">
+                        <h3>Email</h3>
+                    </label>
+                    <input type="email" name="email" disabled="disabled" value="<%= user.attributes.email %>">
                 </div>
             </div>
-        <div class="right-panel">
-            <div class="activation-status">
-                <label for="approved"><h3>Activated</h3></label>
+            <div class="right-panel">
+                <div class="activation-status">
+                    <label for="approved">
+                        <h3>Activated</h3>
+                    </label>
                     <% if (user.attributes.approved) { %>
                         <span class="green">Yes &#x2714;</span>
                     <% } else { %>
@@ -43,42 +54,45 @@
                             <input type="submit" value="Activate User">
                         </form>
                     <% } %>
-            </div>
-            <br><br><br>            <br><br><br>
+                </div>
+                <br><br><br> <br><br><br>
 
                 <div class="user-perms">
-                    <label for="permissions"><h2>Permissions</h2></label></td>
+                    <label for="permissions">
+                        <h2>Permissions</h2>
+                    </label></td>
                     <hr>
-                <div class="existing-perms">
-                    <table>
-                        <tbody>
+                    <div class="existing-perms">
+                        <table>
+                            <tbody>
                                 <% for (let permission of [...user.permissions].sort()) { %>
-                                    <tr><td>
-                                    <% if (has_permission && permission !== 'manage_permissions') { %>
-                                        <img src="<%= cacheBuster('images/delete-colored.svg') %>"
-                                            class="delete-button"
-                                            data-user="<%= user.attributes.id %>"
-                                            data-permission="<%= permission %>"
-                                            width="15"
-                                            height="15">
-                                    <% } %>
-                                <%= permission %><% } %></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="add-perm">
-                    <select>
-                        <option selected="selected" disabled="disabled">
-                            Add Permission:
-                        </option>
+                                <tr>
+                                    <td>
+                                        <% if (has_permission && permission !== 'manage_permissions') { %>
+                                            <img src="<%= cacheBuster('images/delete-colored.svg') %>" 
+                                                class="delete-button"
+                                                data-user="<%= user.attributes.id %>" 
+                                                data-permission="<%= permission %>"
+                                                width="15" 
+                                                height="15">
+                                        <% } %>
+                                        <%= permission %><% } %></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="add-perm">
+                        <select>
+                            <option selected="selected" disabled="disabled">
+                                Add Permission:
+                            </option>
                             <% for (let permission of existingPerms) { %>
                                 <option value="<%= permission %>">
-                            <%= permission %>
-                        </option>
+                                <%= permission %>
+                            </option>
                             <% } %>
-                    </select>
-                </div>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

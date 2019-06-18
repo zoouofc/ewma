@@ -1,21 +1,25 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | Movie List', request: request, cacheBuster: cacheBuster}); %>
 </head>
+
 <body>
     <div id="site">
         <%- include('headers.ejs', {pageId: 'Movie List'}); %>
         <script>
             window.movies = <%- JSON.stringify(movies); %>
+
         </script>
         <div id="content">
             <table id="movieTable">
                 <thead>
                     <tr class="yearRow">
-                        <th onclick="javascript:window.location.search = 's=y&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                        <th
+                            onclick="javascript:window.location.search = 's=y&d=<%= request.query.d === '1' ? '0' : '1' %>';">
                             Year
                             <% if (sortType === 'y') { %>
-                                <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                            <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
                             <% } %>
                         </th>
                         <th>
@@ -23,42 +27,54 @@
                                 <tbody>
                                     <tr class="moviesHeaders">
                                         <td class="tac movieTitle">
-                                            <div onclick="javascript:window.location.search = 's=t&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                            <div
+                                                onclick="javascript:window.location.search = 's=t&d=<%= request.query.d === '1' ? '0' : '1' %>';">
                                                 Title
                                                 <% if (sortType === 't') { %>
-                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <span
+                                                    class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
                                                 <% } %>
                                             </div>
-                                            <div class="smolits" onclick="javascript:window.location.search = 's=i&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                            <div class="smolits"
+                                                onclick="javascript:window.location.search = 's=i&d=<%= request.query.d === '1' ? '0' : '1' %>';">
                                                 (Theme)
                                                 <% if (sortType === 'i') { %>
-                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <span
+                                                    class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
                                                 <% } %>
                                             </div>
-                                            <div class="smolits" onclick="javascript:window.location.search = 's=r&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                            <div class="smolits"
+                                                onclick="javascript:window.location.search = 's=r&d=<%= request.query.d === '1' ? '0' : '1' %>';">
                                                 Rating
                                                 <% if (sortType === 'r') { %>
-                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <span
+                                                    class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
                                                 <% } %>
                                             </div>
                                         </td>
-                                        <td class="tac movieLength" onclick="javascript:window.location.search = 's=l&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                        <td class="tac movieLength"
+                                            onclick="javascript:window.location.search = 's=l&d=<%= request.query.d === '1' ? '0' : '1' %>';">
                                             Duration
                                             <% if (sortType === 'l') { %>
-                                                <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                            <span
+                                                class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
                                             <% } %>
                                         </td>
-                                        <td class="tac movieDept" onclick="javascript:window.location.search = 's=d&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                        <td class="tac movieDept"
+                                            onclick="javascript:window.location.search = 's=d&d=<%= request.query.d === '1' ? '0' : '1' %>';">
                                             Department
                                             <% if (sortType === 'd') { %>
-                                                <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                            <span
+                                                class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
                                             <% } %>
                                         </td>
-                                        <td onclick="javascript:window.location.search = 's=a&d=<%= request.query.d === '1' ? '0' : '1' %>';">
+                                        <td
+                                            onclick="javascript:window.location.search = 's=a&d=<%= request.query.d === '1' ? '0' : '1' %>';">
                                             <div class="tac">
                                                 Awards
                                                 <% if (sortType === 'a') { %>
-                                                    <span class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
+                                                <span
+                                                    class="sort-icon sort-<%= request.query.d === '1' ? 'asc' : 'desc' %>"></span>
                                                 <% } %>
                                             </div>
                                         </td>
@@ -71,62 +87,69 @@
                 <tbody>
                     <% let cls = true; %>
                     <% for (let movieYear of movies) { %>
-                        <tr class="yearRow">
-                            <td><div><%= movieYear.year %></div></td>
-                            <td>
-                                <table class="movieYear">
-                                    <tbody>
-                                        <% for (let movie of movieYear.movies) { %>
-                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.hasVideo ? 'clickable' : '' %>" onclick="javascript:location.href='/movies/<%= movie.id %>';">
-                                                <% cls = !cls %>
-                                                <% if (request.permissions.movie_edit) { %>
-                                                    <td class="editColumn">
-                                                        <a href="/admin/edit/<%= movie.id %>">
-                                                            <img class="editIcon" alt="edit" src="<%= cacheBuster('images/edit.svg'); %>" />
-                                                        </a>
-                                                    </td>
-                                                <% } %>
-                                                <td class="tac movieTitle">
-                                                    <%= movie.title %><br />
-                                                    <% if (movie.theme) { %>
-                                                        <span class="smolits">(<%= movie.theme %>)</span><br />
-                                                    <% } %>
-                                                    <% if (movie.rating) { %>
-                                                        <div class="stars">
-                                                            <div class="empty-stars"></div>
-                                                            <div class="full-stars" style="width: <%= movie.rating || '0'; %>%;"></div>
-                                                        </div>
-                                                    <% } %>
-                                                    <% if (movie.hasTrailer) { %>
-                                                        <div class="trailerBadge" title="This movie has a Trailer">
-                                                            <img class="icon trailerIcon" alt="trailer" src="<%= cacheBuster('images/clacker.svg'); %>" />
-                                                        </div>
-                                                    <% } %>
-                                                    <% if (movie.hasCommentary) { %>
-                                                        <div class="trailerBadge" title="This movie has a Commentated version">
-                                                            <img class="icon commentaryIcon" alt="commentary" src="<%= cacheBuster('images/commentary.svg'); %>" />
-                                                        </div>
-                                                    <% } %>
-                                                </td>
-                                                <td class="tac movieLength">
-                                                    <%= movie.durationDisplay %>
-                                                </td>
-                                                <td class="tac movieDept"><%= movie.display %></td>
-                                                <td>
-                                                    <div class="tac">
-                                                        <% if (movie.awards) { %>
-                                                            <% for (let award of movie.awards) { %>
-                                                                <%- include('award.ejs', {award: award}); %>
-                                                            <% } %>
-                                                        <% } %>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                    <tr class="yearRow">
+                        <td>
+                            <div><%= movieYear.year %></div>
+                        </td>
+                        <td>
+                            <table class="movieYear">
+                                <tbody>
+                                    <% for (let movie of movieYear.movies) { %>
+                                    <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.hasVideo ? 'clickable' : '' %>"
+                                        onclick="javascript:location.href='/movies/<%= movie.id %>';">
+                                        <% cls = !cls %>
+                                        <% if (request.permissions.movie_edit) { %>
+                                        <td class="editColumn">
+                                            <a href="/admin/edit/<%= movie.id %>">
+                                                <img class="editIcon" alt="edit"
+                                                    src="<%= cacheBuster('images/edit.svg'); %>" />
+                                            </a>
+                                        </td>
                                         <% } %>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+                                        <td class="tac movieTitle">
+                                            <%= movie.title %><br />
+                                            <% if (movie.theme) { %>
+                                            <span class="smolits">(<%= movie.theme %>)</span><br />
+                                            <% } %>
+                                            <% if (movie.rating) { %>
+                                            <div class="stars">
+                                                <div class="empty-stars"></div>
+                                                <div class="full-stars" style="width: <%= movie.rating || '0'; %>%;">
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                            <% if (movie.hasTrailer) { %>
+                                            <div class="trailerBadge" title="This movie has a Trailer">
+                                                <img class="icon trailerIcon" alt="trailer"
+                                                    src="<%= cacheBuster('images/clacker.svg'); %>" />
+                                            </div>
+                                            <% } %>
+                                            <% if (movie.hasCommentary) { %>
+                                            <div class="trailerBadge" title="This movie has a Commentated version">
+                                                <img class="icon commentaryIcon" alt="commentary"
+                                                    src="<%= cacheBuster('images/commentary.svg'); %>" />
+                                            </div>
+                                            <% } %>
+                                        </td>
+                                        <td class="tac movieLength">
+                                            <%= movie.durationDisplay %>
+                                        </td>
+                                        <td class="tac movieDept"><%= movie.display %></td>
+                                        <td>
+                                            <div class="tac">
+                                                <% if (movie.awards) { %>
+                                                <% for (let award of movie.awards) { %>
+                                                <%- include('award.ejs', {award: award}); %>
+                                                <% } %>
+                                                <% } %>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
                     <% } %>
                 </tbody>
             </table>

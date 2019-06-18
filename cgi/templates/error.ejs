@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | ' + title}); %>
     <link rel="stylesheet" type="text/css" href="<%= cacheBuster('css/error.css'); %>" />
 </head>
+
 <body>
     <div id="site">
         <div class="absc db">
@@ -14,7 +16,10 @@
                 <table id="summary">
                     <tbody>
                         <% for (let prop in data) { %>
-                            <tr><td><%= prop %>:</td><td><%= data[prop] %></td></tr>
+                        <tr>
+                            <td><%= prop %>:</td>
+                            <td><%= data[prop] %></td>
+                        </tr>
                         <% } %>
                     </tbody>
                 </table>

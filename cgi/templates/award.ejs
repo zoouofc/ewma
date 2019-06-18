@@ -1,12 +1,14 @@
 <div class="award <%= award.note ? 'tooltip' : '' %>">
     <% if (award.note) { %>
-        <span class="awardNote tooltiptext">
-            <%= award.note %>
-        </span>
+    <span class="awardNote tooltiptext">
+        <%= award.note %>
+    </span>
     <% } %>
-    <img class="awardILeft awardI" src="<%= cacheBuster(`images/award_left${award.gold ? '_gold' : ''}.png`); %>" type="image/png" alt="award" />
+    <img class="awardILeft awardI" src="<%= cacheBuster(`images/award_left${award.gold ? '_gold' : ''}.png`); %>"
+        type="image/png" alt="award" />
     <div class="awardTitle">
         <%- award.name.replace(/ /gm, '<br />') %>
     </div>
-    <img class="awardIRight awardI" src="<%= cacheBuster(`images/award_right${award.gold ? '_gold' : ''}.png`) %>" type="image/png" alt="award" />
+    <img class="awardIRight awardI" src="<%= cacheBuster(`images/award_right${award.gold ? '_gold' : ''}.png`) %>"
+        type="image/png" alt="award" />
 </div>

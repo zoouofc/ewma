@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
-  <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
 
 <style>
-  body {font-family: 'Didact Gothic';font-size: 16px;}
+    body {
+        font-family: 'Didact Gothic';
+        font-size: 16px;
+    }
+
 </style>
 
 <body>
@@ -22,42 +27,44 @@
                 </thead>
                 <tbody>
                     <% for (let perm of permissions) { %>
-                        <tr>
-                            <td class="monospace">
-                                <%= perm.permission %>
-                                <br>
-                                <% if (perm.permission !== 'manage_permissions') { %>
-                                    <img src="<%= cacheBuster('images/delete-colored.svg') %>"
-                                        class="delete-button"
-                                        data-permission="<%= perm.permission %>"
-                                        width="16"
-                                        height="16">
-                                <% } %>
-                            </td>
-                            <td><%= perm.description %></td>
-                            <td>
-                                <% for (let user of perm.users) { %>
-                                    <a href="/admin/user/<%= user.id %>"><%= user.username %></a>
-                                    <br />
-                                <% } %>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="monospace">
+                            <%= perm.permission %>
+                            <br>
+                            <% if (perm.permission !== 'manage_permissions') { %>
+                                <img src="<%= cacheBuster('images/delete-colored.svg') %>" 
+                                    class="delete-button"
+                                    data-permission="<%= perm.permission %>" 
+                                    width="16" 
+                                    height="16">
+                            <% } %>
+                        </td>
+                        <td><%= perm.description %></td>
+                        <td>
+                            <% for (let user of perm.users) { %>
+                                <a href="/admin/user/<%= user.id %>"><%= user.username %></a>
+                                <br />
+                            <% } %>
+                        </td>
+                    </tr>
                     <% } %>
                 </tbody>
             </table>
 
-          <div class="page-wrap">
-              <h3>Create Permission</h3>
-              <form action="/admin/permissions/new" method="post">
-                  <label for="name">Permission Name</label><br>
-                  <input class="perm-name-input" type="text" maxlength="20" required="required" name="name" pattern="^[a-zA-Z_]*$"/>
-                  <div class="perm-description">
-                      <label for="description">Permission Description</label>
-                      <textarea class="fixed-textbox" required="required" maxlength="255" name="description"></textarea>
-                  </div>
-                  <input class="button" type="submit"/>
-              </form>
-        </div>
+            <div class="page-wrap">
+                <h3>Create Permission</h3>
+                <form action="/admin/permissions/new" method="post">
+                    <label for="name">Permission Name</label><br>
+                    <input class="perm-name-input" type="text" maxlength="20" required="required" name="name"
+                        pattern="^[a-zA-Z_]*$" />
+                    <div class="perm-description">
+                        <label for="description">Permission Description</label>
+                        <textarea class="fixed-textbox" required="required" maxlength="255"
+                            name="description"></textarea>
+                    </div>
+                    <input class="button" type="submit" />
+                </form>
+            </div>
 
         </div>
         <%- include('../footers.ejs', {}); %>

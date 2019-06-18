@@ -1,12 +1,18 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | Create Account', request: request, cacheBuster: cacheBuster}); %>
     <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
 </head>
 
 <style>
-  body {font-family: 'Didact Gothic';font-size: 16px;}
+    body {
+        font-family: 'Didact Gothic';
+        font-size: 16px;
+    }
+
 </style>
+
 <body>
     <div id="site">
         <div id="content">
@@ -22,35 +28,68 @@
                 </div>
                 <form method="POST" action="/newaccount" id="createForm">
                     <div class="formPart user-name">
-                        <input type="text" name="username" id="username" placeholder="username" autocomplete="off" required="required" maxlength="30">
+                        <input type="text" 
+                            name="username" 
+                            id="username" 
+                            placeholder="username" 
+                            autocomplete="off"
+                            required="required" 
+                            maxlength="30">
                     </div>
-                <div class = "user-password">
-                    <div class="formPart initial-pwd">
-                        <input type="password" name="password" id="password" placeholder="password" autocomplete="off" required="required" pattern=".{8,}" title="Must be at least 8 chars">
-                    </div>
+                    <div class="user-password">
+                        <div class="formPart initial-pwd">
+                            <input type="password" 
+                                name="password" 
+                                id="password" 
+                                placeholder="password"
+                                autocomplete="off" 
+                                required="required" 
+                                pattern=".{8,}" 
+                                title="Must be at least 8 chars">
+                        </div>
 
-                    <div class="formPart retype-pwd">
-                        <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="repeat password" autocomplete="off" required="required" pattern=".{8,}" title="Must be at least 8 chars">
+                        <div class="formPart retype-pwd">
+                            <input type="password" 
+                                name="passwordConfirm" 
+                                id="passwordConfirm"
+                                placeholder="repeat password" 
+                                autocomplete="off" 
+                                required="required" 
+                                pattern=".{8,}"
+                                title="Must be at least 8 chars">
+                        </div>
                     </div>
-                </div>
 
                     <div class="formPart email">
-                        <input type="email" name="email" id="email" placeholder="email" autocomplate="off" required="required" maxlength="100">
+                        <input type="email" 
+                            name="email" 
+                            id="email" 
+                            placeholder="email" 
+                            autocomplate="off"
+                            required="required" 
+                            maxlength="100">
                     </div>
                     <br>
-            <div class="formPart">
-                        <label for="hdyhau">How did you hear about this? (We need to respect the privacy of the students in these videos. Please be honest and name-drop who/where you heard about this.
-                        <br><br>
-                        <div class="denied"><i>Note: If you're just going to say something like "people told me," then the account will not be activated</i></div></label>
-                        <br>
-                        <textarea class="fixed-textbox" name="hdyhau" id="hdyhau" maxlength="255" required="required"></textarea>
-                    <br /><br>
                     <div class="formPart">
-                        This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement. Also, we use cookies.<br/>
-                        <br><strong>By creating an account, you agree to these terms.</strong>
+                        <label for="hdyhau">How did you hear about this? (We need to respect the privacy of the students
+                            in these videos. Please be honest and name-drop who/where you heard about this.
+                            <br><br>
+                            <div class="denied"><i>Note: If you're just going to say something like "people told me,"
+                                    then the account will not be activated</i></div>
+                        </label>
+                        <br>
+                        <textarea class="fixed-textbox" name="hdyhau" id="hdyhau" maxlength="255"
+                            required="required"></textarea>
+                        <br /><br>
+                        <div class="formPart">
+                            This service is lovingly provided by the Electrical, Computer, and Software Engineering
+                            Students' Society (ZOO). In order to use it, you must abide by the Terms of Service
+                            agreement. Also, we use cookies.<br />
+                            <br><strong>By creating an account, you agree to these terms.</strong>
+                        </div>
+                        <br>
+                        <input class="button" type="submit" value="Create Account">
                     </div>
-                    <br>
-                    <input class="button" type="submit" value="Create Account">
                 </form>
             </div>
         </div>
