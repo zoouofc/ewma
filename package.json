@@ -39,7 +39,7 @@
     "microtime": "^2.1.8",
     "mysql": "^2.16.0",
     "node-ffprobe": "^1.2.2",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.13.1",
     "read": "^1.0.7",
     "select-shell": "^1.1.2",
     "strftime": "^0.10.0",
