@@ -45,12 +45,18 @@ module.exports.handle = page.requirePermission('manage_users', (request, cb) => 
                                 template.get('admin/users.ejs', {
                                     request: request,
                                     users: users.sort((a, b) => {
-                                        if (a.attributes.username > b.attributes.username) {
-                                            return 1;
-                                        } else if (a.attributes.username < b.attributes.username) {
+                                        if (a.attributes.approved > b.attributes.approved) {
                                             return -1;
+                                        } else if (a.attributes.approved < b.attributes.approved) {
+                                            return 1;
+                                        } else {
+                                            if (a.attributes.username > b.attributes.username) {
+                                                return 1;
+                                            } else if (a.attributes.username < b.attributes.username) {
+                                                return -1;
+                                            }
+                                            return 0;
                                         }
-                                        return 0;
                                     })
                                 }, (err, content) => {
                                     if (err) {
