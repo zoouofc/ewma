@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | Create Account', request: request, cacheBuster: cacheBuster}); %>
 </head>
+
 <body class="dark-theme || light-theme">
     <div id="site">
         <div id="content">
@@ -12,39 +14,57 @@
                 <br />
                 <div class="errText">
                     <% if (errText) { %>
-                        <%= errText %>
+                    <%= errText %>
                     <% } else { %> &nbsp; <% } %>
                 </div>
                 <form method="POST" action="/newaccount" id="createForm">
                     <div class="formPart">
-                        <input type="text" name="username" id="username" placeholder="username" autocomplete="off" required="required" maxlength="100">
+                        <input class="input-textbox" type="text" name="username" id="username"
+                            placeholder="username" autocomplete="off" required="required"
+                            maxlength="100" style="width: 300px">
                     </div>
 
                     <div class="formPart">
-                        <input type="password" name="password" id="password" placeholder="password" autocomplete="off" required="required" pattern=".{8,}" title="Must be at least 8 chars">
+                        <input class="input-textbox" type="password" name="password" id="password"
+                            placeholder="password" autocomplete="off" required="required"
+                            pattern=".{8,}" title="Must be at least 8 chars" style="width: 300px">
                     </div>
 
                     <div class="formPart">
-                        <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="repeat password" autocomplete="off" required="required" pattern=".{8,}" title="Must be at least 8 chars">
+                        <input class="input-textbox" type="password" name="passwordConfirm"
+                            id="passwordConfirm" placeholder="repeat password" autocomplete="off"
+                            required="required" pattern=".{8,}" title="Must be at least 8 chars"
+                            style="width: 300px">
                     </div>
 
                     <div class="formPart">
-                        <input type="email" name="email" id="email" placeholder="email" autocomplate="off" required="required" maxlength="100">
+                        <input class="input-textbox" type="email" name="email" id="email"
+                            placeholder="email" autocomplate="off" required="required"
+                            maxlength="100" style="width: 300px; margin: 10px 0 20px">
                     </div>
 
                     <div class="formPart">
                         <label for="hdyhau">
-                            How did you hear about this? We need to respect the privacy of the students in these videos. Please be honest and name-drop who/where you heard about this. (If you just say something like "people told me," then you're not going to get approved.)
+                            How did you hear about this? We need to respect the privacy of the
+                            students in these videos. Please be honest and name-drop who/where you
+                            heard about this. (If you just say something like "people told me," then
+                            you're not going to get approved.)
                         </label>
-                        <textarea name="hdyhau" id="hdyhau" required="required"></textarea>
-                    <br />
-                    <div class="formPart">
-                        This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement. Also, we use cookies.<br/>
-                        <br/>
-                        <strong>By creating an account, you agree to these terms.</strong>
-                    </div>
+                        <br />
+                        <textarea class="input-textbox" name="hdyhau" id="hdyhau"
+                            required="required"></textarea>
+                        <br />
+                        <div class="formPart">
+                            This service is lovingly provided by the Electrical, Computer, and
+                            Software Engineering Students' Society (ZOO). In order to use it, you
+                            must abide by the Terms of Service agreement. Also, we use
+                            cookies.<br />
+                            <br />
+                            <strong>By creating an account, you agree to these terms.</strong>
+                        </div>
 
-                    <input class="button" type="submit" value="Create Account">
+                        <input class="button create-account-btn" type="submit"
+                            value="Create Account">
                 </form>
             </div>
         </div>

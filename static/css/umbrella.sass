@@ -30,6 +30,9 @@ body
         font-size: 15px
         font-weight: bold
         font-family: $primaryFont
+    #site input.input-textbox
+        border-radius: 10px; 
+        font-size: 16px;
 
 // Dark-theme properties
 body.dark-theme
@@ -39,9 +42,15 @@ body.dark-theme
     input.button
         color: #fdfdfd
         background-color: $zooBlue
-        border: 2px solid $lightGrey;
+        border: 2px solid $lightGrey
         &:hover
             background-color: $darkBlue
+            color: $offWhite
+    #site input.input-textbox,
+    #site textarea.input-textbox
+        background-color: $offWhite
+        &:focus
+            box-shadow: 0px 0px 4px #00b1fc;
 
             
 #content

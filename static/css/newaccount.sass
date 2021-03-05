@@ -4,16 +4,23 @@ body
     #content
         text-align: center
         form
-            margin: 20px auto 100px
+            margin: 20px auto 50px
             padding: 30px
-            width: 500px
+            width: 550px
             border-radius: 20px
             text-align: center
-            .formPart
-                width: 100%
-                position: relative
-                input, textarea
-                    width: 100%
+            // .formPart
+            //     // width: 100%
+            //     position: relative
+            textarea.input-textbox
+                max-width: 450px
+                min-width: 450px
+                min-height: 100px
+                margin: 15px 0 15px
+                border-radius: 20px
+                outline: none
+            input.create-account-btn
+                margin: 20px 0 10px;
         .errText
         text-align: center
         color: #D94D4D
