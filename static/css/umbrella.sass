@@ -1,7 +1,11 @@
+@import "./_variables";
+    
 $background: #E1E1E1
-$primaryFont: "Encode Sans Semi Condensed", sans-serif
+// $primaryFont: "Encode Sans Semi Condensed", sans-serif
+$primaryFont: "Didact Gothic", sans-serif
 $green: #1F8A0E
 $red: #8A330E
+
 html
     box-sizing: border-box
     height: 100%
@@ -16,9 +20,30 @@ body
     margin: 0
     padding-bottom: 100px
     min-height: 100%
-    background-color: $background
+    // background-color: $background
     font-family: $primaryFont
+    font-size: 16px;
+    #site input.button
+        border-radius: 50px
+        width: 150px
+        padding: 15px
+        font-size: 15px
+        font-weight: bold
+        font-family: $primaryFont
 
+// Dark-theme properties
+body.dark-theme
+    background-color: $darkBackground
+    #site #content
+        color: $lightBlue
+    input.button
+        color: #fdfdfd
+        background-color: $zooBlue
+        border: 2px solid $lightGrey;
+        &:hover
+            background-color: $darkBlue
+
+            
 #content
     padding: 0 10px
 

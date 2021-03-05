@@ -2,7 +2,7 @@
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin', request: request, cacheBuster: cacheBuster}); %>
 </head>
-<body>
+<body class="dark-theme || light-theme">
     <div id="site">
         <%- include('../headers.ejs', {pageId: 'Edit Movie'}); %>
         <div id="content" class="tac">
@@ -24,8 +24,10 @@
             <hr class="most" /><br />
             <form method="POST" action="/admin/edit/<%= movie.id %>/commit">
                 <input type="hidden" name="payload" value="<%= data %>" />
-                <a href="/admin/edit/<%= movie.id %>"><input type="button" value="Cancel" /></a>
-                <input type="submit" value="Commit Changes" />
+                <a href="/admin/edit/<%= movie.id %>">
+                    <input class="button" type="button" value="Cancel" />
+                </a>
+                <input class="button" type="submit" value="Commit Changes" />
             </form>
         </div>
         <%- include('../footers.ejs', {}); %>

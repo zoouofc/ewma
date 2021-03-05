@@ -1,7 +1,10 @@
+@import "./_variables";
+
 #header
     position: relative
     width: 100%
     height: 150px
+    background-color: $zooBlue
 
 #headerLogo
     height: 125px
@@ -14,12 +17,14 @@
     padding-left: 180px
     text-align: center
     a, ul
-        text-decoration: none
-        font-variant: small-caps
+        color: #fdfdfd
         font-weight: bolder
         font-size: 20px
-        color: black
+        letter-spacing: 0.75px;
+        text-decoration: none
         cursor: pointer
+        &:hover
+            color: #efefef
     ul
         list-style-type: none
         padding-left: 0
@@ -42,4 +47,4 @@
         li:hover
             background: white
     .currentpage
-        border-bottom: 1px solid black
+        border-bottom: 2px solid #fdfdfd

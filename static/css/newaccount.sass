@@ -1,11 +1,26 @@
-form
-    text-align: center
-    width: 500px
-    .formPart
-        width: 100%
-        position: relative
-        input, textarea
-            width: 100%
-.errText
-    text-align: center
-    color: #D94D4D
+@import "./_variables";
+
+body
+    #content
+        text-align: center
+        form
+            margin: 20px auto 100px
+            padding: 30px
+            width: 500px
+            border-radius: 20px
+            text-align: center
+            .formPart
+                width: 100%
+                position: relative
+                input, textarea
+                    width: 100%
+        .errText
+        text-align: center
+        color: #D94D4D
+
+
+// Dark-theme properties
+body.dark-theme    
+    #content form
+        background-color: $blueGrey
+        border: 2px solid $lightGrey

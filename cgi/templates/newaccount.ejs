@@ -2,7 +2,7 @@
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | Create Account', request: request, cacheBuster: cacheBuster}); %>
 </head>
-<body>
+<body class="dark-theme || light-theme">
     <div id="site">
         <div id="content">
             <div class="absc db">
@@ -33,15 +33,18 @@
                     </div>
 
                     <div class="formPart">
-                        <label for="hdyhau">How did you hear about this? (We need to respect the privacy of the students in these videos. Please be honest and name-drop who/where you heard about this. If you just say something like "people told me," then you're not going to get approved.)</label>
+                        <label for="hdyhau">
+                            How did you hear about this? We need to respect the privacy of the students in these videos. Please be honest and name-drop who/where you heard about this. (If you just say something like "people told me," then you're not going to get approved.)
+                        </label>
                         <textarea name="hdyhau" id="hdyhau" required="required"></textarea>
                     <br />
                     <div class="formPart">
                         This service is lovingly provided by the Electrical, Computer, and Software Engineering Students' Society (ZOO). In order to use it, you must abide by the Terms of Service agreement. Also, we use cookies.<br/>
+                        <br/>
                         <strong>By creating an account, you agree to these terms.</strong>
                     </div>
 
-                    <input type="submit" value="Create Account">
+                    <input class="button" type="submit" value="Create Account">
                 </form>
             </div>
         </div>

@@ -86,9 +86,9 @@ module.exports.acquire = function (callback, manual) {
             throw err;
         }
 
-        if (connection._connection.state !== "authenticated") {
-            throw new Error(`Bad connection state: ${connection._connection.state}`);
-        }
+        // if (connection._connection.state !== "authenticated") {
+        //     throw new Error(`Bad connection state: ${connection._connection.state}`);
+        // }
 
         if (!manual) {
             // try to close the connection on shutdown

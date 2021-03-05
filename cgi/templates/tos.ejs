@@ -3,7 +3,7 @@
     <%- include('head_shit.ejs', {title: 'EWMA | The ENGG Week Movie Archive'}); %>
     <link rel="stylesheet" type="text/css" href="<%= cacheBuster('css/tos.css'); %>" />
 </head>
-<body>
+<body class="dark-theme || light-theme">
     <div id="site">
         <div class="absc db">
             <a href="/">
@@ -23,7 +23,8 @@
                         <input type="text" name="username" id="username" placeholder="username" />
                         <input type="password" name="password" id="password" placeholder="password" />
                         <input type="hidden" name="dest" value="<%= dest %>" />
-                        <input type="submit" value="I promise I won't be an Ass" />
+                        <br/>
+                        <input class="button" type="submit" value="I promise I won't be an Ass" />
                     </form>
                     <a href="/newaccount">Create an Account</a>
                     <a href="/useapasswordmanager">Forgot Password?</a>

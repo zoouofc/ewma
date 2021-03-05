@@ -1,3 +1,15 @@
-#content
-    text-align: center
-    margin-top: 20px
+@import "./_variables";
+
+body
+    #content
+        text-align: center
+        margin: 50px auto 0
+        padding: 30px
+        width: 80vw
+        border-radius: 20px
+    
+// Dark-theme properties
+body.dark-theme    
+    #content
+        background-color: $blueGrey
+        border: 2px solid $lightGrey
