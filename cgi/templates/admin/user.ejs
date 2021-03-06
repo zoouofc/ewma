@@ -13,14 +13,14 @@
                 </div>
             </h3>
             <hr>
-            <div class="tac width100">
+            <div>
                 <table>
                     <tbody>
                         <tr>
                             <td>
                                 <label for="username">Username</label>
                             </td>
-                            <td><input type="text" name="username" disabled="disabled" value="<%= user.attributes.username %>"></td>
+                            <td><input class="input-textbox" type="text" name="username" disabled="disabled" value="<%= user.attributes.username %>"></td>
                         </tr>
                         <tr>
                             <td>
@@ -31,9 +31,9 @@
                                     <span class="green">Yes &#x2714;</span>
                                 <% } else { %>
                                     <form method="POST" action="/admin/user/<%= user.attributes.id %>/activate">
-                                        <input type="hidden" name="user" value="<%= user.attributes.id %>">
+                                        <input class="input-textbox" type="hidden" name="user" value="<%= user.attributes.id %>">
                                         <span class="red">No ✖</span>
-                                        <input type="submit" value="Activate User">
+                                        <input class="button" type="submit" value="Activate User">
                                     </form>
                                 <% } %>
                             </td>
@@ -46,7 +46,7 @@
                             <td>
                                 <label for="email">Email</label>
                             </td>
-                            <td><input type="email" name="email" disabled="disabled" value="<%= user.attributes.email %>"></td>
+                            <td><input class="input-textbox" type="email" name="email" disabled="disabled" value="<%= user.attributes.email %>"></td>
                         </tr>
                         <tr>
                             <td><label for="permissions">Permissions</label></td>

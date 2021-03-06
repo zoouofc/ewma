@@ -5,30 +5,54 @@
 <body class="dark-theme || light-theme">
     <div id="site">
         <%- include('../headers.ejs', {pageId: 'Manage Users'}); %>
-        <div id="content" class="tac">
-            <table class="width100 styled-table">
-                <thead>
-                    <tr>
-                        <th>Permission</th>
-                        <th>Description</th>
-                        <th>Users With Permission</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let perm of permissions) { %>
+        <div id="content">
+            <!-- <div class="permission-container"> -->
+                <table class="permission-table">
+                    <thead>
                         <tr>
-                            <td class="monospace"><%= perm.permission %></td>
-                            <td><%= perm.description %></td>
-                            <td>
-                                <% for (let user of perm.users) { %>
-                                    <a href="/admin/user/<%= user.id %>"><%= user.username %></a>
-                                    <br />
-                                <% } %>
-                            </td>
+                            <th>Permission</th>
+                            <th>Description</th>
+                            <th>Users With Permission</th>
                         </tr>
-                    <% } %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <% for (let perm of permissions) { %>
+                            <tr>
+                                <td><%= perm.permission %></td>
+                                <td><%= perm.description %></td>
+                                <td>
+                                    <% for (let user of perm.users) { %>
+                                        <a href="/admin/user/<%= user.id %>"><%= user.username %></a>
+                                        <br />
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <!-- </div> -->
+            <div class="add-permission-container">
+                <h3>Create Permission</h3>
+                <form action="/admin/permissions/new" method="post">
+                    <label for="name">Permission Name</label>
+                    <input class="input-textbox"
+                        type="text"
+                        maxlength="20"
+                        required="required"
+                        name="name"
+                        pattern="^[a-zA-Z_]*$" />
+                    <div class="perm-description">
+                        <label for="description">Permission Description</label>
+                        <br/>
+                        <textarea class="input-textbox"
+                            required="required"
+                            maxlength="255"
+                            name="description"></textarea>
+                    </div>
+                    <input class="button" type="submit" />
+                </form>
+            </div>
+
         </div>
         <%- include('../footers.ejs', {}); %>
     </div>

@@ -1,3 +1,5 @@
+@import "./_variables";
+
 $oddrow: white
 $evenrow: #E1E1E1
 $oddnosource: #FFDBDB
@@ -70,7 +72,7 @@ $hoverrow: #C3C3C3
     z-index: 100
 
 .movieLength
-    font-family: monospace
+    // font-family: monospace
     font-size: 13px
     width: 65px
 
@@ -90,3 +92,18 @@ thead > .yearRow th:first-child:hover
 
 .sort-asc::after
     content: "▴"
+
+
+body #site
+    table#movieTable
+        margin: 20px auto 50px
+        padding: 30px
+        width: 85vw
+        border-radius: 20px
+        text-align: center
+
+// Dark-theme properties
+body.dark-theme    
+    #content
+        background-color: $blueGrey
+        border: 2px solid $lightGrey

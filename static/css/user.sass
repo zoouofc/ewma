@@ -1,9 +1,41 @@
+@import "./_variables";
+
 #content table
-    width: 40%
+    // width: 40%
     display: inline-block
     td
-        width: 50%
+        // width: 50%
     td:first-child
         text-align: right
     td:last-child
         text-align: left
+
+body #content
+    margin: 20px auto 50px
+    padding: 15px 30px 30px
+    width: 80vw
+    border-radius: 20px
+    text-align: center
+    h3
+        text-align: left
+        margin: 10px 0
+        .smolits.fr
+            margin: 10px 0 0
+    table
+        margin: 15px
+        input.button
+            font-size: 12px
+            padding: 10px
+            width: 100px
+        tr
+            height: 40px
+            input.input-textbox
+                padding: 3px 10px
+        label
+            margin: 0 5px;
+
+// Dark-theme properties
+body.dark-theme    
+    #content
+        background-color: $blueGrey
+        border: 2px solid $lightGrey

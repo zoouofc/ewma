@@ -1,0 +1,89 @@
+@import "./_variables";
+
+body #content 
+    table.permission-table
+        text-align: center
+        width: 80vw
+        border-radius: 20px
+        margin: 20px auto 50px
+        th
+            color: $headerBlue
+            font-size: 18px
+            letter-spacing: 1px
+            // border-bottom: 1px solid #2c3037
+            border-radius: 10px
+            padding: 15px 10px
+        td
+            font-size: 15px
+        td:not(:last-child), th:not(:last-child)
+            // border-right: none
+            border-radius: 10px
+            padding: 15px 10px
+        td:last-child
+            // border-right: none
+            border-radius: 10px
+            padding: 15px 0
+        a:-webkit-any-link
+            cursor: pointer
+            text-decoration: none
+
+
+body #content 
+    .add-permission-container
+        text-align: center
+        margin: 10px auto 30px
+        padding: 15px 30px 30px
+        width: 450px
+        border-radius: 20px
+        // text-align: center
+        .perm-description
+            margin: 15px 0 0
+        input.input-textbox
+            padding: 3px 8px;
+            margin: 0 0 0 5px;
+        input.button
+            font-size: 12px
+            padding: 10px
+            width: 100px
+        textarea.input-textbox
+            max-width: 85%
+            min-width: 85%
+            min-height: 100px
+            margin: 7px 15px 10px
+            border-radius: 10px
+            outline: none
+            padding: 10px
+        input.input-textbox:focus,
+        textarea.input-textbox:focus
+            outline: none
+        h3
+            letter-spacing: 1px
+
+
+// Dark-theme properties
+body.dark-theme #content
+    table
+        border: 2px solid $lightGrey    
+    .add-permission-container
+        background-color: $blueGrey
+        border: 2px solid $lightGrey
+        h3
+            color: $headerBlue
+
+body #content 
+    table.permission-table
+        th
+            color: $headerBlue
+            border-bottom: 1px solid $blueGrey
+        thead tr
+            background: $blueGrey
+        tr:nth-child(2n)
+            background: $blueGrey
+        a:-webkit-any-link
+            color: $zooBlue
+            &:hover
+                color: $darkBlue
+            &:visited
+                color: $turquoise 
+            &:visited:hover
+                color: $darkTurquoise

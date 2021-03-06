@@ -1,10 +1,14 @@
+@import "./_variables";
+
 .movie
     width: 100%
 
     .movieTitleBlock
         border-radius: 20px
-        background-color: #eeeeee
-        padding: 10px
+        // background-color: #eeeeee
+        width: 80vw
+        margin: 0 auto
+        padding: 15px 30px
         a
             text-decoration: none
 
@@ -19,14 +23,15 @@
             max-width: 900px
             max-height: 506px
         .videoContainer
-            margin: auto
+            margin: 0 auto 35px;
 
 .videoBadge
     border: 1px solid rgb(117, 117, 117)
     border-radius: 7px
-    background: white
+    // background: white
     padding: 2px 5px
     font-variant: small-caps
+    margin: 0 -5px 5px
 
 .videoBadge-primary::after
     content: 'feature presentation'
@@ -36,3 +41,15 @@
     content: 'official trailer'
 .videoBadge-other::after
     content: 'extra video'
+
+body #site
+    #content 
+        margin: 50px 0 0
+
+// Dark-theme properties
+body.dark-theme    
+    #content .movieTitleBlock
+        background-color: $blueGrey
+        border: 2px solid $lightGrey
+        .videoBadge
+            background-color: $darkBackground
