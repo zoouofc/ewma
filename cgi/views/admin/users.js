@@ -13,6 +13,8 @@ module.exports.type = 'GET';
 
 
 module.exports.handle = page.requirePermission('manage_users', (request, cb) => {
+    request.stylesheets.push('users');
+
     page.populateHeaders(request, (err) => {
         if (err) {
             throw err;

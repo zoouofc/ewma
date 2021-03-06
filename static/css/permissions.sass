@@ -5,16 +5,19 @@ body #content
         text-align: center
         width: 80vw
         border-radius: 20px
-        margin: 20px auto 50px
+        margin: 50px auto 50px
         th
-            color: $headerBlue
             font-size: 18px
             letter-spacing: 1px
-            // border-bottom: 1px solid #2c3037
-            border-radius: 10px
+            border-radius: 10px 
             padding: 15px 10px
         td
             font-size: 15px
+            img
+                // padding: 5px 0 0 0;
+                margin: 0 0 0 8px;
+                &:hover
+                  cursor: pointer
         td:not(:last-child), th:not(:last-child)
             // border-right: none
             border-radius: 10px
@@ -69,14 +72,13 @@ body.dark-theme #content
         border: 2px solid $lightGrey
         h3
             color: $headerBlue
-
-body #content 
     table.permission-table
         th
             color: $headerBlue
-            border-bottom: 1px solid $blueGrey
         thead tr
             background: $blueGrey
+        td img:hover
+            opacity: 0.8
         tr:nth-child(2n)
             background: $blueGrey
         a:-webkit-any-link

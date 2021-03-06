@@ -4,17 +4,30 @@ body
     #content
         text-align: center
         margin: 50px auto
-        padding: 50px 30px 75px
+        padding: 35px 30px 75px
         width: 80vw
         border-radius: 20px
         ul li
             list-style-type: none;  
         table#themes
             margin: 0 auto
+            th
+                letter-spacing: 1px
+                padding: 10px
+            tbody tr:nth-child(2n)
+                border-radius: 20px
+            tbody tr
+                font-size: 14px
 
-    
 // Dark-theme properties
 body.dark-theme    
     #content
         background-color: $blueGrey
         border: 2px solid $lightGrey
+        table#themes
+            th
+                color: $headerBlue
+            thead tr
+                // background: #3b4144
+            tbody tr:nth-child(2n)
+                color: $offWhite
