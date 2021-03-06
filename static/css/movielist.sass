@@ -6,63 +6,18 @@ $oddnosource: #FFDBDB
 $evennosource: #CC9898
 $hoverrow: #C3C3C3
 
-#movieTable,
-.movieYear
-    width: 100%
-    border-collapse: collapse
-
-#movieTable
-    border-left: 1px solid black
-    border-right: 1px solid black
-
-.yearRow > td,
-.yearRow > th
-    border-bottom: 1px solid black
-    border-top: 1px solid black
-
 .yearRow > td:first-child,
 .yearRow > th:first-child
     width: 10px
     text-align: center
-    border-right: 1px solid black
     min-height: 10px
     div
         transform: rotate(-90deg)
-        padding: 14px 0
-
-.odd
-    background: $oddrow
-
-.odd:not(.clickable)
-    background: $oddnosource
-
-.even:not(.clickable)
-    background: $evennosource
-
-.movieTitle
-    width: 180px
-    position: relative
-
-.icon
-    width: 15px
-    position: absolute
-    bottom: 5px
-
-.trailerIcon
-    left: 5px
-    
-.commentaryIcon
-    left: 20px
-
-.movieDept
-    width: 300px
-
-.movieRow
-    height: 100px
+        // padding: 14px 0
 
 .movieRow.clickable:hover
     cursor: pointer !important
-    background-color: $hoverrow
+    // background-color: $hoverrow
 
 .movieRow:not(.clickable)
     cursor: not-allowed
@@ -71,39 +26,106 @@ $hoverrow: #C3C3C3
     width: 26px
     z-index: 100
 
-.movieLength
-    // font-family: monospace
-    font-size: 13px
-    width: 65px
-
 .moviesHeaders,
 thead > .yearRow
     height: 60px
-    background: $evenrow
 
 .moviesHeaders td:not(:first-child):hover,
 .moviesHeaders td:first-child div:hover,
 thead > .yearRow th:first-child:hover
-    background-color: $hoverrow
-    cursor: pointer !important
+    cursor: pointer !important        
+    border-radius: 20px
 
 .sort-desc::after
     content: "▾"
-
 .sort-asc::after
     content: "▴"
 
 
 body #site
+    #movieTable,
+    .movieYear
+        width: 100%
+        border-collapse: collapse
     table#movieTable
-        margin: 20px auto 50px
+        margin: 50px auto 50px
         padding: 30px
-        width: 85vw
         border-radius: 20px
-        text-align: center
+        width: 90vw
+        .movieTitle
+            width: 200px
+            position: relative
+        .movieLength
+            font-size: 13px
+            width: 115px
+        .movieDept
+            width: 225px
+        .movieRow
+            height: 100px
+        thead > th
+            border-radius: 20px 
+            padding: 0px
+        .moviesHeaders td:not(:first-child),
+        .moviesHeaders td:first-child div,
+        thead > .yearRow th:first-child
+            font-size: 17px 
+            letter-spacing: 1px
+        td
+            font-size: 15px
+        td:not(:last-child), th:not(:last-child)
+            padding: 15px 10px
+        td:last-child
+            padding: 15px 0
+        .stars
+            display: inline-block                
+        .icon
+            margin: 10px 0 0
+        .award-container
+            padding: 10px 0 
+    table#movieTable > tbody > tr td:last-child
+        padding: 0
 
 // Dark-theme properties
 body.dark-theme    
-    #content
+    #content table#movieTable
         background-color: $blueGrey
-        border: 2px solid $lightGrey
+        box-shadow: 0px 0px 0px 2px $lightGrey
+        .odd:not(.clickable),
+        .even:not(.clickable)
+            color: #fdfdfd
+            background: $red
+            &:hover
+                background: $darkRed
+        .odd
+            background: $darkBackground
+            &:hover
+                background-color: #272d31
+        .even:hover
+            background-color: #383d45
+        a img
+            filter: invert(85%)
+            &:hover
+                opacity: 0.7
+        .moviesHeaders
+            color: $darkBlue
+        .yearRow > td
+            border-bottom: 2px solid $lightGrey
+            border-top: 2px solid $lightGrey
+        .yearRow > td:first-child,
+        .yearRow > th:first-child
+            border-right: 2px solid $lightGrey
+    .moviesHeaders td:not(:first-child):hover,
+    .moviesHeaders td:first-child div:hover,
+    thead > .yearRow th:first-child:hover
+        background-color: #383d45
+// .odd
+// background: $oddrow
+
+// .odd:not(.clickable)
+//     background: $oddnosource
+// .even:not(.clickable)
+//     background: $evennosource
+
+    // #movieTable
+    // border-left: 1px solid black
+    // border-right: 1px solid black

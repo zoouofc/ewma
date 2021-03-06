@@ -26,19 +26,13 @@ body #content
 // Dark-theme properties
 body.dark-theme #content
     table.user-table td[data-approved="0"]
-        color: #D94D4D !important
+        color: $red
     table.user-table
         border: 2px solid $lightGrey    
         th
             color: $headerBlue
         thead tr
             background: $blueGrey
-        td
-            color: $zooBlue
-        
-        // td:contains("false")
-        //   color: #9e1f1f
-        
         td img:hover
             opacity: 0.8
         tr:nth-child(2n)

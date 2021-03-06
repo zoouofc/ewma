@@ -5,12 +5,15 @@
 
     .movieTitleBlock
         border-radius: 20px
-        // background-color: #eeeeee
         width: 80vw
         margin: 0 auto
         padding: 15px 30px
         a
+            margin: 0 10px 0 0;
+            vertical-align: middle;
             text-decoration: none
+        h2, h3
+            letter-spacing: 1px
 
     .movieSourceBlock
         table
@@ -53,3 +56,9 @@ body.dark-theme
         border: 2px solid $lightGrey
         .videoBadge
             background-color: $darkBackground
+        h2, h3
+            color: $headerBlue
+        a img
+            filter: invert(85%)
+            &:hover
+                opacity: 0.7

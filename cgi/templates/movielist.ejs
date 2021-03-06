@@ -72,12 +72,13 @@
                     <% let cls = true; %>
                     <% for (let movieYear of movies) { %>
                         <tr class="yearRow">
-                            <td><div><%= movieYear.year %></div></td>
+                            <td><div class="monospace"><%= movieYear.year %></div></td>
                             <td>
                                 <table class="movieYear">
                                     <tbody>
                                         <% for (let movie of movieYear.movies) { %>
-                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.hasVideo ? 'clickable' : '' %>" onclick="javascript:location.href='/movies/<%= movie.id %>';">
+                                            <tr class="movieRow <%= cls ? 'odd' : 'even' %> <%= movie.hasVideo ? 'clickable' : '' %>"onclick="javascript:location.href='/movies/<%= movie.id %>';"
+                                            >
                                                 <% cls = !cls %>
                                                 <% if (request.permissions.movie_edit) { %>
                                                     <td class="editColumn">
@@ -99,21 +100,21 @@
                                                     <% } %>
                                                     <% if (movie.hasTrailer) { %>
                                                         <div class="trailerBadge" title="This movie has a Trailer">
-                                                            <img class="icon trailerIcon" alt="trailer" src="<%= cacheBuster('images/clacker.svg'); %>" />
+                                                            <img class="icon trailerIcon" style="width: 15px" alt="trailer" src="<%= cacheBuster('images/clacker.svg'); %>" />
                                                         </div>
                                                     <% } %>
                                                     <% if (movie.hasCommentary) { %>
                                                         <div class="trailerBadge" title="This movie has a Commentated version">
-                                                            <img class="icon commentaryIcon" alt="commentary" src="<%= cacheBuster('images/commentary.svg'); %>" />
+                                                            <img class="icon commentaryIcon"  style="width: 15px" alt="commentary" src="<%= cacheBuster('images/commentary.svg'); %>" />
                                                         </div>
                                                     <% } %>
                                                 </td>
-                                                <td class="tac movieLength">
+                                                <td class="tac monospace movieLength">
                                                     <%= movie.durationDisplay %>
                                                 </td>
                                                 <td class="tac movieDept"><%= movie.display %></td>
                                                 <td>
-                                                    <div class="tac">
+                                                    <div class="tac award-container">
                                                         <% if (movie.awards) { %>
                                                             <% for (let award of movie.awards) { %>
                                                                 <%- include('award.ejs', {award: award}); %>

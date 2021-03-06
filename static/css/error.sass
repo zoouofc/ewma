@@ -1,41 +1,37 @@
-$zooblue: #00B1FC
-$grey: #5D5D5D
+@import "./_variables";
+
 $font: monospace
-
-body
-    background-color: #ebebeb
-    position: absolute
-    width: 100%
-    height: 100%
-    top: 0
-    left: 0
-    bottom: 0
-    right: 0
-    margin: 0
-    padding: 0
-
-#site
-    width: 100%
-    height: 100%
-    position: relative
-    .logo
-        width: 330px
-        margin: auto
-
-#summary
-    font-family: monospace
-    td:nth-child(1)
-        text-align: right
-        font-weight: bold
-
-.absc
-    position: absolute
-    left: 50%
-    top: 50%
-    transform: translate(-50%, -50%)
 
 .db
     display: block
+body
+    margin: 0
+    padding: 0
+    #site
+        width: 100%
+        height: 100%
+        position: relative
+        .logo
+            width: 330px
+            margin: 50px auto 0
+        #summary
+            font-family: monospace
+            td:nth-child(1)
+                text-align: right
+                font-weight: bold
 
-.tac
-    text-align: center
+body #site
+    .error-message table#summary
+        margin: 15px auto 30px
+        padding: 30px
+        width: 55vw
+        border-radius: 20px
+        tbody > tr td
+            padding: 0 0 10px 25px
+    
+// Dark-theme properties
+body.dark-theme #site
+    .error-message table#summary
+        color: $offWhite
+        background-color: $blueGrey
+        border: 2px solid $lightGrey

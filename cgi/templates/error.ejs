@@ -5,12 +5,12 @@
 </head>
 <body class="dark-theme || light-theme">
     <div id="site">
-        <div class="absc db">
+        <div class="db">
             <a href="/">
                 <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
             </a>
             <br /><br />
-            <div>
+            <div class="error-message">
                 <table id="summary">
                     <tbody>
                         <% for (let prop in data) { %>

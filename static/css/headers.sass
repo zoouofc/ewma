@@ -33,18 +33,25 @@
             position: relative
         ul
             position: absolute
-            top: 1em
+            top: 25px
             left: 0
             display: none
     ul > li:hover ul
-        padding-top: 0.2em
+        background: $zooBlue
         display: block
-        background: #E1E1E1
-        width: 100%
-        li
+        width: 185px
+        border-radius: 10px
+        box-shadow: 0px 3px 11px #efefef47;
+        li  
+            font-size: 16px
+            padding: 5px 0
             width: 100%
-            border: 1px solid black
+            // border: 1px solid black
         li:hover
-            background: white
+            color: #fdfdfd 
+            background: $lightBlue
+            border-radius: 10px
+            
     .currentpage
-        border-bottom: 2px solid #fdfdfd
+        border-bottom: 2px solid $offWhite
+
