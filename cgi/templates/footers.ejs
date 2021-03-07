@@ -1,4 +1,4 @@
-<div id="footer" class="dark-theme || light-theme">
+<div id="footer" class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="footerContent" class="absCY">
         <span>
             Copyright &copy; 2016 - <%= (new Date()).getFullYear() %> Electrical, Computer, and Software Engineering Students' Society (ZOO), Mitchell Sawatzky, All Rights Reserved<br />

@@ -2,7 +2,7 @@
 <head>
     <%- include('head_shit.ejs', {title: 'EWMA | Home', request: request, cacheBuster: cacheBuster}); %>
 </head>
-<body class="dark-theme || light-theme">
+<body class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="site">
         <%- include('headers.ejs', {pageId: 'Home'}); %>
         <div id="content">

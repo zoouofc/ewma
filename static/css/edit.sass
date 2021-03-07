@@ -8,10 +8,18 @@ body #site
         border-radius: 10px
         padding: 5px 5px 8px
         margin: 0 0 0 10px
-    input.input-textbox
+    input.input-textbox,
+    input.awardName_new,    
+    input.awardNote_new
         padding: 5px 8px
-        margin: 0 0 0 10px
-    input.awardName.input-textbox
+        margin: 0 10px
+        border-radius: 10px
+        &:focus
+            outline: none
+    input.awardName.input-textbox,
+    input.awardNote.input-textbox,
+    input.awardName_new,
+    input.awardNote_new
         width: 85%
     input.button:not(.submit-btn)
         font-size: 14px;
@@ -54,6 +62,9 @@ body.dark-theme #site #content.initial-edit,
 body.dark-theme #site #content.main-edit
     background-color: $blueGrey
     border: 2px solid $lightGrey
+    h1
+        color: $darkBlue
+        letter-spacing: 1px
 
 body.dark-theme #site
     select

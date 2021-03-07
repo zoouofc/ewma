@@ -4,7 +4,7 @@
     <%- include('head_shit.ejs', {title: 'EWMA | Create Account', request: request, cacheBuster: cacheBuster}); %>
 </head>
 
-<body class="dark-theme || light-theme">
+<body class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="site">
         <div id="content">
             <div class="absc db">
