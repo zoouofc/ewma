@@ -28,4 +28,9 @@
             </tr>
         </tobdy>
     </table>
+
+    <div class="darkmode-toggle">
+        <input name="darkmode-toggle" type="checkbox" <%= request.user.attributes.dark ? 'checked="checked"' : '' %> />
+        <script type="text/javascript" src="<%= cacheBuster('js/darkmode-toggle.js') %>"></script>
+    </div>
 </div>
