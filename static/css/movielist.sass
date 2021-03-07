@@ -22,10 +22,6 @@ $hoverrow: #C3C3C3
 .movieRow:not(.clickable)
     cursor: not-allowed
 
-.editColumn
-    width: 26px
-    z-index: 100
-
 .moviesHeaders,
 thead > .yearRow
     height: 60px
@@ -52,14 +48,17 @@ body #site
         padding: 30px
         border-radius: 20px
         width: 90vw
+        .editColumn
+            width: 35px !important
+            z-index: 100
         .movieTitle
             width: 200px
             position: relative
         .movieLength
             font-size: 13px
-            width: 115px
+            width: 75px
         .movieDept
-            width: 225px
+            width: 200px
         .movieRow
             height: 100px
         thead > th
@@ -70,6 +69,8 @@ body #site
         thead > .yearRow th:first-child
             font-size: 17px 
             letter-spacing: 1px
+        .moviesHeaders td.movieTitle div:hover
+            border-radius: 20px 
         td
             font-size: 15px
         td:not(:last-child), th:not(:last-child)
@@ -108,16 +109,21 @@ body.dark-theme
                 opacity: 0.7
         .moviesHeaders
             color: $darkBlue
-        .yearRow > td
+        .yearRow:not(:last-child) > td
             border-bottom: 2px solid $lightGrey
             border-top: 2px solid $lightGrey
         .yearRow > td:first-child,
         .yearRow > th:first-child
             border-right: 2px solid $lightGrey
-    .moviesHeaders td:not(:first-child):hover,
-    .moviesHeaders td:first-child div:hover,
-    thead > .yearRow th:first-child:hover
+    .moviesHeaders td:not(.movieTitle):hover,
+    .moviesHeaders td.movieTitle div:hover,
+    thead > .yearRow th.movieTitle:hover
         background-color: #383d45
+    .moviesHeaders td.editColumn:hover
+        background-color: $blueGrey
+
+
+
 // .odd
 // background: $oddrow
 
@@ -125,7 +131,3 @@ body.dark-theme
 //     background: $oddnosource
 // .even:not(.clickable)
 //     background: $evennosource
-
-    // #movieTable
-    // border-left: 1px solid black
-    // border-right: 1px solid black

@@ -7,7 +7,7 @@
 <body class="dark-theme || light-theme">
     <div id="site">
         <%- include('../headers.ejs', {pageId: 'Edit Movie'}); %>
-        <div id="content" class="tac">
+        <div id="content" class="tac main-edit">
             <h1 class="tal">Editing Movie: <%= movie.title  || '?' %></h1>
             <hr />
             <table class="formTable most">
@@ -15,16 +15,16 @@
                     <tr>
                         <td>Title:</td>
                         <td>
-                            <input name="title" type="text" value="<%= movie.title %>" size="50" />
+                            <input class="input-textbox" name="title" type="text" value="<%= movie.title %>" size="50" />
                         </td>
                         <td>Rating:</td>
                         <td>
-                            <input name="rating" type="number" step="1" value="<%= movie.rating %>" pattern="\d+" />
+                            <input class="input-textbox" name="rating" type="number" step="1" value="<%= movie.rating %>" pattern="\d+" />
                         </td>
                     </tr>
                     <tr>
                         <td>Year:</td>
-                        <td><input name="year" type="number" step="1" maxlength="4" size="4"
+                        <td><input class="input-textbox" name="year" type="number" step="1" maxlength="4" size="4"
                                 value="<%= movie.year %>" /></td>
                         <td>Department:</td>
                         <td>
@@ -58,12 +58,13 @@
                             </select>
                         </td>
                         <td class="themespecify hdn">Please Specify:</td>
-                        <td class="themespecify hdn"><input name="themeNew" type="text" size="50" />
+                        <td class="themespecify hdn">
+                            <input class="input-textbox" name="themeNew" type="text" size="50" />
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4" style="text-align: center">
-                            <input type="button" value="Add Video" id="newVideoButton" />
+                            <input class="button" type="button" value="Add Video" id="newVideoButton" />
                         </td>
                     </tr>
                     <tr>
@@ -75,7 +76,7 @@
                     <tr data-video-id="<%= video %>">
                         <td>Video:</td>
                         <td>
-                            <input type="text" disabled="disabled" value="<%= video %>">
+                            <input class="input-textbox" type="text" disabled="disabled" value="<%= video %>">
                             <input type="button" value="X" data-video-id="<%= video %>"
                                 class="deleteVideo">
                         </td>
@@ -95,11 +96,11 @@
                     </tr>
                     <tr data-video-id="<%= video %>">
                         <td>Title:</td>
-                        <td><input name="title" data-video-id="<%= video %>"
+                        <td><input class="input-textbox" name="title" data-video-id="<%= video %>"
                                 value="<%= videosAndSources[video].title %>" size="50"></td>
                         <td></td>
                         <td>
-                            <input type="button" value="Add Source" class="addSource"
+                            <input type="button" value="Add Source" class="addSource button"
                                 data-video-id="<%= video %>">
                         </td>
                     </tr>
@@ -112,7 +113,7 @@
                     <tr data-source-id="<%= source.id %>" data-video-id="<%= video %>">
                         <td>Source:</td>
                         <td>
-                            <input disabled="disabled" type="text" value="<%= source.id %>">
+                            <input class="input-textbox" disabled="disabled" type="text" value="<%= source.id %>">
                             <input type="button" value="X" class="deleteSource"
                                 data-source-id="<%= source.id %>" />
                         </td>
@@ -134,7 +135,7 @@
                     <tr data-source-id="<%= source.id %>" data-video-id="<%= video %>">
                         <td>Source File:</td>
                         <td>
-                            <input type="text" name="file" value="<%= source.file %>" size="50"
+                            <input class="input-textbox" type="text" name="file" value="<%= source.file %>" size="50"
                                 data-source-id="<%= source.id %>" />
                         </td>
                         <td>Resolution:</td>
@@ -160,8 +161,9 @@
                     </tr>
                     <% } %>
                     <tr>
-                        <td colspan=4 style="text-align: center"><input type="button"
-                                value="New Award" id="newAwardButton" /></td>
+                        <td colspan=4 style="text-align: center">
+                            <input type="button" value="New Award" id="newAwardButton" class="button" />
+                        </td>
                     </tr>
                     <% for (let award of awards) { %>
                     <tr class="awardExist">

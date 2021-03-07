@@ -1,14 +1,50 @@
 @import "./_variables";
 
-.formTable
-    td
-        padding: 10px 0
+// For all editing pages
+body #site
+    select 
+        font-size: 16px
+        font-family: "Didact Gothic", sans-serif
+        padding: 5px 5px 8px
+        border-radius: 10px
 
-    td:nth-child(1), td:nth-child(3)
-        text-align: right
+// For initial editing page
+body #site #content.initial-edit
+    text-align: center
+    margin: 50px auto 0
+    padding: 30px
+    width: 45vw
+    border-radius: 20px
+    input.button
+        margin: 20px 0 5px
+        padding: 15px
+        width: 135px
 
-    td:nth-child(2), td:nth-child(4)
-        text-align: left
+// For main editing page
+body #site #content.main-edit
+    .formTable
+        td
+            padding: 10px 0
+
+        td:nth-child(1), td:nth-child(3)
+            text-align: right
+
+        td:nth-child(2), td:nth-child(4)
+            text-align: left
+
+// Dark-theme properrties
+body.dark-theme #site #content.initial-edit
+    background-color: $blueGrey
+    border: 2px solid $lightGrey
+
+body.dark-theme #site
+    select
+        background-color: $offWhite
+        &:focus
+            outline: none
+            box-shadow: 0px 0px 4px $zooBlue;
+
+
 
 // body #site
 //     #content.initial-edit

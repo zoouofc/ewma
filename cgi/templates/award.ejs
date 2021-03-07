@@ -7,6 +7,7 @@
     <img class="awardILeft awardI" src="<%= cacheBuster(`images/award_left${award.gold ? '_gold' : ''}.png`); %>" type="image/png" alt="award" />
     <div class="awardTitle">
         <%- award.name.replace(/ /gm, '<br />') %>
+        <!-- <%- award.name.replace(/ /gm) %> -->
     </div>
     <img class="awardIRight awardI" src="<%= cacheBuster(`images/award_right${award.gold ? '_gold' : ''}.png`) %>" type="image/png" alt="award" />
 </div>
