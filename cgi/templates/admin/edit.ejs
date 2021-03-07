@@ -114,6 +114,7 @@
                         <td>Source:</td>
                         <td>
                             <input class="input-textbox" disabled="disabled" type="text" value="<%= source.id %>">
+                            
                             <input type="button" value="X" class="deleteSource"
                                 data-source-id="<%= source.id %>" />
                         </td>
@@ -173,20 +174,18 @@
                             Award Name:
                         </td>
                         <td>
-                            <input type="text" class="awardName" award="<%= award.id %>"
-                                value="<%= award.name %>" size="50" />
+                            <input type="text" class="awardName input-textbox" award="<%= award.id %>" value="<%= award.name %>" size="50" />
                         </td>
                         <td>Award Note (On Hover)</td>
                         <td>
-                            <input type="text" class="awardNote" award="<%= award.id %>"
-                                value="<%= award.note %>" size="50" />
+                            <input type="text" class="awardNote input-textbox" award="<%= award.id %>" value="<%= award.note %>" size="50" />
                         </td>
                     </tr>
                     <% } %>
                 </tbody>
             </table>
             <hr />
-            <input class="button" type="button" id="submit" value="Submit" />
+            <input class="submit-btn button" type="button" id="submit" value="Submit" />
         </div>
         <script>
             window.data = < % -JSON.stringify({
