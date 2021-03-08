@@ -27,7 +27,17 @@ body.dark-theme
         table#themes
             th
                 color: $headerBlue
-            thead tr
-                // background: #3b4144
             tbody tr:nth-child(2n)
                 color: $offWhite
+
+// Light-theme properties
+body.light-theme    
+    #content
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        table#themes
+            th
+                color: $darkerFont
+
+

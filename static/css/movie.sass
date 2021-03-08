@@ -19,8 +19,6 @@
             display: inline-block
             width: 100%
             margin: 25px 0 0
-            // max-width: 900px
-            // max-height: 506px
         &.movie-info
             min-height: 135px
             h2
@@ -39,7 +37,6 @@
 .videoBadge
     border: 1px solid rgb(117, 117, 117)
     border-radius: 7px
-    // background: white
     padding: 2px 5px
     font-variant: small-caps
     margin: 0 -5px 5px
@@ -70,3 +67,18 @@ body.dark-theme
             filter: invert(85%)
             &:hover
                 opacity: 0.7
+
+// Light-theme properties
+body.light-theme    
+    #content .movieTitleBlock
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        .videoBadge
+            background-color: $white
+        h2, h3
+            color: $darkerFont
+        a img:hover
+            opacity: 0.7
+
+

@@ -14,16 +14,13 @@ body #content
         td
             font-size: 15px
             img
-                // padding: 5px 0 0 0;
                 margin: 0 0 0 8px;
                 &:hover
                   cursor: pointer
         td:not(:last-child), th:not(:last-child)
-            // border-right: none
             border-radius: 10px
             padding: 15px 10px
         td:last-child
-            // border-right: none
             border-radius: 10px
             padding: 15px 0
         a:-webkit-any-link
@@ -38,7 +35,6 @@ body #content
         padding: 15px 30px 30px
         width: 450px
         border-radius: 20px
-        // text-align: center
         .perm-description
             margin: 15px 0 0
         input.input-textbox
@@ -83,6 +79,37 @@ body.dark-theme #content
             background: $blueGrey
         a:-webkit-any-link
             color: $zooBlue
+            &:hover
+                color: $darkBlue
+            &:visited
+                color: $turquoise 
+            &:visited:hover
+                color: $darkTurquoise
+
+// Light-theme properties
+body.light-theme #content
+    .add-permission-container
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        h3
+            color: $darkerFont
+    table
+        border: 2px solid $lightGrey  
+        box-shadow: 0px 4px 10px 0px $shadowGrey  
+    table.permission-table
+        th
+            color: $darkerFont
+        thead tr
+            background: $offBlueWhite
+        td img:hover
+            opacity: 0.7
+        tr:nth-child(2n)
+            background: $offBlueWhite
+        a:-webkit-any-link
+            color: $zooBlue
+            font-weight: bold
+            letter-spacing: 1px
             &:hover
                 color: $darkBlue
             &:visited

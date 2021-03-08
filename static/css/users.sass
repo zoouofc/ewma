@@ -49,3 +49,35 @@ body.dark-theme #content
             color: $yellow
             &:hover
                 color: $darkYellow
+
+// Light-theme properties
+body.light-theme #content
+    table.user-table td[data-approved="0"]
+        color: $red
+        font-weight: bold
+        letter-spacing: 1px
+    table.user-table
+        border: 2px solid $lightGrey    
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        th
+            color: $darkerFont
+        thead tr
+            background: $offBlueWhite
+        td img:hover
+            opacity: 0.8
+        tr:nth-child(2n)
+            background: $offBlueWhite
+        a.user-link:-webkit-any-link
+            color: $zooBlue
+            font-weight: bold
+            letter-spacing: 1px
+            &:hover
+                color: $darkBlue
+            &:visited
+                color: $turquoise 
+            &:visited:hover
+                color: $darkTurquoise
+        a.email-link:-webkit-any-link
+            color: $yellow
+            &:hover
+                color: $darkYellow

@@ -4,27 +4,21 @@ $font: monospace
 
 .db
     display: block
-body
-    margin: 0
-    padding: 0
-    #site
-        width: 100%
-        height: 100%
-        position: relative
-        .logo
-            width: 330px
-            margin: 50px auto 0
-        #summary
-            font-family: monospace
-            td:nth-child(1)
-                text-align: right
-                font-weight: bold
+body #site
+    .logo
+        width: 330px
+        margin: 50px auto 0
+    #summary
+        font-family: monospace
+        td:nth-child(1)
+            text-align: right
+            font-weight: bold
 
 body #site
     .error-message
         margin: 0 0 30px
     .error-message table#summary
-        margin: 15px auto 30px
+        margin: 15px auto 45px
         padding: 30px
         width: 55vw
         border-radius: 20px
@@ -37,3 +31,11 @@ body.dark-theme #site
         color: $offWhite
         background-color: $blueGrey
         border: 2px solid $lightGrey
+
+// Light-theme properties
+body.light-theme #site
+    .error-message table#summary
+        color: $darkFont
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey

@@ -13,11 +13,9 @@ $hoverrow: #C3C3C3
     min-height: 10px
     div
         transform: rotate(-90deg)
-        // padding: 14px 0
 
 .movieRow.clickable:hover
     cursor: pointer !important
-    // background-color: $hoverrow
 
 .movieRow:not(.clickable)
     cursor: not-allowed
@@ -78,7 +76,7 @@ body #site
         td:last-child
             padding: 15px 0
         .stars
-            display: inline-block                
+            display: inline-block
         .icon
             margin: 10px 0 0
         .award-container
@@ -93,11 +91,11 @@ body.dark-theme
         box-shadow: 0px 0px 0px 2px $lightGrey
         .odd:not(.clickable),
         .even:not(.clickable)
-            color: #fdfdfd
+            color: $white
             background: $red
             &:hover
                 background: $darkRed
-                color: #fdfdfd
+                color: $white
         .odd
             background: $darkBackground
             &:hover
@@ -126,11 +124,37 @@ body.dark-theme
         background-color: $blueGrey
 
 
-
-// .odd
-// background: $oddrow
-
-// .odd:not(.clickable)
-//     background: $oddnosource
-// .even:not(.clickable)
-//     background: $evennosource
+// Light-theme properties
+body.light-theme    
+    #content table#movieTable
+        background-color: $offBlueWhite
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        .odd:not(.clickable),
+        .even:not(.clickable)
+            color: $white
+            background: $red
+            &:hover
+                background: $darkRed
+                color: $white
+        .odd
+            background: $lightBackground
+            &:hover
+                background-color: #c1e6f8
+        .even:hover
+            background-color: $white
+        a img:hover
+            opacity: 0.45
+        .moviesHeaders
+            color: $darkerFont
+        .yearRow:not(:last-child) > td
+            border-bottom: 2px solid $lightGrey
+            border-top: 2px solid $lightGrey
+        .yearRow > td:first-child,
+        .yearRow > th:first-child
+            border-right: 2px solid $lightGrey
+    .moviesHeaders td:not(.movieTitle):hover,
+    .moviesHeaders td.movieTitle div:hover,
+    thead > .yearRow th.movieTitle:hover
+        background-color: $white
+    .moviesHeaders td.editColumn:hover
+        background-color: $offBlueWhite

@@ -2,6 +2,8 @@
 
 // For all editing pages
 body #site
+    h1
+        margin: 0 0 20px;
     select 
         font-size: 16px
         font-family: "Didact Gothic", sans-serif
@@ -28,6 +30,8 @@ body #site
     input.button.submit-btn
         font-size: 18px
         margin: 15px 0 0
+    .delete-icon:hover
+        cursor: pointer
 
 // For initial editing page
 body #site #content.initial-edit
@@ -45,9 +49,10 @@ body #site #content.initial-edit
 body #site #content.main-edit
     margin: 50px auto 0
     padding: 30px
-    width: 75vw
+    width: 90vw
     border-radius: 20px
     .formTable
+        margin: 0 auto
         td
             padding: 10px 0
 
@@ -56,6 +61,8 @@ body #site #content.main-edit
 
         td:nth-child(2), td:nth-child(4)
             text-align: left
+    .delete-icon:hover
+        opacity: 0.8
 
 // Dark-theme properrties
 body.dark-theme #site #content.initial-edit,
@@ -71,21 +78,21 @@ body.dark-theme #site
         background-color: $offWhite
         &:focus
             outline: none
+            box-shadow: 0px 0px 4px $zooBlue
+
+// Light-theme properrties
+body.light-theme #site #content.initial-edit,
+body.light-theme #site #content.main-edit
+    background-color: $offBlueWhite
+    border: 2px solid $lightGrey
+    box-shadow: 0px 4px 10px 0px $shadowGrey
+    h1
+        color: $darkerFont
+        letter-spacing: 1px
+
+body.light-theme #site
+    select
+        background-color: $white
+        &:focus
+            outline: none
             box-shadow: 0px 0px 4px $zooBlue;
-
-
-
-// body #site
-//     #content.initial-edit
-//         margin: 20px 0 0
-//         #site input.input-textbox
-//             border-radius: 10px; 
-//             font-size: 16px;
-
-// // Dark-theme properties
-// body.dark-theme
-//     #site #content.initial-edit
-//         select
-//             background-color: $offWhite
-//             &:focus
-//                 box-shadow: 0px 0px 4px #00b1fc;

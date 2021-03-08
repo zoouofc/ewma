@@ -21,11 +21,14 @@
                 </p>
                 <br />
                 <div id="errorMessage">
-                    <%= request.errorMessage %>
+                    <b>
+                        <%= request.errorMessage %>
+                    </b>
                 </div>
                 <div id="login" class="tac">
                     <form id="login" action="/login" method="POST">
-                        <input class="input-textbox" type="text" name="username" id="username" placeholder="username" />
+                        <input class="input-textbox" type="text" name="username" id="username"
+                            placeholder="username" />
                         <input class="input-textbox" type="password" name="password" id="password"
                             placeholder="password" />
                         <input type="hidden" name="dest" value="<%= dest %>" />

@@ -4,14 +4,11 @@ body
     #content
         text-align: center
         form
-            margin: 20px auto 50px
+            margin: 0 auto 30px
             padding: 30px
             width: 550px
             border-radius: 20px
             text-align: center
-            // .formPart
-            //     // width: 100%
-            //     position: relative
             textarea.input-textbox
                 max-width: 450px
                 min-width: 450px
@@ -23,8 +20,7 @@ body
             input.create-account-btn
                 margin: 20px 0 10px;
         .errText
-            // text-align: center
-            color: #D94D4D
+            color: $red
 
 
 // Dark-theme properties
@@ -32,3 +28,10 @@ body.dark-theme
     #content form
         background-color: $blueGrey
         border: 2px solid $lightGrey
+
+// Light-theme properties
+body.light-theme    
+    #content form
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey

@@ -13,9 +13,11 @@
                 </a>
                 <br />
                 <div class="errText">
-                    <% if (errText) { %>
-                    <%= errText %>
-                    <% } else { %> &nbsp; <% } %>
+                    <b>
+                        <% if (errText) { %>
+                        <%= errText %>
+                        <% } else { %> &nbsp; <% } %>
+                    </b>
                 </div>
                 <form method="POST" action="/newaccount" id="createForm">
                     <div class="formPart">
