@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
 </head>
+
 <body class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="site">
         <%- include('../headers.ejs', {pageId: 'Manage User'}); %>
@@ -20,7 +22,9 @@
                             <td>
                                 <label for="username">Username</label>
                             </td>
-                            <td><input class="input-textbox" type="text" name="username" disabled="disabled" value="<%= user.attributes.username %>"></td>
+                            <td><input class="input-textbox" type="text" name="username"
+                                    disabled="disabled" value="<%= user.attributes.username %>">
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -28,13 +32,15 @@
                             </td>
                             <td>
                                 <% if (user.attributes.approved) { %>
-                                    <span class="green">Yes &#x2714;</span>
+                                <span class="green">Yes &#x2714;</span>
                                 <% } else { %>
-                                    <form method="POST" action="/admin/user/<%= user.attributes.id %>/activate">
-                                        <input class="input-textbox" type="hidden" name="user" value="<%= user.attributes.id %>">
-                                        <span class="red">No ✖</span>
-                                        <input class="button" type="submit" value="Activate User">
-                                    </form>
+                                <form method="POST"
+                                    action="/admin/user/<%= user.attributes.id %>/activate">
+                                    <input class="input-textbox" type="hidden" name="user"
+                                        value="<%= user.attributes.id %>">
+                                    <span class="red">No ✖</span>
+                                    <input class="button" type="submit" value="Activate User">
+                                </form>
                                 <% } %>
                             </td>
                         </tr>
@@ -46,18 +52,37 @@
                             <td>
                                 <label for="email">Email</label>
                             </td>
-                            <td><input class="input-textbox" type="email" name="email" disabled="disabled" value="<%= user.attributes.email %>"></td>
+                            <td><input class="input-textbox" type="email" name="email"
+                                    disabled="disabled" value="<%= user.attributes.email %>"></td>
                         </tr>
                         <tr>
                             <td><label for="permissions">Permissions</label></td>
                             <td class="monospace">
                                 <% for (let permission of [...user.permissions].sort()) { %>
-                                    <%= permission %>
-                                    <br />
+                                    <div class="permission-entry">
+                                        <%= permission %>
+                                        <% if (has_permission && permission !== 'manage_permissions') { %>
+                                        <img src="<%= cacheBuster('images/delete-colored.svg') %>"
+                                            class="delete-button" data-user="<%= user.attributes.id %>"
+                                            data-permission="<%= permission %>" width="15" height="15">
+                                        <% } %>
+                                    </div>
                                 <% } %>
                             </td>
                     </tbody>
                 </table>
+                <div class="add-perm">
+                    <select>
+                        <option selected="selected" disabled="disabled">
+                            Add Permission:
+                        </option>
+                        <% for (let permission of existingPerms) { %>
+                        <option value="<%= permission %>">
+                            <%= permission %>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
             </div>
         </div>
         <%- include('../footers.ejs', {}); %>
