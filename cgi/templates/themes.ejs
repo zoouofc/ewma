@@ -9,17 +9,18 @@
         <%- include('headers.ejs', {pageId: 'Themes'}); %>
         <div id="content">
             <p>
-                The rules for ENGG Week themes vary from year to year and are ultimately up to the Judges. This being said,
-                <ul>
-                    <li>
-                        1. A theme may not be used for more than one department in a given year
-                    </li>
-                    <li>
-                        2. Once a theme is used in ENGG Week (Frosh Week does not count), it cannot be used again in the following 10 years.
-                    </li>
-                </ul>
+                The rules for ENGG Week themes vary from year to year and are ultimately up to the
+                Judges. This being said,
             </p>
-            <h3>Below are themes that have been used in the last 10 years, and should not be used in the <%= nowYear %> ENGG Week.</h3>
+            <p>
+                1. A theme may not be used for more than one department in a given year
+                <br>
+                2. Once a theme is used in ENGG Week (Frosh Week does not count), it cannot be used again in the following 10 years.
+            </p>
+            <h3>
+                Below are themes that have been used in the last 10 years, and should not be used in
+                the <%= nowYear %> ENGG Week.
+            </h3>
             <table id="themes">
                 <thead>
                     <tr>
@@ -31,12 +32,12 @@
                 </thead>
                 <tbody>
                     <% for (let theme of themes) { %>
-                    <tr>
-                        <td><%= theme.theme %></td>
-                        <td><%= theme.year %></td>
-                        <td><%= theme.available %></td>
-                        <td><%= theme.dept %></td>
-                    </tr>
+                        <tr>
+                            <td><%= theme.theme %></td>
+                            <td><%= theme.year %></td>
+                            <td><%= theme.available %></td>
+                            <td><%= theme.dept %></td>
+                        </tr>
                     <% } %>
                 </tbody>
             </table>
