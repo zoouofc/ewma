@@ -46,7 +46,6 @@
             font-size: 16px
             padding: 5px 0
             width: 100%
-            // border: 1px solid black
         li:hover
             color: #fdfdfd 
             background: $lightBlue
@@ -83,7 +82,6 @@
     -webkit-transition: .4s
     transition: .4s
 
-
 .slider:before 
     position: absolute
     content: ""
@@ -95,25 +93,20 @@
     -webkit-transition: .4s
     transition: .4s
 
-
 input:checked + .slider 
     background-color: $blueGrey
 
-
 input:focus + .slider 
     box-shadow: 0 0 1px $blueGrey
-
 
 input:checked + .slider:before 
     -webkit-transform: translateX(26px)
     -ms-transform: translateX(26px)
     transform: translateX(26px)
 
-
 /* Rounded sliders */
 .slider.round 
     border-radius: 34px
-
 
 .slider.round:before 
     border-radius: 50%
