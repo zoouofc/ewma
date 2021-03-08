@@ -19,22 +19,27 @@
                 </thead>
                 <tbody>
                     <% for (let user of users) { %>
-                    <tr>
-                        <td><a class="user-link"
-                                href="/admin/user/<%= user.attributes.id %>"><%= user.attributes.username %></a>
-                        </td>
-                        <td><a class="email-link"
-                                href="mailto:<%= user.attributes.email %>"><%= user.attributes.email %></a>
-                        </td>
-                        <td data-approved="<%= user.attributes.approved %>">
-                            <%= user.attributes.approved ? 'true' : 'false' %></td>
-                        <td>
-                            <% for (let perm of [...user.permissions].sort()) { %>
-                            <%= perm %>
-                            <br />
-                            <% } %>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <a class="user-link" href="/admin/user/<%= user.attributes.id %>">
+                                    <%= user.attributes.username %>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="email-link" href="mailto:<%= user.attributes.email %>">
+                                    <%= user.attributes.email %>
+                                </a>
+                            </td>
+                            <td data-approved="<%= user.attributes.approved %>">
+                                <%= user.attributes.approved ? 'true' : 'false' %>
+                            </td>
+                            <td>
+                                <% for (let perm of [...user.permissions].sort()) { %>
+                                    <%= perm %>
+                                    <br />
+                                <% } %>
+                            </td>
+                        </tr>
                     <% } %>
                 </tbody>
             </table>

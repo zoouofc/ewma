@@ -22,35 +22,29 @@
                         <td>
                             <%= perm.permission %>
                             <% if (perm.permission !== 'manage_permissions') { %>
-                            <img src="<%= cacheBuster('images/delete-colored.svg') %>"
-                                class="delete-button" data-permission="<%= perm.permission %>"
-                                width="15" height="15">
+                                <img src="<%= cacheBuster('images/delete-colored.svg') %>" class="delete-button" data-permission="<%= perm.permission %>" width="15" height="15">
                             <% } %>
-
                         </td>
                         <td><%= perm.description %></td>
                         <td>
                             <% for (let user of perm.users) { %>
-                            <a href="/admin/user/<%= user.id %>"><%= user.username %></a>
-                            <br />
+                                <a href="/admin/user/<%= user.id %>"><%= user.username %></a>
+                                <br />
                             <% } %>
                         </td>
                     </tr>
                     <% } %>
                 </tbody>
             </table>
-            <!-- </div> -->
             <div class="add-permission-container">
                 <h3>Create Permission</h3>
                 <form action="/admin/permissions/new" method="post">
                     <label for="name">Permission Name</label>
-                    <input class="input-textbox" type="text" maxlength="20" required="required"
-                        name="name" pattern="^[a-zA-Z_]*$" />
+                    <input class="input-textbox" type="text" maxlength="20" required="required" name="name" pattern="^[a-zA-Z_]*$" />
                     <div class="perm-description">
                         <label for="description">Permission Description</label>
                         <br />
-                        <textarea class="input-textbox" required="required" maxlength="255"
-                            name="description"></textarea>
+                        <textarea class="input-textbox" required="required" maxlength="255" name="description"></textarea>
                     </div>
                     <input class="button" type="submit" />
                 </form>
