@@ -6,34 +6,36 @@
         <tbody>
             <tr>
                 <% if (request.headerLinksAdmin.length) { %>
-                <td>
-                    <ul class="header headerDropdown">
-                        <li>Admin &blacktriangledown;
-                            <ul class="headerDropdownList">
-                                <% for (let header of request.headerLinksAdmin.sort((a, b) => { return a.text < b.text ? 1 : -1; })) { %>
-                                <a class="headerDropdownItem <%= header.text.toLowerCase() === pageId.toLowerCase() ? 'currentpage' : '' %>"
-                                    href="<%= header.link %>">
-                                    <li>
-                                        <%= header.text %>
-                                    </li>
-                                </a>
-                                <% } %>
-                            </ul>
-                        </li>
-                    </ul>
-                </td>
+                    <td>
+                        <ul class="header headerDropdown">
+                            <li>Admin &blacktriangledown;
+                                <ul class="headerDropdownList">
+                                    <% for (let header of request.headerLinksAdmin.sort((a, b) => { return a.text < b.text ? 1 : -1; })) { %>
+                                        <a class="headerDropdownItem <%= header.text.toLowerCase() === pageId.toLowerCase() ? 'currentpage' : '' %>"
+                                            href="<%= header.link %>">
+                                            <li>
+                                                <%= header.text %>
+                                            </li>
+                                        </a>
+                                    <% } %>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
                 <% } %>
                 <% for (let header of request.headerLinks) { %>
-                <td><a class="header <%= header.text.toLowerCase() === pageId.toLowerCase() ? 'currentpage' : '' %>"
-                        href="<%= header.link %>"><%= header.text %></a>
-                    <% } %>
+                    <td>
+                        <a class="header <%= header.text.toLowerCase() === pageId.toLowerCase() ? 'currentpage' : '' %>"
+                            href="<%= header.link %>"><%= header.text %>
+                        </a>
+                    </td>
+                <% } %>
             </tr>
-            </tobdy>
+        </tbody>
     </table>
 
     <label class="darkmode-toggle">
-        <input class="checkbox" name="darkmode-toggle" type="checkbox"
-            <%= request.user.attributes.dark ? 'checked="checked"' : '' %> />
+        <input class="checkbox" name="darkmode-toggle" type="checkbox" <%= request.user.attributes.dark ? 'checked="checked"' : '' %> />
         <span class="slider round"></span>
         <script type="text/javascript" src="<%= cacheBuster('js/darkmode-toggle.js') %>"></script>
     </label>
