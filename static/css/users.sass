@@ -1,0 +1,83 @@
+@import "./_variables"
+
+body #content 
+    table.user-table
+        text-align: center
+        width: 80vw
+        border-radius: 20px
+        margin: 50px auto 50px
+        th
+            font-size: 18px
+            letter-spacing: 1px
+            border-radius: 10px 
+            padding: 15px 10px
+        td
+            font-size: 15px
+        td:not(:last-child), th:not(:last-child)
+            border-radius: 10px
+            padding: 15px 10px
+        td:last-child
+            border-radius: 10px
+            padding: 15px 0
+        a:-webkit-any-link
+            cursor: pointer
+            text-decoration: none
+
+// Dark-theme properties
+body.dark-theme #content
+    table.user-table td[data-approved="0"]
+        color: $red
+    table.user-table
+        border: 2px solid $lightGrey    
+        th
+            color: $headerBlue
+        thead tr
+            background: $blueGrey
+        td img:hover
+            opacity: 0.8
+        tr:nth-child(2n)
+            background: $blueGrey
+        a.user-link:-webkit-any-link
+            color: $zooBlue
+            &:hover
+                color: $darkBlue
+            &:visited
+                color: $turquoise 
+            &:visited:hover
+                color: $darkTurquoise
+        a.email-link:-webkit-any-link
+            color: $yellow
+            &:hover
+                color: $darkYellow
+
+// Light-theme properties
+body.light-theme #content
+    table.user-table td[data-approved="0"]
+        color: $red
+        font-weight: bold
+        letter-spacing: 1px
+    table.user-table
+        border: 2px solid $lightGrey    
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        th
+            color: $darkerFont
+        thead tr
+            background: $offBlueWhite
+        td img:hover
+            opacity: 0.8
+        tr:nth-child(2n)
+            background: $offBlueWhite
+        a.user-link:-webkit-any-link
+            color: $zooBlue
+            font-weight: bold
+            letter-spacing: 1px
+            &:hover
+                color: $darkBlue
+            &:visited
+                color: $turquoise 
+            &:visited:hover
+                color: $darkTurquoise
+        a.email-link:-webkit-any-link
+            color: $yellow
+            &:hover
+                color: $darkYellow

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+
 <head>
     <%- include('../head_shit.ejs', {title: 'EWMA | Admin | Users', request: request, cacheBuster: cacheBuster}); %>
 </head>
-<body>
+
+<body class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="site">
         <%- include('../headers.ejs', {pageId: 'Manage Users'}); %>
-        <div id="content" class="tac">
-            <table class="width100 styled-table">
+        <div id="content">
+            <table class="user-table">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -18,10 +20,20 @@
                 <tbody>
                     <% for (let user of users) { %>
                         <tr>
-                            <td><a href="/admin/user/<%= user.attributes.id %>"><%= user.attributes.username %></a></td>
-                            <td><a href="mailto:<%= user.attributes.email %>"><%= user.attributes.email %></a></td>
-                            <td class="monospace"><%= user.attributes.approved ? 'true' : 'false' %></td>
-                            <td class="monospace">
+                            <td>
+                                <a class="user-link" href="/admin/user/<%= user.attributes.id %>">
+                                    <%= user.attributes.username %>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="email-link" href="mailto:<%= user.attributes.email %>">
+                                    <%= user.attributes.email %>
+                                </a>
+                            </td>
+                            <td data-approved="<%= user.attributes.approved %>">
+                                <%= user.attributes.approved ? 'true' : 'false' %>
+                            </td>
+                            <td>
                                 <% for (let perm of [...user.permissions].sort()) { %>
                                     <%= perm %>
                                     <br />

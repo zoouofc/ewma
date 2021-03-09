@@ -1,9 +1,73 @@
+@import "./_variables"
+
 #content table
-    width: 40%
     display: inline-block
-    td
-        width: 50%
     td:first-child
         text-align: right
     td:last-child
         text-align: left
+
+body #content
+    margin: 20px auto 50px
+    padding: 15px 30px 30px
+    width: 80vw
+    border-radius: 20px
+    text-align: center
+    h3
+        text-align: left
+        letter-spacing: 1px
+        margin: 10px 0
+        .smolits.fr
+            margin: 10px 0 0
+    table
+        margin: 15px
+        input.button
+            font-size: 12px
+            padding: 10px
+            width: 100px
+        tr
+            height: 40px
+            input.input-textbox
+                padding: 3px 10px
+        label
+            margin: 0 5px
+        .permission-entry
+            margin: 0 0 10px 5px
+            img
+                margin: 0 0 0 3px
+                &:hover
+                    cursor: pointer
+                    opacity: 0.8
+    .add-perm select
+        font-size: 16px
+        font-family: "Didact Gothic", sans-serif
+        border-radius: 10px
+        padding: 5px 5px 8px
+        margin: 0 0 0 10px
+
+// Dark-theme properties
+body.dark-theme    
+    #content
+        background-color: $blueGrey
+        border: 2px solid $lightGrey
+        h3
+            color: $darkBlue
+        select
+            background-color: $offWhite
+            &:focus
+                outline: none
+                box-shadow: 0px 0px 4px $zooBlue
+
+// Light-theme properties
+body.light-theme    
+    #content
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        h3
+            color: $darkerFont
+    select
+        background-color: $white
+        &:focus
+            outline: none
+            box-shadow: 0px 0px 4px $zooBlue

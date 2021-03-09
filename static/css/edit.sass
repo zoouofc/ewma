@@ -1,9 +1,98 @@
-.formTable
-    td
-        padding: 10px 0
+@import "./_variables"
 
-    td:nth-child(1), td:nth-child(3)
-        text-align: right
+// For all editing pages
+body #site
+    h1
+        margin: 0 0 20px
+    select 
+        font-size: 16px
+        font-family: "Didact Gothic", sans-serif
+        border-radius: 10px
+        padding: 5px 5px 8px
+        margin: 0 0 0 10px
+    input.input-textbox,
+    input.awardName_new,    
+    input.awardNote_new
+        padding: 5px 8px
+        margin: 0 10px
+        border-radius: 10px
+        &:focus
+            outline: none
+    input.awardName.input-textbox,
+    input.awardNote.input-textbox,
+    input.awardName_new,
+    input.awardNote_new
+        width: 85%
+    input.button:not(.submit-btn)
+        font-size: 14px
+        width: 125px
+        padding: 13px
+    input.button.submit-btn
+        font-size: 18px
+        margin: 15px 0 0
+    .delete-icon:hover
+        cursor: pointer
 
-    td:nth-child(2), td:nth-child(4)
-        text-align: left
+// For initial editing page
+body #site #content.initial-edit
+    text-align: center
+    margin: 50px auto 0
+    padding: 30px
+    width: 45vw
+    border-radius: 20px
+    input.button
+        margin: 20px 0 5px
+        padding: 15px
+        width: 135px
+
+// For main editing page
+body #site #content.main-edit
+    margin: 50px auto 0
+    padding: 30px
+    width: 90vw
+    border-radius: 20px
+    .formTable
+        margin: 0 auto
+        td
+            padding: 10px 0
+
+        td:nth-child(1), td:nth-child(3)
+            text-align: right
+
+        td:nth-child(2), td:nth-child(4)
+            text-align: left
+    .delete-icon:hover
+        opacity: 0.8
+
+// Dark-theme properrties
+body.dark-theme #site #content.initial-edit,
+body.dark-theme #site #content.main-edit
+    background-color: $blueGrey
+    border: 2px solid $lightGrey
+    h1
+        color: $darkBlue
+        letter-spacing: 1px
+
+body.dark-theme #site
+    select
+        background-color: $offWhite
+        &:focus
+            outline: none
+            box-shadow: 0px 0px 4px $zooBlue
+
+// Light-theme properrties
+body.light-theme #site #content.initial-edit,
+body.light-theme #site #content.main-edit
+    background-color: $offBlueWhite
+    border: 2px solid $lightGrey
+    box-shadow: 0px 4px 10px 0px $shadowGrey
+    h1
+        color: $darkerFont
+        letter-spacing: 1px
+
+body.light-theme #site
+    select
+        background-color: $white
+        &:focus
+            outline: none
+            box-shadow: 0px 0px 4px $zooBlue

@@ -1,3 +1,41 @@
-#themes
-    width: 100%
-    text-align: center
+@import "./_variables"
+
+body
+    #content
+        text-align: center
+        margin: 50px auto
+        padding: 35px 30px 75px
+        width: 80vw
+        border-radius: 20px
+        ul li
+            list-style-type: none
+        table#themes
+            margin: 0 auto
+            th
+                letter-spacing: 1px
+                padding: 10px
+            tbody tr:nth-child(2n)
+                border-radius: 20px
+            tbody tr
+                font-size: 14px
+
+// Dark-theme properties
+body.dark-theme    
+    #content
+        background-color: $blueGrey
+        border: 2px solid $lightGrey
+        table#themes
+            th
+                color: $headerBlue
+            tbody tr:nth-child(2n)
+                color: $offWhite
+
+// Light-theme properties
+body.light-theme    
+    #content
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        table#themes
+            th
+                color: $darkerFont

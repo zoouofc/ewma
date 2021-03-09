@@ -5,7 +5,7 @@ $(document).ready(function () {
     let newSourceID = 0;
     let newVideoID = 0;
 
-    function packPayload (payload) {
+    function packPayload(payload) {
         for (let prop in payload) {
             if (typeof payload[prop][0] === "object") { // array
                 for (let e of payload[prop]) {
@@ -76,7 +76,7 @@ $(document).ready(function () {
         );
     });
 
-    $(document).on('click', '.addSource', function(e) {
+    $(document).on('click', '.addSource', function (e) {
         let videoID = $(e.target).attr('data-video-id');
         newSourceID--;
         $(e.target).closest('tr').after(
@@ -119,7 +119,7 @@ $(document).ready(function () {
         );
     });
 
-    $(document).on('click', '.deleteSource', function(e) {
+    $(document).on('click', '.deleteSource', function (e) {
         let id = $(e.target).attr('data-source-id');
         if (parseInt(id) >= 0) {
             deletedSources.push(id);
@@ -127,12 +127,12 @@ $(document).ready(function () {
         $(`tr[data-source-id="${id}"]`).remove();
     });
 
-    $(document).on('click', '.deleteVideo', function(e) {
+    $(document).on('click', '.deleteVideo', function (e) {
         let id = $(e.target).attr('data-video-id');
         if (parseInt(id) >= 0) {
             deletedVideos.push(id);
         }
-        $(`tr[data-video-id="${id}"][data-source-id]`).each(function(i, e) {
+        $(`tr[data-video-id="${id}"][data-source-id]`).each(function (i, e) {
             let id = $(e).attr('data-source-id');
             if (parseInt(id) >= 0) {
                 if (deletedSources.indexOf(id) === -1) {
@@ -147,15 +147,15 @@ $(document).ready(function () {
         $(e.target).closest('tr').after(
             $(`<tr>
                 <td>
-                    <input type="button" class="deleteAward" value="X" />
                     Award Name:
+                    <input type="button" class="deleteAward" value="X" />
                 </td>
                 <td>
-                    <input type="text" class="awardName_new" value="" size="50" />
+                    <input type="text" class="awardName_new input-textbox" value="" size="50" />
                 </td>
                 <td>Award Note (On Hover)</td>
                 <td>
-                    <input type="text" class="awardNote_new" value="" size="50" />
+                    <input type="text" class="awardNote_new input-textbox" value="" size="50" />
                 </td>
             </tr>`)
         );
@@ -163,13 +163,15 @@ $(document).ready(function () {
 
     $('#submit').click(function (e) {
         // compile the form data into actions
-        let actions = {_: []};
+        let actions = {
+            _: []
+        };
         let DELETE = 1;
         let UPDATE = 2;
         let CREATE = 3;
         let valid = true;
 
-        function validateText (key, selector) {
+        function validateText(key, selector) {
             let val = $(selector || `[name="${key}"]`).val().trim();
             if (!val.length) {
                 val = null;
@@ -179,7 +181,7 @@ $(document).ready(function () {
             }
         }
 
-        function validateNum (key, selector) {
+        function validateNum(key, selector) {
             let val = parseInt($(selector || `[name="${key}"]`).val().trim(), 10);
             if (isNaN(val)) {
                 val = null;
@@ -216,7 +218,7 @@ $(document).ready(function () {
             }
         }
 
-        $('.awardName_new').each(function(i, e) {
+        $('.awardName_new').each(function (i, e) {
             let awardname = $(e).val().trim();
             if (!awardname.length) {
                 alert('Award names cannot be empty');
@@ -235,7 +237,7 @@ $(document).ready(function () {
             actions._.push([DELETE, 'award', award]);
         }
 
-        $('.awardExist input[type="text"].awardName').each(function(i, e) {
+        $('.awardExist input[type="text"].awardName').each(function (i, e) {
             let awardname = $(e).val().trim();
             let awardnote = $(e).parent().parent().find('.awardNote').val().trim();
             let award = parseInt($(e).attr('award'), 10);

@@ -2,16 +2,17 @@
 <head>
     <%- include('head_shit.ejs', {title: `EWMA | Stream`, request: request, cacheBuster: cacheBuster}); %>
 </head>
-<body>
+<body class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="site">
         <%- include('headers.ejs', {pageId: 'movies'}); %>
         <div id="content">
             <div class="movie">
-                <div class="movieTitleBlock">
+                <div class="movieTitleBlock movie-info">
                     <div class="fr tar">
                         <% if (oneVideo.deptDisplay) { %>
                             <div><%= oneVideo.deptDisplay %></div>
                         <% } %>
+
                         <% if (oneVideo.movieYear) { %>
                             <div><%= oneVideo.movieYear %></div>
                         <% } %>
@@ -19,6 +20,7 @@
                         <% if (oneVideo.movieTheme) { %>
                             <div>Theme: <%= oneVideo.movieTheme %></div>
                         <% } %>
+
                         <div class="smolits">Movie <%= oneVideo.movieId %></div>
                     </div>
                     <h2>
@@ -30,7 +32,7 @@
                             </div>
                         <% } %>
                     </h2>
-                    <div class="movieAwards tac">
+                    <div class="movieAwards">
                         <% for (let award of awards) { %>
                             <%- include('award.ejs', {award: award}); %>
                         <% } %>

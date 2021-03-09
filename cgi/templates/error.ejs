@@ -3,14 +3,14 @@
     <%- include('head_shit.ejs', {title: 'EWMA | ' + title}); %>
     <link rel="stylesheet" type="text/css" href="<%= cacheBuster('css/error.css'); %>" />
 </head>
-<body>
+<body class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="site">
-        <div class="absc db">
+        <div class="db">
             <a href="/">
                 <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
             </a>
             <br /><br />
-            <div>
+            <div class="error-message">
                 <table id="summary">
                     <tbody>
                         <% for (let prop in data) { %>

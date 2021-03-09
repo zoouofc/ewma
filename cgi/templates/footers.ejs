@@ -1,8 +1,10 @@
-<div id="footer">
+<div id="footer" class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
     <div id="footerContent" class="absCY">
         <span>
-            Copyright &copy; 2016 - <%= (new Date()).getFullYear() %> Electrical, Computer, and Software Students' Society (ZOO), Mitchell Sawatzky, All Rights Reserved<br />
-            <a href="mailto:webmaster@zooengg.ca">Contact Webmaster</a>
+            Copyright &copy; 2016 - <%= (new Date()).getFullYear() %> Electrical, Computer, and Software Engineering Students' Society (ZOO), Mitchell Sawatzky, All Rights Reserved<br />
         </span>
+        <div>
+            <a href="mailto:webmaster@zooengg.ca">Contact Webmaster</a>
+        </div>
     </div>
 </div>

@@ -1,3 +1,22 @@
-#content
-    text-align: center
-    margin-top: 20px
+@import "./_variables"
+
+body
+    #content
+        text-align: center
+        margin: 50px auto 0
+        padding: 30px 50px
+        width: 75vw
+        border-radius: 20px
+    
+// Dark-theme properties
+body.dark-theme    
+    #content
+        background-color: $blueGrey
+        border: 2px solid $lightGrey
+
+// Light-theme properties
+body.light-theme    
+    #content
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey

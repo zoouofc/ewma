@@ -1,32 +1,45 @@
+@import "./_variables"
+
 .movie
     width: 100%
 
     .movieTitleBlock
         border-radius: 20px
-        background-color: #eeeeee
-        padding: 10px
+        width: 80vw
+        margin: 0 auto
+        padding: 15px 30px
         a
+            margin: 0 10px 0 0
+            vertical-align: middle
             text-decoration: none
-
+        h2, h3
+            letter-spacing: 1px
+        .movieAwards
+            text-align: center
+            display: inline-block
+            width: 100%
+            margin: 25px 0 0
+        &.movie-info
+            min-height: 135px
+            h2
+                margin: 0 0 20px
     .movieSourceBlock
         table
             width: 100%
             td
                 width: 50%
                 padding: 10px
-        .videoContainer,
-        .movieAwards
+        .videoContainer
+            margin: 0 auto 35px
             max-width: 900px
             max-height: 506px
-        .videoContainer
-            margin: auto
 
 .videoBadge
     border: 1px solid rgb(117, 117, 117)
     border-radius: 7px
-    background: white
     padding: 2px 5px
     font-variant: small-caps
+    margin: 0 -5px 5px
 
 .videoBadge-primary::after
     content: 'feature presentation'
@@ -36,3 +49,36 @@
     content: 'official trailer'
 .videoBadge-other::after
     content: 'extra video'
+
+body #site
+    #content 
+        margin: 50px 0 0
+
+// Dark-theme properties
+body.dark-theme    
+    #content .movieTitleBlock
+        background-color: $blueGrey
+        border: 2px solid $lightGrey
+        .videoBadge
+            background-color: $darkBackground
+        h2, h3
+            color: $headerBlue
+        a img
+            filter: invert(85%)
+            &:hover
+                opacity: 0.7
+
+// Light-theme properties
+body.light-theme    
+    #content .movieTitleBlock
+        background-color: $offBlueWhite
+        border: 2px solid $lightGrey
+        box-shadow: 0px 4px 10px 0px $shadowGrey
+        .videoBadge
+            background-color: $white
+        h2, h3
+            color: $darkerFont
+        a img:hover
+            opacity: 0.7
+
+
