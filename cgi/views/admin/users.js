@@ -52,9 +52,9 @@ module.exports.handle = page.requirePermission('manage_users', (request, cb) => 
                                         } else if (a.attributes.approved < b.attributes.approved) {
                                             return 1;
                                         } else {
-                                            if (a.attributes.username > b.attributes.username) {
+                                            if (a.attributes.username.toLowerCase() > b.attributes.username.toLowerCase()) {
                                                 return 1;
-                                            } else if (a.attributes.username < b.attributes.username) {
+                                            } else if (a.attributes.username.toLowerCase() < b.attributes.username.toLowerCase()) {
                                                 return -1;
                                             }
                                             return 0;
